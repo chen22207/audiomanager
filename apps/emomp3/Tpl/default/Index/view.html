@@ -3,7 +3,7 @@
 <div id="page-wrap">
   <div id="main-wrap">
     <div class="boxShadow">
-        <foundation>
+        <div class="foundation">
             <div class="row">
                 <h2>查看音频</h2>
                 <hr/>
@@ -14,14 +14,14 @@
                     播放
                 </div>
             </div>
-        </foundation>
+        </div>
     </div>
   </div>
 </div>
 
 <script>
     $('#play').click(function(){
-        var au = $('foundation audio').get(0);
+        var au = $('.foundation audio').get(0);
         au.play();
     });
 </script>
