@@ -1,0 +1,29 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+        <foundation>
+            <div class="row">
+                <h2>查看音频</h2>
+                <hr/>
+            </div>
+            <div class="row">
+                <audio src="{$audiourl}"></audio>
+                <div class="button" id="play">
+                    播放
+                </div>
+            </div>
+        </foundation>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('#play').click(function(){
+        var au = $('foundation audio').get(0);
+        au.play();
+    });
+</script>
+
+<include file="__THEME__/public_footer" />

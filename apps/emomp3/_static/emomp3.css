@@ -1,0 +1,67 @@
+.title {
+    padding:30px;
+    font-size: 20px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.content {
+    padding: 30px;
+}
+
+.cpbutton {
+    background-color: #96C95F;
+    border: none;
+    color: #FFF;
+    display: inline-block;
+}
+
+.cpbutton:hover {
+    color: #fff;
+    background-color: #a7db61;
+}
+
+.big {
+    font-size: 20px;
+    padding: 20px;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+}
+
+.cpupload {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.cpupload .filelist {
+    border: 1px solid #eee;
+    margin-top: 10px;
+    min-height: 200px;
+}
+
+.cpupload .filelist div{
+    padding: 10px 20px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.cpupload .filelist div:hover{
+    padding: 10px 20px;
+    background-color: #eee;
+}
+
+.cpupload input[type="file"] {
+
+}
+
+.cpupload input[type="submit"] {
+
+}
+
+.cpupload .cpbutton {
+    margin-top: 10px;
+}

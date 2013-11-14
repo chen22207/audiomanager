@@ -1,0 +1,68 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+        <foundation id="listaudio">
+            <div class="row">
+                <h2>音频列表</h2>
+                <hr/>
+            </div>
+            <div class="row">
+                <table>
+                    <thead>
+                    <tr>
+                        <th width="200">用户</th>
+                        <th width="200">上传时间</th>
+                        <th width="200">文件编号</th>
+                        <th width="200">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <php>
+                        $files = D('CpFiles')->getpage($this->mid);
+                    </php>
+                    <volist name="files['data']" id="file">
+                        <php>
+                            $$user = D('User')->getuserinfo($file['uid']);
+                        </php>
+                        <tr>
+                            <td>{$user['uname']|htmlspecialchars}</td>
+                            <td>{$file['ctime']|friendlydate}</td>
+                            <td>{$file['attach_id']}</td>
+                            <td>
+                                <a href="{:U('emomp3/Index/view', array('id'=>$file['emo_files_id']))}">查看</a>|
+                                <a id="delete" fileid="{$file['emo_files_id']}">删除</a>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="page">
+                    {$files['html']}
+                </div>
+            </div>
+        </foundation>
+    </div>
+  </div>
+</div>
+
+<script>
+    $("#listaudio #delete").click(function(){
+        var fileid = this.getAttribute("fileid");
+        $.post("{:U('emomp3/Index/delete')}", {fileid: fileid}, function(a,b,c){
+            if(a.status){
+                ui.success(a.data);
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
+            } else {
+                ui.error(a.data);
+            }
+        }, "json");
+    });
+</script>
+
+<include file="__THEME__/public_footer" />
