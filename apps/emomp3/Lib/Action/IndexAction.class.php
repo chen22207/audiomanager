@@ -10,25 +10,6 @@ class IndexAction extends Action
 		$this->appCssList[] = 'emomp3.css';
 	}
 
-    public function delete() {
-        $fileid = $_POST['fileid'];
-        $result = D('CpFiles')->remove($fileid);
-        if($result) {
-            $this->ajaxReturn("删除成功", null, 1);
-        } else {
-            $this->ajaxReturn("删除失败", null, 0);
-        }
-    }
-
-    public function view() {
-        $fileid = $_REQUEST['id'];
-        $file = D('CpFiles')->get($fileid);
-        $attachid = $file['attach_id'];
-        $audiourl = getAttachUrlByAttachId($attachid);
-        $this->assign('audiourl', $audiourl);
-        $this->display();
-    }
-
     public function upload() {
         $this->display();
     }
@@ -44,7 +25,7 @@ class IndexAction extends Action
             foreach($files as $file) {
                 $mid = $this->mid;
                 $attachid = $file['attach_id'];
-                $result = model('CpFiles')->put($mid, $attachid);
+                $result = D('CpAudio')->put($mid, $attachid);
                 if(!$result) {
                     $success = false;
                     $message = "数据库写入错误";
@@ -53,9 +34,36 @@ class IndexAction extends Action
         }
         // render
         if($success) {
-            return D('CpUtil')->ajax(1, "上传成功");
+            return $this->jsonsuccess("上传成功", U('emomp3/Index/listaudio'));
         } else {
-            return D('CpUtil')->ajax(0, $message);
+            return $this->jsonerror($message);
+        }
+    }
+
+    public function listaudio() {
+        // read db
+        $page = D('CpAudio')->getpage();
+        // display
+        $this->assign('page', $page);
+        $this->display();
+    }
+
+    public function viewaudio() {
+        $fileid = $_REQUEST['audioid'];
+        $file = D('CpAudio')->get($fileid);
+        $attachid = $file['attach_id'];
+        $audiourl = getAttachUrlByAttachId($attachid);
+        $this->assign('audiourl', $audiourl);
+        $this->display();
+    }
+
+    public function deleteaudio() {
+        $fileid = $_REQUEST['audioid'];
+        $result = D('CpAudio')->remove($fileid);
+        if($result) {
+            return $this->jsonsuccess('删除成功', 'refresh');
+        } else {
+            return $this->jsonerror('删除失败', 'refresh');
         }
     }
 }

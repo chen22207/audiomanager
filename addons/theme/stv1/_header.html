@@ -11,7 +11,7 @@
 <link href="__THEME__/css/menu.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
 <link href="__THEME__/css/form.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
 <link href="__THEME__/css/jquery.atwho.css?v={$site.sys_version}" rel="stylesheet" type="text/css" /> -->
-<link href="__THEME__/css/css.php?t=css&f=foundation2.css,bootstrap2.css,global.css,module.css,menu.css,form.css,jquery.atwho.css&v={$site.sys_version}.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/css.php?t=css&f=foundation2.css,global.css,module.css,menu.css,form.css,jquery.atwho.css&v={$site.sys_version}.css" rel="stylesheet" type="text/css" />
 <php>if(!empty($appCssList)):</php>
 <volist name='appCssList' id='cl'>
 <link href="{:APP_PUBLIC_URL}/{$cl}?v={$site.sys_version}" rel="stylesheet" type="text/css"/>
@@ -50,6 +50,7 @@ var LANG = new Array();
 <script src="__THEME__/js/ui.draggable.js?v={$site.sys_version}"></script> -->
 <script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js&v={$site.sys_version}.js"></script>
 <script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/emomp3.js"></script>
 {:Addons::hook('public_head',array('uid'=>$uid))}
 </head>
 <body>

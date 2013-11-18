@@ -11,12 +11,12 @@
 
             <form action="{:U('emomp3/Index/doupload')}" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="large-offset-3 large-6 columns">
+                    <div class="large-12 columns">
                         <input type="file"  name="files[]" accept="audio/*" multiple>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="large-6 large-offset-3 columns">
+                    <div class="large-12 columns">
                         <table id="filelist" style="width: 100%;">
                             <thead>
                             <tr>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="large-6 large-offset-3 columns">
+                    <div class="large-12 columns">
                         <div class="fdprogress">
                             <span class="meter" style="width: 0%;"></span>
                         </div>
@@ -65,12 +65,10 @@
             uploadProgress: function(event, position, total, percentComplete) {
                 var percentVal = percentComplete + '%';
                 bar.css("width", percentVal);
-                percent.html(percentVal);
             },
             success: function() {
                 var percentVal = '100%';
                 bar.width(percentVal)
-                percent.html(percentVal);
             },
             complete: function(xhr) {
             }
@@ -111,16 +109,9 @@
         }
 
         $('#upload').submit(function(){
-            var url = $("#upload form")[0].getAttribute("action");
+            var url = $("#upload form").attr('action');
             $('#upload').ajaxSubmit({url:url, type:'post', success: function(a,b,c){
-                if(a.success) {
-                    ui.success(a.message);
-                    setTimeout(function(){
-                        location.reload();
-                    }, 500);
-                } else {
-                    ui.error(a.message);
-                }
+                handleajax(a);
             }});
             return false;
         })

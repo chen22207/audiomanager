@@ -561,7 +561,7 @@ abstract class Action
         return false;
     }
 
-    public function jsonsuccess($message, $url) {
+    public function jsonsuccess($message, $url=null) {
         $json = array();
         $json['success'] = true;
         $json['message'] = $message;
@@ -569,7 +569,7 @@ abstract class Action
         echo json_encode($json);
     }
 
-    public function jsonerror($message, $url) {
+    public function jsonerror($message, $url=null) {
         $json = array();
         $json['success'] = false;
         $json['message'] = $message;
