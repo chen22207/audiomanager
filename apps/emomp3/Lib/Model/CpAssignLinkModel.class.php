@@ -12,7 +12,7 @@ class CpAssignLinkModel extends Model {
         $result = $this->decode($result);
         return $result;
     }
-
+//ceshi
     public function getlist($taskid=null, $uid=null) {
         // limit parameter type
         $taskid = intval($taskid);
