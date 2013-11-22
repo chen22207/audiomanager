@@ -12,7 +12,7 @@ class CpTaskModel extends Model {
         $map['id'] = $id;
         $result = $this->where($map)->select();
         $result = $result[0];
-        $result = $this->decodetask($result);
+        $result = $this->decode($result);
         return $result;
     }
 
