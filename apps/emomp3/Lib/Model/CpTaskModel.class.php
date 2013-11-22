@@ -45,7 +45,7 @@ class CpTaskModel extends Model {
             return $result;
         } else {
             $result = $this->order('ctime desc')->findpage();
-            $result = $this->decodelist($result['data']);
+            $result['data'] = $this->decodelist($result['data']);
             return $result;
         }
     }
