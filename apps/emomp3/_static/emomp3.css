@@ -65,3 +65,20 @@
 .cpupload .cpbutton {
     margin-top: 10px;
 }
+
+/*标签*/
+[model-node="string_text"] input {font-size: 12px;}
+.tag-lists{overflow:hidden;zoom:1}
+.tag-lists .taglist li{box-sizing: content-box; -webkit-box-sizing: content-box;}
+.tag-lists .taglist li{float:left;color:#fff;background:#48980d;height:14px;line-height:14px;padding:5px;margin:0 5px 5px 0;cursor:pointer;white-space:nowrap;opacity: 0.7;-moz-opacity: 0.7;filter:alpha(opacity=70);border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;transition: opacity .2s ease-in, padding .2s ease-in;-moz-transition: opacity .2s ease-in, padding .2s ease-in;-o-transition: opacity .2s ease-in, padding .2s ease-in;-webkit-transition: opacity .2s ease-in, padding .2s ease-in}
+.tag-lists .taglist li:hover{background:#3C9100;cursor:pointer;padding:5px 10px;opacity: 1;-moz-opacity: 1;filter:alpha(opacity=100);}
+.tag-lists .taglist li a.tag{display:inline-block;color:#fff;padding:0 5px}
+.tag-lists .taglist li a.tag:hover{text-decoration:none;cursor:default;}
+.tag-lists .taglist li em{color:#fff;padding:0 5px}
+.tag-lists .taglist li label{cursor:pointer; display: inline-block; color: #fff; font-size: 12px;}
+.tag-lists .ico-close{_vertical-align:2px}
+.setupTag_list01 {clear: both;margin-top: 6px;overflow: hidden}
+.setupTag_list01 a{display: inline-block;line-height: 20px;padding: 2px 5px;color:#36c}
+.setupTag_list01 a em {font-style:normal;color: #ddd;font-family: Arial;font-weight:700;font-size: 17px;margin-right: 2px;vertical-align: -2px}
+.setupTag_list01 a:hover {background-color: #9EC97F;color: #fff;text-decoration: none}
+.setupTag_list01 a:hover em {color: #fff;cursor: pointer;font-size: 17px;font-weight: bold}

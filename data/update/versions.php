@@ -88,5 +88,21 @@ return array (
     'package' => 'thinksns_d2013092501_v27972.zip',
     'status' => 0,
   ),
+  2013111601 => 
+  array (
+    'id' => '2013111601',
+    'title' => '2013-11-16：ThinkSNS V3 紧急安全补丁包，适用于V3任意版本（只更新一个不常用文件，二次开发过的版本也可放心更新），请务必升级！！',
+    'version' => 'ThinkSNS.V3.28881',
+    'package' => 'thinksns_d2013111601_v28881.zip',
+    'status' => 0,
+  ),
+  2013110801 => 
+  array (
+    'id' => '2013110801',
+    'title' => '2013-11-08：ThinkSNS V3.1 最新升级包，适用于2013-09-30以后发布的版本（后台升级后，请更新rewrite规则文件）',
+    'version' => 'ThinkSNS.V3.28822',
+    'package' => 'thinksns_d2013110801_v28822.zip',
+    'status' => 0,
+  ),
 );
 ?>
