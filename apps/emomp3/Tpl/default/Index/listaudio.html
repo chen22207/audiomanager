@@ -29,7 +29,7 @@
                             <td>{$e['ctime']|friendlydate}</td>
                             <td>{$e['attachid']}</td>
                             <td>
-                                <a href="{:U('emomp3/Index/viewaudio', array('id'=>$e['id']))}">查看</a>|
+                                <a href="{:U('emomp3/Index/viewaudio', array('audioid'=>$e['id']))}">查看</a>|
                                 <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
                             </td>
                             <td>

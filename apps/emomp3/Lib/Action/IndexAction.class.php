@@ -54,6 +54,7 @@ class IndexAction extends Action
         $attachid = $file['attach_id'];
         $audiourl = getAttachUrlByAttachId($attachid);
         $this->assign('audiourl', $audiourl);
+        $this->assign('audioid', $fileid);
         $this->display();
     }
 
