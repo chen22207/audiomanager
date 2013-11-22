@@ -51,13 +51,16 @@ class IndexAction extends Action
     public function viewaudio() {
         $fileid = $_REQUEST['audioid'];
         $file = D('CpAudio')->get($fileid);
-        $attachid = $file['attach_id'];
+        $attachid = $file['attachid'];
         $audiourl = getAttachUrlByAttachId($attachid);
         $this->assign('audiourl', $audiourl);
         $this->assign('audioid', $fileid);
+        $map = array();
+        $map['audioid'] = $fileid;
+        $page_view = D('CpTask')->where($map)->select();
+        $this->assign('page_view', $page_view);
         $this->display();
     }
-
     public function deleteaudio() {
         $fileid = $_REQUEST['audioid'];
         $result = D('CpAudio')->remove($fileid);
