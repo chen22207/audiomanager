@@ -232,19 +232,20 @@ class RegisterAction extends Action
 		$sex = 1 == $_POST['sex'] ? 1 : 2;
 		$password = trim($_POST['password']);
 		$repassword = trim($_POST['repassword']);
+        $classname = trim($_POST['classname']);
 
 		//检查验证码
 		if (md5(strtoupper($_POST['verify'])) != $_SESSION['verify']) {
 			$this->error('验证码错误');
 		}
-		
 		if(!$this->_register_model->isValidName($uname)) {
 			$this->error($this->_register_model->getLastError());
 		}
 
+
 		if(!$this->_register_model->isValidEmail($email)) {
 			$this->error($this->_register_model->getLastError());
-		}
+        }
 
 		if(!$this->_register_model->isValidPassword($password, $repassword)){
 			$this->error($this->_register_model->getLastError());
@@ -262,14 +263,17 @@ class RegisterAction extends Action
 		$map['login'] = $map['email'] = $email;
 		$map['reg_ip'] = get_client_ip();
 		$map['ctime'] = time();
+        $map['taskcount']=0;
+        $map['studentid']=$email;
+        $map['classname']=$classname;
+        $map['is_init']=1;
+
 
 		// 添加地区信息
 		$map['location'] = t($_POST['city_names']);
-		$cityIds = t($_POST['city_ids']);
-		$cityIds = explode(',', $cityIds);
-		isset($cityIds[0]) && $map['province'] = intval($cityIds[0]);
-		isset($cityIds[1]) && $map['city'] = intval($cityIds[1]);
-		isset($cityIds[2]) && $map['area'] = intval($cityIds[2]);
+		$map['province'] = 0;
+		$map['city'] = 0;
+		$map['area'] = 0;
 		// 审核状态： 0-需要审核；1-通过审核
 		$map['is_audit'] = $this->_config['register_audit'] ? 0 : 1;
 		// 需求添加 - 若后台没有填写邮件配置，将直接过滤掉激活操作

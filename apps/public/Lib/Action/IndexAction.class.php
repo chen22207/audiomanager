@@ -11,6 +11,9 @@ class IndexAction extends Action {
 	 * @return void
 	 */
 	public function index(){
+        //直接跳转到语音管理页面
+        U('emomp3/Index/index','',true);
+
 		// 安全过滤
 		$d['type'] = t($_GET['type']) ? t($_GET['type']) : 'following';
 		$d['feed_type'] = t($_GET['feed_type']) ? t($_GET['feed_type']) : '';
