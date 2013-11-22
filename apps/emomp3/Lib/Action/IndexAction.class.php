@@ -67,4 +67,28 @@ class IndexAction extends Action
             return $this->jsonerror('删除失败', 'refresh');
         }
     }
+
+    public function dotask() {
+        // read finish task count/remain task count
+        $map = array();
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0;
+        $finishtaskcount = intval($_SESSION['cptask']['finishcount']);
+        $remaintaskcount = D('CpAssignLink')->where($map)->count();
+        // get next task
+        $map = array();
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0; // means not finished
+        $assignlink = D('CpAssignLink')->where($map)->order('ctime asc')->limit(1)->select();
+        $assignlink = $assignlink[0];
+        // read task content
+        if($assignlink) {
+            $task = D('CpTask')->get($assignlink['taskid']);
+        }
+        // display
+        $this->assign('task', $task);
+        $this->assign('finishtaskcount', $finishtaskcount);
+        $this->assign('remaintaskcount', $remaintaskcount);
+        $this->display();
+    }
 }
