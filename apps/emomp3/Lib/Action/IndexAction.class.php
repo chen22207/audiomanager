@@ -61,6 +61,13 @@ class IndexAction extends Action
         $this->assign('page_view', $page_view);
         $this->display();
     }
+    public function listtask() {
+        $page = D('CpTask')->getpage($this->mid);
+        $this->assign('page', $page);
+        //dump($page);exit;
+        $this->display();
+
+    }
     public function deleteaudio() {
         $fileid = $_REQUEST['audioid'];
         $result = D('CpAudio')->remove($fileid);
