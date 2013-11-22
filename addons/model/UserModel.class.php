@@ -40,6 +40,9 @@ class UserModel extends Model {
 			28 => 'invite_code',
 			29 => 'feed_email_time',
 			30 => 'send_email_time',
+            31 =>'taskcount',
+            32 =>'studentid',
+            33 =>'classname',
 			'_autoinc' => true,
 			'_pk' => 'uid' 
 	);

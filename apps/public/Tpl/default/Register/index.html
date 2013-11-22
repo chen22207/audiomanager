@@ -16,7 +16,7 @@
 					<php>endif;</php>
 					<dl class="item">
 						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_LOGIN_EMAIL')}：</div>
+							<div class="form-tt"><i class="text-required">*</i>学号：</div>
 							<div class="form-row" style="z-index:99">
 								<input event-node="email" event-args="suffix={$config['email_suffix']}" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" value="" />
 							</div>
@@ -41,14 +41,24 @@
 							</div>
 						</dd>
 						<dd>
-							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_NICKNAME')}：</div>
+							<div class="form-tt"><i class="text-required">*</i>姓名：</div>
 							<div class="form-row">
 								<div style="overflow:hidden;*zoom:1">
                                 <input event-node="uname" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" value="" />
                                 </div>
-								<div event-node="uname_tips" class="txt-info">{:L('PUBLIC_NICKNAME_TIPS', array('nums'=>'2-10'))}</div>
+								<div event-node="uname_tips" class="txt-info">姓名长度为2-10个汉字，仅支持中英文，数字，下划线，不允许重名。</div>
 							</div>
 						</dd>
+                        <dd>
+                            <div class="form-tt"><i class="text-required">*</i>班级：</div>
+                            <div class="form-row">
+                                <div style="overflow:hidden;*zoom:1">
+                                    <input class="s-txt" name="classname"  autocomplete="off" type="text" value="" />
+                                </div>
+                            </div>
+                        </dd>
+                        <!--
+                        不需要性别模块
 						<dd>
 							<div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_GENDER')}：</div>
 							<div class="form-row">
@@ -56,6 +66,7 @@
 								<label><input event-node="radio" type="radio" name="sex" value="2" class="s-radio"  />{:L('PUBLIC_FEMALE')}</label>
 							</div>
 						</dd>
+
 						<dd>
 							<div class="form-tt"><i class="text-required">*</i>地区：</div>
 							<div class="form-row">
@@ -64,7 +75,7 @@
 								</div>
 							</div>
 						</dd>
-													<dd>
+						-->						<dd>
 							<div class="form-tt"><i class="text-required">*</i>验证码：</div>
 							<div class="form-row">
 								<div class="captcha-tips" style="padding:3px 0 0 0;*height:30px;overflow:hidden;*zoom:1;">

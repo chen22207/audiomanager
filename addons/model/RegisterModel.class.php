@@ -52,6 +52,7 @@ class RegisterModel extends Model {
 	 * @return boolean 是否验证成功
 	 */
 	public function isValidEmail($email, $old_email = null) {
+        /*
 		$res = preg_match($this->_email_reg, $email, $matches) !== 0;
 		if(!$res) {
 			$this->_error = L('PUBLIC_EMAIL_TIPS');			// 无效的Email地址
@@ -64,8 +65,14 @@ class RegisterModel extends Model {
 			$this->_error = L('PUBLIC_EMAIL_REGISTER');			// 该Email已被注册
 			$res = false;
 		}
-
-		return (boolean)$res;
+        */
+        if(strlen($email)==10&&is_numeric($email)){
+            return true;
+        }
+        else {
+            $this->_error = "学号必须为10位数字组成";
+            return false;
+        }
 	}
 
 	/**
