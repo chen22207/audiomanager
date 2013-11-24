@@ -60,7 +60,7 @@ class CpTaskModel extends Model {
         $row['audioid'] = $audioid;
         $row['problems'] = $problems;
         $row['ctime'] = time();
-        $row = $this->encodetask($row);
+        $row = $this->encode($row);
         return $this->add($row);
     }
 

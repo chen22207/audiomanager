@@ -66,4 +66,29 @@ class IndexAction extends Action
             return $this->jsonerror('删除失败', 'refresh');
         }
     }
+
+    public function selectPublishAudio()
+    {
+        // read db
+        $page = D('CpAudio')->getpage();
+        // display
+        $this->assign('page', $page);
+        $this->display();
+    }
+
+    public function  newtaskstep1()
+    {
+        $fileid = $_REQUEST['audioid'];
+        $userId = $this->mid;
+        $problem = $_REQUEST['problems'];
+        $result = D('CpTask')->put($userId,$fileid,$problem);
+        if($result)
+        {
+            return $this->jsonsuccess('添加成功', 'refresh');
+        }
+        else
+        {
+            return $this->jsonsuccess('添加失败', 'refresh');
+        }
+    }
 }
