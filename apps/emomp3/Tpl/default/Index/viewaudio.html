@@ -9,10 +9,37 @@
                 <hr/>
             </div>
             <div class="row">
-                <audio src="{$audiourl}"></audio>
-                <div class="button" id="play">
-                    播放
-                </div>
+                音频编号：{$audioid}
+            </div>
+            <div class="row">
+                &nbsp;
+            </div>
+
+            <div class="row">
+                <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
+            </div>
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row">
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="300">任务编号</th>
+                            <th width="400">发布时间</th>
+                            <th width="100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="page_view" id="e">
+                            <tr>
+                                <td>{$e['id']}</td>
+                                <td>{$e['ctime']|friendlydate}</td>
+                                <td><a href="{:U('emomp3/Index/viewtask',array('taskid' => $e['id']))}">查看</a></td>
+                            </tr>
+                        </volist>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -51,12 +51,23 @@ class IndexAction extends Action
     public function viewaudio() {
         $fileid = $_REQUEST['audioid'];
         $file = D('CpAudio')->get($fileid);
-        $attachid = $file['attach_id'];
+        $attachid = $file['attachid'];
         $audiourl = getAttachUrlByAttachId($attachid);
         $this->assign('audiourl', $audiourl);
+        $this->assign('audioid', $fileid);
+        $map = array();
+        $map['audioid'] = $fileid;
+        $page_view = D('CpTask')->where($map)->select();
+        $this->assign('page_view', $page_view);
         $this->display();
     }
+    public function listtask() {
+        $page = D('CpTask')->getpage($this->mid);
+        $this->assign('page', $page);
+        //dump($page);exit;
+        $this->display();
 
+    }
     public function deleteaudio() {
         $fileid = $_REQUEST['audioid'];
         $result = D('CpAudio')->remove($fileid);
@@ -65,6 +76,30 @@ class IndexAction extends Action
         } else {
             return $this->jsonerror('删除失败', 'refresh');
         }
+    }
+
+    public function dotask() {
+        // read finish task count/remain task count
+        $map = array();
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0;
+        $finishtaskcount = intval($_SESSION['cptask']['finishcount']);
+        $remaintaskcount = D('CpAssignLink')->where($map)->count();
+        // get next task
+        $map = array();
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0; // means not finished
+        $assignlink = D('CpAssignLink')->where($map)->order('ctime asc')->limit(1)->select();
+        $assignlink = $assignlink[0];
+        // read task content
+        if($assignlink) {
+            $task = D('CpTask')->get($assignlink['taskid']);
+        }
+        // display
+        $this->assign('task', $task);
+        $this->assign('finishtaskcount', $finishtaskcount);
+        $this->assign('remaintaskcount', $remaintaskcount);
+        $this->display();
     }
 
     public function selectPublishAudio()

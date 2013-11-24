@@ -12,7 +12,7 @@ class CpTaskModel extends Model {
         $map['id'] = $id;
         $result = $this->where($map)->select();
         $result = $result[0];
-        $result = $this->decodetask($result);
+        $result = $this->decode($result);
         return $result;
     }
 
@@ -45,7 +45,7 @@ class CpTaskModel extends Model {
             return $result;
         } else {
             $result = $this->order('ctime desc')->findpage();
-            $result = $this->decodelist($result['data']);
+            $result['data'] = $this->decodelist($result['data']);
             return $result;
         }
     }
