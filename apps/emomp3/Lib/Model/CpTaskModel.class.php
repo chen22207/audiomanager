@@ -90,7 +90,7 @@ class CpTaskModel extends Model {
 
     public function decodelist($list) {
         $result = array();
-        foreach($result as $e) {
+        foreach($list as $e) {
             $result[] = $this->decode($e);
         }
         return $result;
