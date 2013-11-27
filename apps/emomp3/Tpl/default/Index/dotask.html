@@ -88,10 +88,14 @@
             var problem = problems[i];
             var answer;
             if(problem.type=="choice") {
-                answer = $('#problem'+i).val();
+                answer = $('[name=problem'+i+']:checked').val();
             } else if(problem.type=="tag") {
                 answer = $('[name="problem'+i+'"]').val();
-                answer = answer.split(',');
+                if(answer) {
+                    answer = answer.split(',');
+                } else {
+                    answer = '';
+                }
             }
             answers.push(answer);
         }

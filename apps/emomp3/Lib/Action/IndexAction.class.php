@@ -91,4 +91,69 @@ class IndexAction extends Action
         $this->assign('remaintaskcount', $remaintaskcount);
         $this->display();
     }
+
+    public function commitanswer() {
+        // get answer
+        $taskid = intval($_REQUEST['taskid']);
+        $answer = $_REQUEST['answer'];
+        // check assign exist
+        $map = array();
+        $map['taskid'] = $taskid;
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0;
+        $count = D('CpAssignLink')->where($map)->count();
+        if(!$count) {
+            $this->jsonerror("taskid参数错误");
+            return;
+        }
+        // read task
+        $task = D('CpTask')->get($taskid);
+        if(!$task) {
+            $this->jsonerror("taskid参数错误");
+            return;
+        }
+        // check answer correct
+        foreach($task['problems'] as $i=>$e) {
+            if($e['type'] == 'choice') {
+                if($answer[$i] == 'undefined') {
+                    $this->jsonerror("第".($i+1)."题未填写");
+                    return;
+                }
+            } else if($e['type'] == 'tag') {
+                if(!$answer[$i]) {
+                    $this->jsonerror("第".($i+1)."题未填写");
+                    return;
+                }
+            }
+        }
+        // write db
+        $map = array();
+        $map['taskid'] = $taskid;
+        $map['uid'] = $this->mid;
+        $map['finishtime'] = 0;
+        $row = array();
+        $row['answer'] = json_encode($answer);
+        $row['finishtime'] = time();
+        D('CpAssignLink')->where($map)->save($row);
+        // increase finishcount in session
+        session_start();
+        $_SESSION['cptask']['finishcount']++;
+        // increase user's taskcount in db
+        $map = array();
+        $map['uid'] = $this->mid;
+        $row = array();
+        $row['finishcount'] = $this->user['finishcount'] + 1;
+        D('User')->where($map)->save($row);
+        D('User')->cleancache($this->mid);
+        // add search index
+        foreach($task['problems'] as $i=>$e) {
+            if($e['type'] == 'tag') {
+                foreach($answer[$i] as $e2) {
+                    D('CpSearch')->put($e2, $task['audioid']);
+                }
+            }
+        }
+        // return result
+        $this->jsonsuccess("提交成功", 'refresh');
+    }
 }
