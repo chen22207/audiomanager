@@ -2,7 +2,7 @@
 
 class CpTaskModel extends Model {
     protected $tableName = "cptask";
-    protected $fields = array('id','uid','audioid','problems','ctime');
+    protected $fields = array('id','uid','audioids','problems','ctime');
 
     public function get($id) {
         // limit parameter type
@@ -50,14 +50,13 @@ class CpTaskModel extends Model {
         }
     }
 
-    public function put($uid, $audioid, $problems) {
+    public function put($uid, $audioids, $problems) {
         // limit parameter type
         $uid = intval($uid);
-        $audioid = intval($audioid);
         // write db
         $row = array();
         $row['uid'] = $uid;
-        $row['audioid'] = $audioid;
+        $row['audioids'] = $audioids;
         $row['problems'] = $problems;
         $row['ctime'] = time();
         $row = $this->encode($row);
@@ -72,11 +71,13 @@ class CpTaskModel extends Model {
 
     public function encode($row) {
         $row['problems'] = json_encode($row['problems']);
+        $row['audioids'] = json_encode($row['audioids']);
         return $row;
     }
 
     public function decode($row) {
         $row['problems'] = json_decode($row['problems'], true);
+        $row['audioids'] = json_decode($row['audioids'], true);
         return $row;
     }
 
