@@ -13,7 +13,7 @@
                         <thead>
                         <tr>
                             <th width="200">任务编号</th>
-                            <th width="300">音频编号</th>
+                            <th width="300">音频</th>
                             <th width="200">发布时间</th>
                             <th width="100">操作</th>
                         </tr>
@@ -22,7 +22,7 @@
                             <volist name="page['data']" id="e">
                                 <tr>
                                     <td>{$e['id']}</td>
-                                    <td>{$e['audioid']}</td>
+                                    <td>{:count($e['audioids'])}个音频</td>
                                     <td>{$e['ctime']|friendlydate}</td>
                                     <td>
                                         <a href="{:U('emomp3/Index/viewtask',array('taskid'=> $e['id']))}">查看</a>
