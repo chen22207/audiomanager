@@ -198,4 +198,13 @@ class IndexAction extends Action
         // return result
         $this->jsonsuccess("提交成功", 'refresh');
     }
+
+    public function viewtask() {
+        $taskid = intval($_REQUEST['taskid']);
+        // 读取数据库
+        $task = D('CpTask')->get($taskid);
+        // 显示
+        $this->assign('task', $task);
+        $this->display();
+    }
 }
