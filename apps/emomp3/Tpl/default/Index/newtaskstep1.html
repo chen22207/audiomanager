@@ -1,0 +1,177 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <h3>发布任务 - 第一步设置题目</h3>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <p>题目列表：</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <table style="width: 100%;" id="problemlist">
+                            <thead>
+                            <tr>
+                                <td>题目</td>
+                                <td>类型</td>
+                                <td>选项</td>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <p>题目描述：</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <input type="text" name="description" id="description"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <p>题目类型：</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <select id="problemtype">
+                            <option value="choice">选择题</option>
+                            <option value="tag">标签题</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="choicepanel">
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <p>填写选项：</p>
+                            <p class="subheader">最多填写6个</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                        <div class="large-2 columns">
+                            <input type="text" id="choice"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <div class="expand button" id="addproblem">添加题目</div>
+                    </div>
+                    <div class="large-6 columns">
+                        <div class="expand button" id="next" href="{:U('emomp3/Index/donewtaskstep1')}">下一步</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        // 根据题目类型自动显示或隐藏“填写选项”
+        $("#problemtype").change(function(){
+            var problemtype = $('#problemtype').val();
+            if(problemtype=="choice") {
+                $('#choicepanel').show();
+            } else {
+                $('#choicepanel').hide();
+            }
+        });
+        // 点击添加题目
+        var problemlist = [];
+        $("#addproblem").click(function(){
+            // 获取用户输入的内容
+            var problem = $('#description').val();
+            var type = $('#problemtype').val();
+            var choices = getchoices();
+            // 检查输入内容
+            if(problem == "") {
+                ui.error("请输入题目描述");
+                return;
+            }
+            if(type=="choice"){
+                if(choices.length == 0) {
+                    ui.error("请填入选项");
+                    return;
+                }
+            }
+            // 添加到题目列表
+            if(type=="choice") {
+                problemlist.push({problem: problem, type: type, choices:choices});
+            } else {
+                problemlist.push({problem: problem, type: type});
+            }
+            // 显示添加的题目
+            var html = "";
+            var typename = "";
+            var choicesname = "";
+            if(type=="choice"){
+                typename="选择题";
+            } else {
+                typename="标签题";
+            }
+            for(var i=0;i<choices.length;i++) {
+                if(choicesname!="") {
+                    choicesname += ",";
+                }
+                choicesname += choices[i];
+            }
+            html += "<tr>" +
+                    "<td>"+problem+"</td>" +
+                    "<td>"+typename+"</td>" +
+                    "<td>"+choicesname+"</td>" +
+                    "</tr>";
+            $('#problemlist tbody').append(html);
+            // 清空用户输入
+            $('#description').val("");
+            $('[id="choice"]').val("");
+        })
+        function getchoices() {
+            var choices = $('[id="choice"]');
+            var result = [];
+            for(var i=0;i<choices.length;i++){
+                var c = $(choices.get(i)).val();
+                if(c != "") {
+                    result.push(c);
+                }
+            }
+            return result;
+        }
+        // 点击下一步
+        $("#next").click(function(){
+            var url = $(this).attr('href');
+            $.post(url, {problems:problemlist}, function(a,b,c){
+                handleajax(a);
+            });
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer" />

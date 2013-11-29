@@ -96,4 +96,18 @@ class CpTaskModel extends Model {
         }
         return $result;
     }
+
+    public function addaudiototask($audioids, $taskid) {
+        //读取数据库中对应的任务
+        $task = $this->get($taskid);
+        // 将音频添加到任务中
+        $task['audioids'] = array_merge($task['audioids'], $audioids);
+        $task['audioids'] = array_unique($task['audioids']);
+        $task = $this->encode($task);
+        // 写入数据库
+        unset($task['id']);
+        $map = array();
+        $map['id'] = $taskid;
+        return $this->where($map)->save($task);
+    }
 }

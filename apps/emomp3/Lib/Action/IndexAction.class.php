@@ -102,29 +102,36 @@ class IndexAction extends Action
         $this->display();
     }
 
-    public function selectPublishAudio()
-    {
-        // read db
-        $page = D('CpAudio')->getpage();
-        // display
-        $this->assign('page', $page);
+    public function newtaskstep1() {
         $this->display();
     }
 
-    public function  newtaskstep1()
-    {
-        $fileid = $_REQUEST['audioid'];
-        $userId = $this->mid;
-        $problem = $_REQUEST['problems'];
-        $result = D('CpTask')->put($userId,$fileid,$problem);
-        if($result)
-        {
-            return $this->jsonsuccess('添加成功', 'refresh');
+    public function donewtaskstep1() {
+        $problems = $_REQUEST['problems'];
+        // write db
+        $taskid = D('CpTask')->put($this->mid, array(), $problems);
+        if(!$taskid) {
+            $this->jsonerror("写入数据库错误");
+            return;
         }
-        else
-        {
-            return $this->jsonsuccess('添加失败', 'refresh');
-        }
+        // goto step2
+        $this->jsonsuccess(null, U('emomp3/Index/newtaskstep2', array('taskid'=>$taskid)));
+    }
+
+    public function newtaskstep2() {
+        $taskid = intval($_REQUEST['taskid']);
+        // display
+        $this->assign('taskid', $taskid);
+        $this->display();
+    }
+
+    public function addaudiototask() {
+        $taskid = intval($_REQUEST['taskid']);
+        $audioids = $_REQUEST['audioids'];
+        // write db
+        D('CpTask')->addaudiototask($audioids, $taskid);
+        // return success
+        $this->jsonsuccess("添加成功，可以继续添加", "refresh");
     }
 
     public function commitanswer() {

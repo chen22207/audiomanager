@@ -1,0 +1,97 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <h3>发布任务 - 第二步添加音频</h3>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <p>音频列表</p>
+                    </div>
+                    <div class="large-6 columns">
+                        <php>
+                            $task = D('CpTask')->get($taskid);
+                        </php>
+                        <p class="right">已添加{:count($task['audioids'])}个音频</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <table style="width: 100%;" id="audiolist">
+                            <thead>
+                            <tr>
+                                <td>音频编号</td>
+                                <td>上传时间</td>
+                                <td>选择</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <php>
+                                $audios = D('CpAudio')->getpage($mid);
+                                $task = D('CpTask')->get($taskid);
+                            </php>
+                            <volist name="audios['data']" id="e">
+                                <php>
+                                    $checked = "";
+                                    if(in_array($e['id'], $task['audioids'])) {
+                                        $checked = 'checked="1"';
+                                    }
+                                </php>
+                                <tr>
+                                    <td>{$e['id']}</td>
+                                    <td>{$e['ctime']|friendlydate}</td>
+                                    <td><input type="checkbox" id="selectaudio" audioid="{$e['id']}" {$checked}/></td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="page">
+                        <p>{$audios['html']}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-offset-6 large-6 columns">
+                        <div class="expand button" id="addaudio" taskid="{$taskid}" href="{:U('emomp3/Index/addaudiototask')}">添加音频</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        //点击添加音频
+        $('#addaudio').click(function(){
+            //获取已选择的音频编号
+            var audioids = [];
+            var selections = $('[id="selectaudio"]:checked');
+            for(var i=0;i<selections.length;i++) {
+                var audioid = $(selections.get(i)).attr('audioid');
+                audioids.push(audioid);
+            }
+            // 检查音频编号
+            if(audioids.length == 0) {
+                ui.error("请至少选择1个音频");
+                return;
+            }
+            //将音频列表发送到服务器
+            var url = $(this).attr('href');
+            var taskid = $(this).attr('taskid');
+            $.post(url, {audioids:audioids, taskid: taskid}, function(a,b,c){
+                handleajax(a);
+            });
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer" />
