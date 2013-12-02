@@ -2,7 +2,7 @@
 
 class CpAssignModel extends Model {
     protected $tableName = "cpassign";
-    protected $fields = array('id','uid','assignids', 'uids', 'ctime');
+    protected $fields = array('id','uid','taskid', 'uids', 'ctime');
 
     public function get($id) {
         // limit parameter type
@@ -49,15 +49,15 @@ class CpAssignModel extends Model {
         return $result;
     }
 
-    public function put($uid, $assignids, $uids) {
+    public function put($uid, $taskid, $uids) {
         // limit parameter type
         $uid = intval($uid);
-        $assignids = $this->intarray($uid);
+        $taskid = intval($taskid);
         $uids = $this->intarray($uids);
         // encode row
         $row = array();
         $row['uid'] = $uid;
-        $row['assignids'] = $assignids;
+        $row['taskid'] = $taskid;
         $row['uids'] = $uids;
         $row['ctime'] = time();
         $row = $this->encode($row);
@@ -108,6 +108,19 @@ class CpAssignModel extends Model {
         foreach($list as $e) {
             $result[] = $this->decode($e);
         }
+        return $result;
+    }
+
+    public function getlistbytaskid($taskid) {
+        // limit parameter type
+        $taskid = intval($taskid);
+        // read db
+        $map = array();
+        $map['taskid'] = $taskid;
+        $result = $this->where($map)->order('ctime desc')->select();
+        // decode result
+        $result = $this->decodelist($result);
+        // return result
         return $result;
     }
 }

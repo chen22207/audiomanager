@@ -31,6 +31,19 @@ class CpAssignLinkModel extends Model {
         return $result;
     }
 
+    public function getlistbytaskid($taskid) {
+        // limit parameter type
+        $taskid = intval($taskid);
+        // read db
+        $map = array();
+        $map['taskid'] = $taskid;
+        $result = $this->where($map)->order('ctime desc')->select();
+        // decode reuslt
+        $result = $this->decodelist($result);
+        // return result
+        return $result;
+    }
+
     public function getlistbyaudioid($audioid) {
         // limit parameter type
         $audioid = intval($audioid);

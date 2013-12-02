@@ -68,4 +68,14 @@ class AdminAction extends Action
             return;
         }
     }
+
+    public function viewtask() {
+        // get parameter
+        $taskid = intval($_REQUEST['taskid']);
+        // read database
+        $task = D('CpTask')->get($taskid);
+        // display
+        $this->assign('task', $task);
+        $this->display();
+    }
 }

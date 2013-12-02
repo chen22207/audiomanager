@@ -1,3 +1,6 @@
+.foundation {
+    font-size: 14px;
+}
 .foundation meta.foundation-mq-small{
   font-family: "only screen and (min-width: 768px)";
   width: 768px; }.foundation meta.foundation-mq-medium{
