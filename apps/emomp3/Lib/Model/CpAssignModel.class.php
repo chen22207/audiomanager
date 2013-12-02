@@ -92,13 +92,11 @@ class CpAssignModel extends Model {
     }
 
     private function encode($row) {
-        $row['assignids'] = json_encode($row['assignids']);
         $row['uids'] = json_encode($row['uids']);
         return $row;
     }
 
     private function decode($row) {
-        $row['assignids'] = json_decode($row['assignids'], 'json');
         $row['uids'] = json_decode($row['uids'], 'json');
         return $row;
     }
@@ -121,6 +119,14 @@ class CpAssignModel extends Model {
         // decode result
         $result = $this->decodelist($result);
         // return result
+        return $result;
+    }
+
+    public function intarray($a) {
+        $result = array();
+        foreach($a as $e) {
+            $result[] = intval($e);
+        }
         return $result;
     }
 }

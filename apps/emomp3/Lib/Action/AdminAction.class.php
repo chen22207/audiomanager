@@ -78,4 +78,67 @@ class AdminAction extends Action
         $this->assign('task', $task);
         $this->display();
     }
+
+    public function assigntask() {
+        //第一步：选择要分配的任务
+        // read db
+        $tasks = D('CpTask')->getpage();
+        // clear session
+        session_start();
+        unset($_SESSION['cpassign']);
+        // display
+        $this->assign('tasks', $tasks);
+        $this->display();
+    }
+
+    public function assigntaskstep2() {
+        //第二步：指定人员
+        // get taskid from parameter
+        $taskid = intval($_REQUEST['taskid']);
+        // read session
+        $uids = $_SESSION['cpassign']['uids'];
+        // read users
+        $users = D('User')->findpage();
+        // display
+        $this->assign('uids', $uids);
+        $this->assign('users', $users);
+        $this->assign('taskid', $taskid);
+        $this->display();
+    }
+
+    public function addassignuser() {
+        //get parameter
+        $uids = $_REQUEST['uids'];
+        if(!$uids) {
+            $uids = array();
+        }
+        //merge uids
+        $uids2 = $_SESSION['cpassign']['uids'];
+        if($uids2) {
+            $uids = array_merge($uids, $uids2);
+        }
+        $uids = array_unique($uids);
+        //write session
+        session_start();
+        $_SESSION['cpassign']['uids'] = $uids;
+        //return success
+        $this->jsonsuccess('添加成功', 'refresh');
+    }
+
+    public function commitassigntask() {
+        // get parameters
+        $taskid = intval($_REQUEST['taskid']);
+        $uid = $this->mid;
+        // read assign target users
+        $uids = $_SESSION['cpassign']['uids'];
+        // add assignment to database
+        $assignid = D('CpAssign')->put($uid, $taskid, $uids);
+        // add assignment link to database
+        foreach($uids as $e) {
+            D('CpAssignLink')->put($assignid, $taskid, $e);
+        }
+        // return success
+        $this->jsonsuccess('分配成功', U('emomp3/Admin/listassign'));
+        return;
+    }
 }

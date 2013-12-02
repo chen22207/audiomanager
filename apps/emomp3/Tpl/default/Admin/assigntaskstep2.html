@@ -1,0 +1,108 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns"><h2>分配任务 - 第二步指定人员</h2></div>
+                    <hr/>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <p>已选择{:count($uids)}个用户</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <table style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>UID</th>
+                            <th>学号</th>
+                            <th>用户名</th>
+                            <th>班级</th>
+                            <th>选择</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <volist name="users['data']" id="e">
+                                <php>
+                                    $user = D('User')->getuserinfo($e['uid']);
+                                    if(in_array($e['uid'], $uids)) {
+                                        $checked = 'checked';
+                                    }
+                                </php>
+                                <tr>
+                                    <td>{$e['uid']}</td>
+                                    <td>{$e['studentid']}</td>
+                                    <td>{$user['uname']}</td>
+                                    <td>{$e['classname']}</td>
+                                    <td><input type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/></td>
+                                </tr>
+                            </volist>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="page">
+                            {$page['html']}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-3 columns">
+                        <div class="expand secondary button" id="selectall">全选</div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="expand secondary button" id="selectnone">全不选</div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="expand button" id="addselected" href="{:U('emomp3/Admin/addassignuser')}">添加选定人员</div>
+                    </div>
+                    <div class="large-3 columns">
+                        <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">立即分配</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        //全选
+        $('#selectall').click(function() {
+            $('[name="selectuser"]').prop('checked', true);
+        });
+        //全不选
+        $('#selectnone').click(function(){
+            $('[name="selectuser"]').prop('checked', false);
+        })
+        //添加指定人员
+        $('#addselected').click(function(){
+            //get uids
+            var users = $('[name="selectuser"]:checked');
+            var uids = [];
+            for(var i=0;i<users.length;i++){
+                var uid = $(users.get(i)).attr('uid');
+                uids.push(uid);
+            }
+            //commit to server
+            var url = $(this).attr('href');
+            $.post(url, {uids:uids}, function(a,b,c){
+                handleajax(a);
+            });
+        });
+        //立即分配
+        $('#assignnow').click(function(){
+            //commit to server
+            var url = $(this).attr('href');
+            $.post(url, {}, function(a,b,c){
+                handleajax(a);
+            })
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer" />
