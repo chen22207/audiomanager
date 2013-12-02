@@ -1,0 +1,72 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+        <div class="foundation" id="listaudio">
+            <div class="row">
+                <h2>音频列表</h2>
+                <hr/>
+            </div>
+            <div class="row">
+                <table>
+                    <thead>
+                    <tr>
+                        <th width="200">用户</th>
+                        <th width="200">上传时间</th>
+                        <th width="100">文件编号</th>
+                        <th width="200">操作</th>
+                        <th width="100">试听</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="page['data']" id="e">
+                        <php>
+                            $user = D('User')->getuserinfo($e['uid']);
+                        </php>
+                        <tr>
+                            <td>{$user['uname']}</td>
+                            <td>{$e['ctime']|friendlydate}</td>
+                            <td>{$e['attachid']}</td>
+                            <td>
+                                <a href="{:U('emomp3/Admin/viewaudio', array('audioid'=>$e['id']))}">查看</a>|
+                                <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
+                            </td>
+                            <td>
+                                <php>
+                                    $audiourl = getattachurlbyattachid($e['attachid']);
+                                </php>
+                                <a class="play" audioid="{$e['id']}">播放</a>
+                                <audio src="{$audiourl}" id="audio{$e['id']}"/>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="page">
+                        {$page['html']}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    // 点击播放按钮时
+    $(document).on('click', '.play', function(){
+        // get audioid
+        var audioid = $(this).attr('audioid');
+        // play the audio
+        $('#audio' + audioid).get(0).play();
+    })
+</script>
+
+<include file="__THEME__/public_footer" />

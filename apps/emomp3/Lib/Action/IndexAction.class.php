@@ -61,6 +61,7 @@ class IndexAction extends Action
         $this->assign('page_view', $page_view);
         $this->display();
     }
+
     public function listtask() {
         $page = D('CpTask')->getpage($this->mid);
         $this->assign('page', $page);

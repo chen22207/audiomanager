@@ -2,7 +2,7 @@
 
 class CpAssignLinkModel extends Model {
     protected $tableName = "cpassignlink";
-    protected $fields = array('id','assignid','taskid','uid','ctime','answer','finishtime');
+    protected $fields = array('id','assignid','taskid','audioid','uid','ctime','answer','finishtime');
 
     public function get($id) {
         $map = array();
@@ -25,6 +25,18 @@ class CpAssignLinkModel extends Model {
         if($uid) {
             $map['uid'] = $uid;
         }
+        // read db
+        $result = $this->where($map)->order('ctime desc')->select();
+        $result = $this->decodelist($result);
+        return $result;
+    }
+
+    public function getlistbyaudioid($audioid) {
+        // limit parameter type
+        $audioid = intval($audioid);
+        // generate query condition
+        $map = array();
+        $map['audioid'] = $audioid;
         // read db
         $result = $this->where($map)->order('ctime desc')->select();
         $result = $this->decodelist($result);
@@ -86,8 +98,8 @@ class CpAssignLinkModel extends Model {
 
     public function decodelist($list) {
         $result = array();
-        foreach($result as $e) {
-            $result[] = $this->decode($list);
+        foreach($list as $e) {
+            $result[] = $this->decode($e);
         }
         return $result;
     }
