@@ -37,4 +37,35 @@ class AdminAction extends Action
         $this->assign('audiolength', $audioinfo['playtime_string']);
         $this->display();
     }
+
+    public function listtask() {
+        // read db
+        $tasks = D('CpTask')->getpage();
+        // display
+        $this->assign('tasks', $tasks);
+        $this->display();
+    }
+
+    public function deletetask() {
+        // get parameters
+        $taskid = intval($_REQUEST['taskid']);
+        // ensure task not assigned
+        $map = array();
+        $map['taskid'] = $taskid;
+        $count = D('CpAssignLink')->where($map)->count();
+        if($count) {
+            $this->jsonerror("删除失败，因为任务已经分配");
+            return;
+        }
+        // write db
+        $result = D('CpTask')->remove($taskid);
+        // return result
+        if($result) {
+            $this->jsonsuccess('删除成功', 'refresh');
+            return;
+        } else {
+            $this->jsonerror('删除失败，写入数据库错误');
+            return;
+        }
+    }
 }

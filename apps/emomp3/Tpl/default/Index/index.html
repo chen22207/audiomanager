@@ -9,32 +9,61 @@
                 <hr/>
             </div>
             <div class="row">
-                <a href="{:U('emomp3/Index/upload')}" class="button large">
-                    上传音频
-                </a>
-                <a href="{:U('emomp3/Index/listaudio')}" class="button large">
-                    音频列表
-                </a>
-                <a href="{:U('emomp3/Index/dotask')}" class="button large">
-                    做任务
-                </a>
-                <a href="{:U('emomp3/Index/listtask')}" class="button large">
-                    查看已发布任务
-                </a>
-                <a href="{:U('emomp3/Index/newtaskstep1')}" class="button large">
-                    发布任务
-                </a>
+                <div class="large-3 columns">
+                    <a href="{:U('emomp3/Index/upload')}" class="expand button large">
+                        上传音频
+                    </a>
+                </div>
+                <div class="large-3 columns">
+                    <a href="{:U('emomp3/Index/listaudio')}" class="expand button large">
+                        音频列表
+                    </a>
+                </div>
+                <div class="large-3 columns">
+                    <a href="{:U('emomp3/Index/dotask')}" class="expand button large">
+                        做任务
+                    </a>
+                </div>
+                <div class="large-3 columns">
+                    <a href="{:U('emomp3/Index/listtask')}" class="expand button large">
+                        查看已发布任务
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <a href="{:U('emomp3/Index/newtaskstep1')}" class="expand button large">
+                        发布任务
+                    </a>
+                </div>
+                <div class="large-9 columns">
+                    &nbsp;
+                </div>
             </div>
             <if condition="$uid==1">
                 <div class="row">
                     <div class="large-12 columns">
-                        <p>管理员特权</p>
+                        <h2>管理员特权</h2>
+                        <hr/>
                     </div>
                 </div>
                 <div class="row">
-                    <a href="{:U('emomp3/Admin/listaudio')}" class="button large">
-                        音频管理
-                    </a>
+                    <div class="large-3 columns">
+                        <a href="{:U('emomp3/Admin/listaudio')}" class="expand large button">
+                            音频管理
+                        </a>
+                    </div>
+                    <div class="large-3 columns">
+                        <a href="{:U('emomp3/Admin/listtask')}" class="expand large button">
+                            任务管理
+                        </a>
+                    </div>
+                    <div class="large-3 columns">
+
+                    </div>
+                    <div class="large-3 columns">
+
+                    </div>
                 </div>
             </if>
         </div>
