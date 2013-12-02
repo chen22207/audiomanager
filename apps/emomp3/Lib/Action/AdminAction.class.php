@@ -134,8 +134,11 @@ class AdminAction extends Action
         // add assignment to database
         $assignid = D('CpAssign')->put($uid, $taskid, $uids);
         // add assignment link to database
+        $task = D('CpTask')->get($taskid);
         foreach($uids as $e) {
-            D('CpAssignLink')->put($assignid, $taskid, $e);
+            foreach($task['audioids'] as $audioid) {
+                D('CpAssignLink')->put($assignid, $taskid, $audioid, $e);
+            }
         }
         // return success
         $this->jsonsuccess('分配成功', U('emomp3/Admin/listassign'));

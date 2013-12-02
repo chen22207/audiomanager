@@ -66,7 +66,7 @@
                 <!--提交按钮-->
                 <div class="row">
                     <div class="large-centered large-3 columns">
-                        <div class="button expand" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}">
+                        <div class="button expand" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}" audioid="{$audioid}">
                             提交
                         </div>
                     </div>
@@ -102,6 +102,7 @@
         // post to server
         var url = $(this).attr('href');
         var taskid = $(this).attr('taskid');
+        var audioid = $(this).attr('audioid');
         $.post(url, {taskid:taskid, answer:answers}, function(a,b,c){
             handleajax(a);
         });

@@ -98,6 +98,7 @@ class IndexAction extends Action
         }
         // display
         $this->assign('task', $task);
+        $this->assign('audioid', $assignlink['audioid']);
         $this->assign('finishtaskcount', $finishtaskcount);
         $this->assign('remaintaskcount', $remaintaskcount);
         $this->display();
@@ -138,10 +139,12 @@ class IndexAction extends Action
     public function commitanswer() {
         // get answer
         $taskid = intval($_REQUEST['taskid']);
+        $audioid = intval($_REQUEST['audioid']);
         $answer = $_REQUEST['answer'];
         // check assign exist
         $map = array();
         $map['taskid'] = $taskid;
+        $map['audioid'] = $audioid;
         $map['uid'] = $this->mid;
         $map['finishtime'] = 0;
         $count = D('CpAssignLink')->where($map)->count();
@@ -172,6 +175,7 @@ class IndexAction extends Action
         // write db
         $map = array();
         $map['taskid'] = $taskid;
+        $map['audioid'] = $audioid;
         $map['uid'] = $this->mid;
         $map['finishtime'] = 0;
         $row = array();

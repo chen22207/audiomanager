@@ -74,7 +74,7 @@ class CpAssignLinkModel extends Model {
         return $result;
     }
 
-    public function put($assignid, $taskid, $uid) {
+    public function put($assignid, $taskid, $audioid, $uid) {
         // limit parameter type
         $assignid = intval($assignid);
         $taskid = intval($taskid);
@@ -83,6 +83,7 @@ class CpAssignLinkModel extends Model {
         $row = array();
         $row['assignid'] = $assignid;
         $row['taskid'] = $taskid;
+        $row['audioid'] = $audioid;
         $row['uid'] = $uid;
         $row['ctime'] = time();
         $row['answer'] = '';
