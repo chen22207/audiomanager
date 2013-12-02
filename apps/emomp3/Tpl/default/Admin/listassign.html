@@ -1,0 +1,59 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns"><h2>查看已经分配的任务</h2></div>
+                    <hr/>
+                </div>
+                <div class="row">
+                    <table style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>分配编号</th>
+                            <th>分配时间</th>
+                            <th>参与人数</th>
+                            <th>完成人数</th>
+                            <th>进度</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <volist name="assignlist['data']" id="e">
+                                <php>
+                                    $user = D('User')->getuserinfo($e['id']);
+                                    $joincount = D('CpAssign')->getjoincount($e['id']);
+                                    $finishcount = D('CpAssign')->getfinishcount($e['id']);
+                                    $percent = round($finishcount / $joincount * 100) . '%';
+                                </php>
+                                <tr>
+                                    <td>{$e['id']}</td>
+                                    <td>{$e['ctime']|friendlydate}</td>
+                                    <td>{$joincount}</td>
+                                    <td>{$finishcount}</td>
+                                    <td>
+                                        <div class="fdprogress">
+                                            <span class="meter" style="width: {$percent};"></span>
+                                        </div>
+                                    </td>
+                                    <td><a href="{:U('emomp3/Admin/viewassign', array('assignid'=>$e['id']))}">查看</a></td>
+                                </tr>
+                            </volist>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <div class="page">
+                            {$assignlist['html']}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />

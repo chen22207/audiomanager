@@ -144,4 +144,12 @@ class AdminAction extends Action
         $this->jsonsuccess('分配成功', U('emomp3/Admin/listassign'));
         return;
     }
+
+    public function listassign() {
+        // read db
+        $assignlist = D('CpAssign')->getpage();
+        // display
+        $this->assign('assignlist', $assignlist);
+        $this->display();
+    }
 }
