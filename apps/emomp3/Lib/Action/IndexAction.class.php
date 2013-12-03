@@ -221,5 +221,6 @@ class IndexAction extends Action
         $assignlinks = D('CpAssignLink')->where($map)->order('finishtime desc')->findpage();
         // display
         $this->assign('assignlinks', $assignlinks);
+        $this->display();
     }
 }
