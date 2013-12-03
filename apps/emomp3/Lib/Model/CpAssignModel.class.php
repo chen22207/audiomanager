@@ -91,6 +91,25 @@ class CpAssignModel extends Model {
         return $totalcount - $unfinished;
     }
 
+    public function getprogress($assignid) {
+        //get total count
+        $map = array();
+        $map['assignid'] = $assignid;
+        $totalcount = D('CpAssignLink')->where($map)->count();
+        //get finish count
+        $map = array();
+        $map['assignid'] = $assignid;
+        $map['finishtime'] = 0;
+        $unfinishcount = D('CpAssignLink')->where($map)->count();
+        $finishcount = $totalcount- $unfinishcount;
+        //return progress
+        if($totalcount == $finishcount) {
+            return 1;
+        } else {
+            return $finishcount / $totalcount;
+        }
+    }
+
     private function encode($row) {
         $row['uids'] = json_encode($row['uids']);
         return $row;

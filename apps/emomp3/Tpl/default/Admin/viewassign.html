@@ -55,7 +55,8 @@
                     <div class="large-9 columns">
                         <div class="fdprogress">
                             <php>
-                                $percent = round($joincount / $finishcount * 100).'%';
+                                $progress = D('CpAssign')->getprogress($assign['id']);
+                                $percent = round($progress * 100).'%';
                             </php>
                             <span class="meter" style="width: {$percent}%;"></span>
                         </div>
@@ -101,7 +102,7 @@
                                     </if>
                                     <!--完成时间-->
                                     <if condition="$e['finishtime']">
-                                        <td>{$finishtime|friendlydate}</td>
+                                        <td>{$e['finishtime']|friendlydate}</td>
                                     </if>
                                     <if condition="!$e['finishtime']">
                                         <td>-</td>

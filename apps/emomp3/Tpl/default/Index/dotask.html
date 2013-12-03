@@ -103,7 +103,7 @@
         var url = $(this).attr('href');
         var taskid = $(this).attr('taskid');
         var audioid = $(this).attr('audioid');
-        $.post(url, {taskid:taskid, answer:answers}, function(a,b,c){
+        $.post(url, {taskid:taskid, audioid:audioid, answer:answers}, function(a,b,c){
             handleajax(a);
         });
     });
