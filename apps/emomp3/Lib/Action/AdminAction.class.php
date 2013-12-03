@@ -162,4 +162,19 @@ class AdminAction extends Action
         $this->assign('assign', $assign);
         $this->display();
     }
+
+    public function search() {
+        $this->display();
+    }
+
+    public function dosearch() {
+        //get keyword
+        $keyword = strval($_REQUEST['keyword']);
+        //read db
+        $result = D('CpSearch')->getpage($keyword);
+        //display
+        $this->assign('result', $result);
+        $this->assign('keyword', $keyword);
+        $this->display();
+    }
 }

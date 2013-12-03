@@ -1,0 +1,52 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <h1 class="center">音频搜索</h1>
+                        <hr/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-10 columns">
+                        <input type="text" id="keyword"/>
+                    </div>
+                    <div class="large-2 columns">
+                        <div class="postfix button" id="search2" href="{:U('emomp3/Admin/dosearch')}">搜索</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $('#search2').click(function(){
+            //get keyword
+            var keyword = $('#keyword').val();
+            keyword = encodeURIComponent(keyword);
+            //generate url
+            var url = $(this).attr('href');
+            url += '&keyword=';
+            url += keyword;
+            //jump to search result
+            location.href = url;
+        });
+    })
+</script>
+
+<include file="__THEME__/public_footer" />

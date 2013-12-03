@@ -24,6 +24,15 @@ class CpSearchModel extends Model {
         return $this->where($map)->order('count desc')->select();
     }
 
+    public function getlistbyaudioid($audioid) {
+        //limit parameter type
+        $audioid = intval($audioid);
+        //read db
+        $map = array();
+        $map['audioid'] = $audioid;
+        return $this->where($map)->order('count desc')->select();
+    }
+
     public function getpage($keyword) {
         // limit paramter type
         $keyword = strval($keyword);

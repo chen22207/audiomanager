@@ -1,0 +1,76 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+            <div class="foundation">
+                <div class="row">
+                    <div class="large-12 columns">
+                        <h2>音频搜索 - {$keyword}</h2>
+                        <hr/>
+                    </div>
+                </div>
+                <if condition="!$result['data']">
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <p class="center">暂无任何结果</p>
+                        </div>
+                    </div>
+                </if>
+                <if condition="$result">
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <p class="right">共找到{$result['count']}个结果</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <table style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th>音频</th>
+                                    <th>包含关键字</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="result['data']" id="e">
+                                    <tr>
+                                        <td><a href="{:U('emomp3/Admin/viewaudio', array('audioid'=>$e['audioid']))}">{$e['audioid']}</a></td>
+                                        <!--获取包含关键字-->
+                                        <td>
+                                            <php>
+                                                $keywords = D('CpSearch')->getlistbyaudioid($e['audioid']);
+                                            </php>
+                                            <volist name="keywords" id="e">
+                                                <php>
+                                                    if(strstr($keyword, $e['keyword']) != false) {
+                                                        $color = 'success';
+                                                    } else {
+                                                        $color = 'secondary';
+                                                    }
+                                                </php>
+                                                <span class="round label {$color}">
+                                                    {$e['keyword']}
+                                                </span>&nbsp;
+                                            </volist>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </if>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <p class="page">
+                            {$result['html']}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />
