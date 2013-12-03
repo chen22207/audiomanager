@@ -152,4 +152,14 @@ class AdminAction extends Action
         $this->assign('assignlist', $assignlist);
         $this->display();
     }
+
+    public function viewassign() {
+        // get parameter
+        $assignid = intval($_REQUEST['assignid']);
+        // read db
+        $assign = D('CpAssign')->get($assignid);
+        // display
+        $this->assign('assign', $assign);
+        $this->display();
+    }
 }

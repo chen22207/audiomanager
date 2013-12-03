@@ -44,6 +44,19 @@ class CpAssignLinkModel extends Model {
         return $result;
     }
 
+    public function getpagebyassignid($assignid) {
+        // limit parameter type
+        $assignid = intval($assignid);
+        // read db
+        $map = array();
+        $map['assignid'] = $assignid;
+        $result = $this->where($map)->findpage();
+        // decode result
+        $result['data'] = $this->decodelist($result['data']);
+        // return result
+        return $result;
+    }
+
     public function getlistbyaudioid($audioid) {
         // limit parameter type
         $audioid = intval($audioid);
