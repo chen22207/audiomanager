@@ -212,4 +212,14 @@ class IndexAction extends Action
         $this->assign('task', $task);
         $this->display();
     }
+
+    public function listfinishedtask() {
+        //read db
+        $map = array();
+        $map['finishtime'] = array('NEQ', 0);
+        $map['uid'] = $this->mid;
+        $assignlinks = D('CpAssignLink')->where($map)->order('finishtime desc')->findpage();
+        // display
+        $this->assign('assignlinks', $assignlinks);
+    }
 }

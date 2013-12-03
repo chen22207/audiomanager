@@ -43,7 +43,7 @@
                                             </php>
                                             <volist name="keywords" id="e">
                                                 <php>
-                                                    if(strstr($keyword, $e['keyword']) != false) {
+                                                    if(strstr($e['keyword'],$keyword)) {
                                                         $color = 'success';
                                                     } else {
                                                         $color = 'secondary';
