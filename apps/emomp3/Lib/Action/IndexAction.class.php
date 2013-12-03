@@ -223,4 +223,21 @@ class IndexAction extends Action
         $this->assign('assignlinks', $assignlinks);
         $this->display();
     }
+
+    public function viewfinishedtask() {
+        //get parameter
+        $linkid = intval($_REQUEST['linkid']);
+        //read db
+        $assignlink = D('CpAssignLink')->get($linkid);
+        $task = D('CpTask')->get($assignlink['taskid']);
+        $audio = D('CpAudio')->get($assignlink['audioid']);
+        //get audio url
+        $audiourl = getattachurlbyattachid($audio['attachid']);
+        //display
+        $this->assign('assignlink', $assignlink);
+        $this->assign('task', $task);
+        $this->assign('audio', $audio);
+        $this->assign('audiourl', $audiourl);
+        $this->display();
+    }
 }
