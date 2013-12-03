@@ -26,7 +26,8 @@
                                     $user = D('User')->getuserinfo($e['id']);
                                     $joincount = D('CpAssign')->getjoincount($e['id']);
                                     $finishcount = D('CpAssign')->getfinishcount($e['id']);
-                                    $percent = round($finishcount / $joincount * 100) . '%';
+                                    $progress = D('CpAssign')->getprogress($e['id']);
+                                    $percent = round($progress * 100) . '%';
                                 </php>
                                 <tr>
                                     <td>{$e['id']}</td>
