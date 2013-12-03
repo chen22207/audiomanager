@@ -172,7 +172,7 @@ class IndexAction extends Action
                 }
             }
         }
-        // write db
+        // write answer to db
         $map = array();
         $map['taskid'] = $taskid;
         $map['audioid'] = $audioid;
@@ -196,7 +196,7 @@ class IndexAction extends Action
         foreach($task['problems'] as $i=>$e) {
             if($e['type'] == 'tag') {
                 foreach($answer[$i] as $e2) {
-                    D('CpSearch')->put($e2, $task['audioid']);
+                    D('CpSearch')->put($e2, $audioid);
                 }
             }
         }
