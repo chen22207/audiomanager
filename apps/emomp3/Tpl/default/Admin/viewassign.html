@@ -28,24 +28,36 @@
                 </div>
                 <div class="row">
                     <div class="large-3 columns">
-                        <p class="right">参与人数：</p>
+                        <p class="right">参与人：</p>
                     </div>
                     <div class="large-9 columns">
-                        <php>
-                            $joincount = D('CpAssign')->getjoincount($assign['id']);
-                        </php>
-                        <p>{$joincount}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-3 columns">
-                        <p class="right">完成人数：</p>
-                    </div>
-                    <div class="large-9 columns">
-                        <php>
-                            $finishcount = D('CpAssign')->getfinishcount($assign['id']);
-                        </php>
-                        <p>{$finishcount}</p>
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <td>学号</td>
+                                <td>姓名</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <php>
+                                $uids = $assign['uids'];
+                            </php>
+                            <if condition="!$uids">
+                                <tr>
+                                    <td colspan="2">没有指定任何人！</td>
+                                </tr>
+                            </if>
+                            <volist name="uids" id="e">
+                                <php>
+                                    $user = D('User')->getuserinfo($e);
+                                </php>
+                                <tr>
+                                    <td>{$user['studentid']}</td>
+                                    <td>{$user['uname']}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="row">
@@ -115,9 +127,9 @@
                 </div>
                 <div class="row">
                     <div class="large-12 columns">
-                        <div class="page">
+                        <p class="page">
                             {$assignlinks['html']}
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
