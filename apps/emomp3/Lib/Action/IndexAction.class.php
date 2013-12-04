@@ -217,6 +217,9 @@ class IndexAction extends Action
                 foreach($answer[$i] as $e2) {
                     D('CpSearch')->put($e2, $audioid);
                 }
+            } else if($e['type'] == 'choice') {
+                $answername = $e['choices'][$answer[$i]];
+                D('CpSearch')->put($answername, $audioid);
             }
         }
         // return result
