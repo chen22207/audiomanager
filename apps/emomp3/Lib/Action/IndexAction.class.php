@@ -208,7 +208,7 @@ class IndexAction extends Action
         $map = array();
         $map['uid'] = $this->mid;
         $row = array();
-        $row['finishcount'] = $this->user['finishcount'] + 1;
+        $row['taskcount'] = $this->user['taskcount'] + 1;
         D('User')->where($map)->save($row);
         D('User')->cleancache($this->mid);
         // add search index
