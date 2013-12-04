@@ -33,7 +33,12 @@
                                 <php>
                                     $user = D('User')->getuserinfo($e['uid']);
                                     if(in_array($e['uid'], $uids)) {
-                                    $checked = 'checked';
+                                        $checked = 'checked';
+                                        $unselectedstyle = "display:none";
+                                        $selectedstyle = "";
+                                    } else {
+                                        $unselectedstyle = "";
+                                        $selectedstyle = "display:none";
                                     }
                                 </php>
                                 <tr>
@@ -43,8 +48,8 @@
                                     <td>{$e['classname']}</td>
                                     <td>
                                         <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
-                                        <span class="round secondary label unselected" style="display: none;">未选择</span>
-                                        <span class="round success label selected" style="display: none;">已选择</span>
+                                        <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
+                                        <span class="round success label selected" style="{$selectedstyle}">已选择</span>
                                     </td>
                                 </tr>
                             </volist>
@@ -103,9 +108,6 @@
             });
         })
         //高亮已经选择的用户
-        $(function(){
-            $('#userlist tr [name="selectuser"').trigger('change');
-        })
         $('#userlist tr [name="selectuser"]').change(function(e){
             var checked = $(this).is(':checked');
             var row = $(this).parent().parent();
@@ -119,6 +121,18 @@
                 unselected.show();
             }
         });
+        //同步显示已选用户的数量
+        var usercount = parseInt($('#usercount').text());
+        $('#userlist tr [name="selectuser"]').change(function(e){
+            var checked = $(this).is(':checked');
+            if(checked) {
+                usercount++;
+            } else {
+                usercount--;
+            }
+            // 显示已选用户的数量
+            $('#usercount').text(usercount);
+        })
         //拖动选择
         var mousedown = false;
         var targetstate = false;
