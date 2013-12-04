@@ -1746,6 +1746,16 @@ function getAttachUrlByAttachId($attachid){
 	}
 }
 
+function getAttachPathByAttachId($attachid) {
+    // read attach from databsae
+    $attach = D('Attach')->getAttachById($attachid);
+    if(!$attach) {
+        return false;
+    }
+    // return result;
+    return SITE_PATH.'/data/upload/'.$attach['save_path'].$attach['save_name'];
+}
+
 function getSiteLogo($logoid = ''){
     if(empty($logoid)){
         $logoid = $GLOBALS['ts']['site']['site_logo'];

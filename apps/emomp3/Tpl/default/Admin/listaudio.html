@@ -16,6 +16,7 @@
                         <th>用户</th>
                         <th>上传时间</th>
                         <th>文件编号</th>
+                        <th>音频指纹</th>
                         <th>操作</th>
                         <th>试听</th>
                     </tr>
@@ -30,8 +31,10 @@
                             <td>{$user['uname']}</td>
                             <td>{$e['ctime']|friendlydate}</td>
                             <td>{$e['attachid']}</td>
+                            <td>{$e['md5']}</td>
                             <td>
-                                <a href="{:U('emomp3/Admin/viewaudio', array('audioid'=>$e['id']))}">查看</a>|
+                                <a href="{:U('emomp3/Admin/viewaudio', array('audioid'=>$e['id']))}">查看</a>
+                                &nbsp;
                                 <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
                             </td>
                             <td>

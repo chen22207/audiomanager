@@ -2,7 +2,7 @@
 
 class CpAudioModel extends Model {
     protected $tableName = "cpaudio";
-    protected $fields = array('id','uid','attachid','ctime');
+    protected $fields = array('id','uid','attachid','ctime','md5');
 
     public function get($id) {
         $map = array();
@@ -12,9 +12,14 @@ class CpAudioModel extends Model {
     }
 
     public function put($uid, $attachid) {
+        //calc md5
+        $path = getAttachPathByAttachId($attachid);
+        $md5 = md5_file($path);
+        //write db
         $row['uid'] = $uid;
         $row['attachid'] = $attachid;
         $row['ctime'] = time();
+        $row['md5'] = $md5;
         return $this->add($row);
     }
 

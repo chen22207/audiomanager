@@ -9,25 +9,55 @@
                 <hr/>
             </div>
             <div class="row">
-                <p>音频编号：{$audio['id']}</p>
+                <div class="large-3 columns">
+                    <p class="right">音频编号：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$audio['id']}</p>
+                </div>
             </div>
             <div class="row">
-                <p>上传时间：{$audio['ctime']|friendlydate}</p>
+                <div class="large-3 columns">
+                    <p class="right">上传时间：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$audio['ctime']|friendlydate}</p>
+                </div>
             </div>
             <div class="row">
-                <p>音频长度：{$audiolength}</p>
+                <div class="large-3 columns">
+                    <p class="right">音频长度：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$audiolength}</p>
+                </div>
             </div>
             <div class="row">
-                <div class="large-12 columns">
-                    <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
+                <div class="large-3 columns">
+                    <p class="right">音频指纹：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$audio['md5']}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <p class="right">
+                        试听：
+                    </p>
+                </div>
+                <div class="large-9 columns">
+                    <p>
+                        <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
+                    </p>
                 </div>
             </div>
             <!--显示众测结果-->
             <div class="row">
-                <p>测试结果：</p>
-            </div>
-            <div class="row">
-                <div class="large-12 columns">
+                <div class="large-3 columns">
+                    <p class="right">测试结果：</p>
+                </div>
+                <div class="large-9 columns">
                     <table style="width: 100%;">
                         <thead>
                         <tr>
@@ -41,6 +71,13 @@
                         <php>
                             $assignlinks = D('CpAssignLink')->getlistbyaudioid($audio['id']);
                         </php>
+                        <if condition="!$assignlinks">
+                            <tr>
+                                <td colspan="4">
+                                    <p class="center">该音频尚无测试结果</p>
+                                </td>
+                            </tr>
+                        </if>
                         <volist name="assignlinks" id="e">
                             <if condition="$e['finishtime']">
                                 <php>
@@ -55,24 +92,24 @@
                                     $answers = $assignlink['answer'];
                                     $problemanswer = '';
                                     foreach($problems as $i=>$problem) {
-                                        if($problem['type'] == 'choice') {
-                                            $problemtype = '选择题';
-                                            $answer = $answers[$i];
-                                            $answer = $problem['choices'][$answer];
-                                            $keywords[] = $answer;
-                                        } else if($problem['type'] == 'tag') {
-                                            $problemtype = '标签题';
-                                            $answer = $answers[$i];
-                                            foreach($answer as $a) {
-                                                $keywords[] = $a;
-                                            }
-                                            $answer = implode('，', $answer);
-                                        }
-                                        $problemanswer .= '<p>';
-                                        $problemanswer .= $problem['problem'];
-                                        $problemanswer .= '【'.$problemtype.'】';
-                                        $problemanswer .= '该用户选了：'.$answer;
-                                        $problemanswer .= '</p>';
+                                    if($problem['type'] == 'choice') {
+                                    $problemtype = '选择题';
+                                    $answer = $answers[$i];
+                                    $answer = $problem['choices'][$answer];
+                                    $keywords[] = $answer;
+                                    } else if($problem['type'] == 'tag') {
+                                    $problemtype = '标签题';
+                                    $answer = $answers[$i];
+                                    foreach($answer as $a) {
+                                    $keywords[] = $a;
+                                    }
+                                    $answer = implode('，', $answer);
+                                    }
+                                    $problemanswer .= '<p>';
+                                    $problemanswer .= $problem['problem'];
+                                    $problemanswer .= '【'.$problemtype.'】';
+                                    $problemanswer .= '该用户选了：'.$answer;
+                                    $problemanswer .= '</p>';
                                     }
                                 </php>
                                 <tr>
@@ -102,10 +139,10 @@
                 $totalcount = count($keywords);
             </php>
             <div class="row">
-                <p>答案统计：</p>
-            </div>
-            <div class="row">
-                <div class="large-12 columns">
+                <div class="large-3 columns">
+                    <p class="right">答案统计：</p>
+                </div>
+                <div class="large-9 columns">
                     <table style="width: 100%;">
                         <thead>
                         <tr>
@@ -116,6 +153,13 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <if condition="!$counter">
+                            <tr>
+                                <td colspan="4">
+                                    <p class="center">该音频尚无测试结果</p>
+                                </td>
+                            </tr>
+                        </if>
                         <volist name="counter" id="e">
                             <tr>
                                 <td>{$key}</td>
