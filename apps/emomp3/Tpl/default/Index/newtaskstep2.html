@@ -39,11 +39,13 @@
                             <volist name="audios['data']" id="e">
                                 <php>
                                     $checked = "";
+                                    $trclass = "";
                                     if(in_array($e['id'], $task['audioids'])) {
                                         $checked = 'checked="1"';
+                                        $trclass = 'highlight';
                                     }
                                 </php>
-                                <tr>
+                                <tr class="{$trclass}">
                                     <td>{$e['id']}</td>
                                     <td>{$e['ctime']|friendlydate}</td>
                                     <td>
@@ -100,6 +102,17 @@
             }
             //显示音频数量
             $('#audiocount').text(audiocount);
+        })
+        //高亮已选音频
+        $('[id="selectaudio"]').change(function(){
+            var checked = $(this).is(':checked');
+            //类名
+            var classname = "";
+            if(checked) {
+                classname = "highlight";
+            }
+            //设置背景颜色
+            $(this).parent().parent().attr("class", classname);
         })
         //将音频的勾选状态发送到服务器
         function saveselection(callback) {

@@ -2758,3 +2758,6 @@
     max-width: 500px; }.foundation .f-dropdown.large{
     max-width: 800px; }
 
+.foundation table tr.highlight {
+    background-color: #8fe26c;
+}
