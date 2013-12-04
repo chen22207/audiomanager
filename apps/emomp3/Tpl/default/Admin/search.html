@@ -45,6 +45,10 @@
         $('#search2').click(function(){
             //get keyword
             var keyword = $('#keyword').val();
+            if(keyword == "") {
+                ui.error("请输入需要搜索的关键字");
+                return;
+            }
             keyword = encodeURIComponent(keyword);
             //generate url
             var url = $(this).attr('href');
