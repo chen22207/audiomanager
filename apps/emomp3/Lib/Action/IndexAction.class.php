@@ -240,4 +240,10 @@ class IndexAction extends Action
         $this->assign('audiourl', $audiourl);
         $this->display();
     }
+
+    public function profile() {
+        //display
+        $this->assign('user', $this->user);
+        $this->display();
+    }
 }

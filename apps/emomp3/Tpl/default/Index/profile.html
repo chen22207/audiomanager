@@ -1,0 +1,40 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+        <div class="foundation">
+            <div class="row">
+                <div class="large-12 columns"><h2>个人信息</h2></div>
+                <hr/>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <p class="right">学号：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$user['studentid']}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <p class="right">姓名：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$user['uname']}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-3 columns">
+                    <p class="right">完成任务总数：</p>
+                </div>
+                <div class="large-9 columns">
+                    <p>{$user['taskcount']}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<include file="__THEME__/public_footer" />
