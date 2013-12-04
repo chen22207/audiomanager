@@ -12,7 +12,7 @@
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
-                        <p>请选择包含的音频</p>
+                        <p>请选择包含的音频（拖动鼠标可以多选）</p>
                     </div>
                     <div class="large-6 columns">
                         <php>
@@ -40,16 +40,23 @@
                                 <php>
                                     $checked = "";
                                     $trclass = "";
+                                    $selectedstyle = "";
+                                    $unselectedstyle = "";
                                     if(in_array($e['id'], $task['audioids'])) {
                                         $checked = 'checked="1"';
                                         $trclass = 'highlight';
+                                        $unselectedstyle = "display: none;";
+                                    } else {
+                                        $selectedstyle = "display: none;";
                                     }
                                 </php>
-                                <tr class="{$trclass}">
+                                <tr>
                                     <td>{$e['id']}</td>
                                     <td>{$e['ctime']|friendlydate}</td>
                                     <td>
-                                        <input type="checkbox" id="selectaudio" audioid="{$e['id']}" {$checked}/>
+                                        <input class="hide" type="checkbox" id="selectaudio" audioid="{$e['id']}" {$checked}/>
+                                        <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
+                                        <span class="round success label selected" style="{$selectedstyle}">已选择</span>
                                     </td>
                                 </tr>
                             </volist>
@@ -105,15 +112,20 @@
         })
         //高亮已选音频
         $('[id="selectaudio"]').change(function(){
-            var checked = $(this).is(':checked');
-            //类名
-            var classname = "";
-            if(checked) {
-                classname = "highlight";
-            }
-            //设置背景颜色
-            $(this).parent().parent().attr("class", classname);
+            setuprowhighlight(this);
         })
+        function setuprowhighlight(checkbox) {
+            var checked = $(checkbox).is(':checked');
+            //显示选择状态
+            var tr = $(checkbox).parent().parent();
+            if(checked) {
+                $('.unselected', tr).hide();
+                $('.selected', tr).show();
+            } else {
+                $('.selected', tr).hide();
+                $('.unselected', tr).show();
+            }
+        }
         //将音频的勾选状态发送到服务器
         function saveselection(callback) {
             //获取音频的勾选状态
@@ -135,6 +147,34 @@
             $.post(url, {taskid:taskid,add:add,remove:remove}, function(a,b,c){
                 callback(a,b,c);
             });
+        }
+        //拖动鼠标可多选
+        var mousedown = false;
+        $('#audiolist tr').mousedown(function(e){
+            mousedown = true;
+            changeselectionstate(this);
+        });
+        $('#audiolist tr').mouseup(function(e){
+            mousedown = false;
+        })
+        $('#audiolist tr').mousemove(function(e){
+            e.preventDefault();
+        })
+        $('#audiolist tr').mouseenter(function(e){
+            if(mousedown) {
+                changeselectionstate(this);
+            }
+        })
+        function changeselectionstate(element) {
+            var checkbox = $('input', element);
+            var checked = checkbox.is(':checked');
+            if(checked) {
+                checkbox.prop('checked', false);
+                checkbox.trigger('change');
+            } else {
+                checkbox.prop('checked', true);
+                checkbox.trigger('change');
+            }
         }
     })
 </script>
