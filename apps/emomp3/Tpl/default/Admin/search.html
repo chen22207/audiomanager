@@ -35,6 +35,13 @@
 
 <script>
     $(function(){
+        //在输入框中按下回车
+        $('.foundation #keyword').keydown(function(e){
+            if(e.keyCode == 13) {
+                $('#search2').trigger('click');
+            }
+        })
+        //点击搜索按钮
         $('#search2').click(function(){
             //get keyword
             var keyword = $('#keyword').val();
