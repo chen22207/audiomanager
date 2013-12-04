@@ -21,6 +21,13 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <if condition="!$page['data']">
+                        <tr>
+                            <td colspan="6">
+                                <p class="center">您还没有上传音频，<a href="{:U('emomp3/Index/upload')}">点击上传</a></p>
+                            </td>
+                        </tr>
+                    </if>
                     <volist name="page['data']" id="e">
                         <php>
                             $user = D('User')->getuserinfo($e['uid']);

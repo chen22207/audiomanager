@@ -42,7 +42,7 @@ class IndexAction extends Action
 
     public function listaudio() {
         // read db
-        $page = D('CpAudio')->getpage();
+        $page = D('CpAudio')->getpage($this->mid);
         // display
         $this->assign('page', $page);
         $this->display();
