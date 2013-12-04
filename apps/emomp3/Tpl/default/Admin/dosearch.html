@@ -49,9 +49,11 @@
                                                         $color = 'secondary';
                                                     }
                                                 </php>
-                                                <span class="round label {$color}">
+                                                <if condition="$e['keyword']">
+                                                    <span class="round label {$color}">
                                                     {$e['keyword']}
                                                 </span>&nbsp;
+                                                </if>
                                             </volist>
                                         </td>
                                     </tr>
