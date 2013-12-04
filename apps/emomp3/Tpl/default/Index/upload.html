@@ -9,7 +9,7 @@
                 <hr/>
             </div>
 
-            <form action="{:U('emomp3/Index/doupload')}" method="post" enctype="multipart/form-data">
+            <form action="{:U('emomp3/Index/doupload')}" onsubmit="return false;" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="large-12 columns">
                         <input type="file"  name="files[]" accept="audio/*" multiple>
