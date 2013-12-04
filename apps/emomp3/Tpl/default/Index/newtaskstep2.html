@@ -65,8 +65,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="page">
-                        <p>{$audios['html']}</p>
+                    <div class="large-12 columns">
+                        <div class="page">
+                            <p>{$audios['html']}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -159,11 +161,13 @@
             // change state
             setselectionstate(this, targetstate);
         });
-        $('#audiolist tr').mouseup(function(e){
+        $(document).mouseup(function(e){
             mousedown = false;
         })
-        $('#audiolist tr').mousemove(function(e){
-            e.preventDefault();
+        $(document).mousemove(function(e){
+            if(mousedown) {
+                e.preventDefault();
+            }
         })
         $('#audiolist tr').mouseenter(function(e){
             if(mousedown) {
