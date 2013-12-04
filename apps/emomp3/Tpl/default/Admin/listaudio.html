@@ -9,14 +9,15 @@
                 <hr/>
             </div>
             <div class="row">
-                <table>
+                <table style="width: 100%;">
                     <thead>
                     <tr>
-                        <th width="200">用户</th>
-                        <th width="200">上传时间</th>
-                        <th width="100">文件编号</th>
-                        <th width="200">操作</th>
-                        <th width="100">试听</th>
+                        <th>音频编号</th>
+                        <th>用户</th>
+                        <th>上传时间</th>
+                        <th>文件编号</th>
+                        <th>操作</th>
+                        <th>试听</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -25,6 +26,7 @@
                             $user = D('User')->getuserinfo($e['uid']);
                         </php>
                         <tr>
+                            <td>{$e['id']}</td>
                             <td>{$user['uname']}</td>
                             <td>{$e['ctime']|friendlydate}</td>
                             <td>{$e['attachid']}</td>
