@@ -14,8 +14,6 @@
                         <tr>
                             <th>分配编号</th>
                             <th>分配时间</th>
-                            <th>参与人数</th>
-                            <th>完成人数</th>
                             <th>进度</th>
                             <th>操作</th>
                         </tr>
@@ -32,8 +30,6 @@
                                 <tr>
                                     <td>{$e['id']}</td>
                                     <td>{$e['ctime']|friendlydate}</td>
-                                    <td>{$joincount}</td>
-                                    <td>{$finishcount}</td>
                                     <td>
                                         <div class="fdprogress">
                                             <span class="meter" style="width: {$percent};"></span>
