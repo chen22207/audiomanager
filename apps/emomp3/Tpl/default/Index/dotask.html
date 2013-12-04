@@ -55,7 +55,10 @@
                 <volist name="task['problems']" id="e">
                     <php>$problemid = $key;</php>
                     <div class="row">
-                        <div class="large-12 columns">
+                        <div class="large-2 columns">
+                            <p class="right">{$problemid+1}.</p>
+                        </div>
+                        <div class="large-10 columns">
                             <if condition="$e['type']=='choice'">
                                 <p>{$e['problem']|htmlspecialchars}</p>
                                 <volist name="e['choices']" id="e">
