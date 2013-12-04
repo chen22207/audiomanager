@@ -148,9 +148,7 @@ class IndexAction extends Action
             $audioids[] = $e;
         }
         //remove audios
-        foreach($remove as $e) {
-            $audioids = array_diff($audioids, $remove);
-        }
+        $audioids = array_intersect($audioids, array_diff($audioids, $remove));
         //write audios to task
         D('CpTask')->settaskaudios($taskid, $audioids);
         //return success
