@@ -150,9 +150,14 @@
         }
         //拖动鼠标可多选
         var mousedown = false;
+        var targetstate = false;
         $('#audiolist tr').mousedown(function(e){
             mousedown = true;
-            changeselectionstate(this);
+            // get selected state
+            var checked = $('#selectaudio', this).is(':checked');
+            targetstate = !checked;
+            // change state
+            setselectionstate(this, targetstate);
         });
         $('#audiolist tr').mouseup(function(e){
             mousedown = false;
@@ -162,17 +167,25 @@
         })
         $('#audiolist tr').mouseenter(function(e){
             if(mousedown) {
-                changeselectionstate(this);
+                setselectionstate(this, targetstate);
+            }
+        });
+        $('#audiolist tr').mouseleave(function(e){
+            if(mousedown) {
+                setselectionstate(this, targetstate);
             }
         })
-        function changeselectionstate(element) {
+        function setselectionstate(element, state) {
             var checkbox = $('input', element);
             var checked = checkbox.is(':checked');
-            if(checked) {
-                checkbox.prop('checked', false);
+            if(checked == state) {
+                return;
+            }
+            if(state) {
+                checkbox.prop('checked', true);
                 checkbox.trigger('change');
             } else {
-                checkbox.prop('checked', true);
+                checkbox.prop('checked', false);
                 checkbox.trigger('change');
             }
         }
