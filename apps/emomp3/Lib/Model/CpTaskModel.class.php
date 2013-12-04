@@ -70,8 +70,12 @@ class CpTaskModel extends Model {
     }
 
     public function encode($row) {
-        $row['problems'] = json_encode($row['problems']);
-        $row['audioids'] = json_encode($row['audioids']);
+        if(isset($row['problems'])) {
+            $row['problems'] = json_encode($row['problems']);
+        }
+        if(isset($row['audioids'])) {
+            $row['audioids'] = json_encode($row['audioids']);
+        }
         return $row;
     }
 
@@ -109,5 +113,17 @@ class CpTaskModel extends Model {
         $map = array();
         $map['id'] = $taskid;
         return $this->where($map)->save($task);
+    }
+
+    public function settaskaudios($taskid, $audioids) {
+        // unique audioids
+        $audioids = array_unique($audioids);
+        // write database
+        $map = array();
+        $map['id'] = $taskid;
+        $row = array();
+        $row['audioids'] = $audioids;
+        $row = $this->encode($row);
+        return $this->where($map)->save($row);
     }
 }

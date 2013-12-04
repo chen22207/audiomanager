@@ -136,6 +136,30 @@ class IndexAction extends Action
         $this->jsonsuccess("添加成功，可以继续添加", "refresh");
     }
 
+    public function settaskaudio() {
+        $taskid = intval($_REQUEST['taskid']);
+        $add = $_REQUEST['add'];
+        $remove = $_REQUEST['remove'];
+        //read audios in task
+        $task = D('CpTask')->get($taskid);
+        $audioids = $task['audioids'];
+        //add audios
+        foreach($add as $e) {
+            $audioids[] = $e;
+        }
+        //remove audios
+        foreach($remove as $e) {
+            $pos = array_search($e, $audioids);
+            if($pos !== false) {
+                $audioids = array_splice($audioids, $pos, 1);
+            }
+        }
+        //write audios to task
+        D('CpTask')->settaskaudios($taskid, $audioids);
+        //return success
+        return $this->jsonsuccess("发布成功", U('emomp3/Index/listtask'));
+    }
+
     public function commitanswer() {
         // get answer
         $taskid = intval($_REQUEST['taskid']);
