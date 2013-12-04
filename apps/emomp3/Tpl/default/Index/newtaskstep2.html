@@ -12,13 +12,13 @@
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
-                        <p>音频列表</p>
+                        <p>请选择包含的音频</p>
                     </div>
                     <div class="large-6 columns">
                         <php>
                             $task = D('CpTask')->get($taskid);
                         </php>
-                        <p class="right">已添加{:count($task['audioids'])}个音频</p>
+                        <p class="right">已添加<span id="audiocount">{:count($task['audioids'])}</span>个音频</p>
                     </div>
                 </div>
                 <div class="row">
@@ -74,6 +74,7 @@
 
 <script>
     $(function(){
+        var audiocount = parseInt($('#audiocount').text());
         //翻页时将音频的勾选状态发送到服务器
         $('.page a').click(function(){
             var url = $(this).attr('href');
@@ -87,6 +88,18 @@
             saveselection(function(a,b,c){
                 handleajax(a);
             });
+        })
+        //勾选/取消勾选音频时，增加或减少已添加的音频数量
+        $('[id="selectaudio"]').change(function(){
+            //增加或减少音频数量
+            var checked = $(this).is(':checked');
+            if(checked) {
+                audiocount++;
+            } else {
+                audiocount--;
+            }
+            //显示音频数量
+            $('#audiocount').text(audiocount);
         })
         //将音频的勾选状态发送到服务器
         function saveselection(callback) {
