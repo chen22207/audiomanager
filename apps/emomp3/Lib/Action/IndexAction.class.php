@@ -154,7 +154,7 @@ class IndexAction extends Action
         //write audios to task
         D('CpTask')->settaskaudios($taskid, $audioids);
         //return success
-        return $this->jsonsuccess("发布成功", U('emomp3/Index/listtask'));
+        return $this->jsonsuccess("操作成功", U('emomp3/Index/viewtask', array('taskid'=>$taskid)));
     }
 
     public function commitanswer() {
