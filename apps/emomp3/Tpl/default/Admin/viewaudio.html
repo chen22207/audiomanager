@@ -70,6 +70,8 @@
                         <tbody>
                         <php>
                             $assignlinks = D('CpAssignLink')->getlistbyaudioid($audio['id']);
+                            //用于答案统计
+                            $keywords = array();
                         </php>
                         <if condition="!$assignlinks">
                             <tr>
@@ -83,8 +85,6 @@
                                 <php>
                                     //获取被测者用户名
                                     $user = D('User')->getuserinfo($e['uid']);
-                                    //用于答案统计
-                                    $keywords = array();
                                     //获取问题和答案
                                     $task = D('CpTask')->get($e['taskid']);
                                     $problems = $task['problems'];
@@ -92,24 +92,24 @@
                                     $answers = $assignlink['answer'];
                                     $problemanswer = '';
                                     foreach($problems as $i=>$problem) {
-                                    if($problem['type'] == 'choice') {
-                                    $problemtype = '选择题';
-                                    $answer = $answers[$i];
-                                    $answer = $problem['choices'][$answer];
-                                    $keywords[] = $answer;
-                                    } else if($problem['type'] == 'tag') {
-                                    $problemtype = '标签题';
-                                    $answer = $answers[$i];
-                                    foreach($answer as $a) {
-                                    $keywords[] = $a;
-                                    }
-                                    $answer = implode('，', $answer);
-                                    }
-                                    $problemanswer .= '<p>';
-                                    $problemanswer .= $problem['problem'];
-                                    $problemanswer .= '【'.$problemtype.'】';
-                                    $problemanswer .= '该用户选了：'.$answer;
-                                    $problemanswer .= '</p>';
+                                        if($problem['type'] == 'choice') {
+                                            $problemtype = '选择题';
+                                            $answer = $answers[$i];
+                                            $answer = $problem['choices'][$answer];
+                                            $keywords[] = $answer;
+                                        } else if($problem['type'] == 'tag') {
+                                            $problemtype = '标签题';
+                                            $answer = $answers[$i];
+                                            foreach($answer as $a) {
+                                                $keywords[] = $a;
+                                            }
+                                            $answer = implode('，', $answer);
+                                        }
+                                        $problemanswer .= '<p>';
+                                        $problemanswer .= $problem['problem'];
+                                        $problemanswer .= '【'.$problemtype.'】';
+                                        $problemanswer .= '该用户选了：'.$answer;
+                                        $problemanswer .= '</p>';
                                     }
                                 </php>
                                 <tr>
