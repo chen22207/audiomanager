@@ -106,23 +106,32 @@ class AdminAction extends Action
         $this->display();
     }
 
-    public function addassignuser() {
+    public function setassignuser() {
         //get parameter
-        $uids = $_REQUEST['uids'];
+        $add = $_REQUEST['add'];
+        $remove = $_REQUEST['remove'];
+        if(!is_array($add)) {
+            $add = array();
+        }
+        if(!is_array($remove)) {
+            $remove = array();
+        }
+        //add uids
+        $uids = $_SESSION['cpassign']['uids'];
         if(!$uids) {
             $uids = array();
         }
-        //merge uids
-        $uids2 = $_SESSION['cpassign']['uids'];
-        if($uids2) {
-            $uids = array_merge($uids, $uids2);
+        foreach($add as $e) {
+            $uids[] = $e;
         }
+        //remove uids
+        $uids = array_intersect($uids, array_diff($uids, $remove));
+        //unique uids
         $uids = array_unique($uids);
         //write session
-        session_start();
         $_SESSION['cpassign']['uids'] = $uids;
         //return success
-        $this->jsonsuccess('添加成功', 'refresh');
+        $this->jsonsuccess("操作成功");
     }
 
     public function commitassigntask() {

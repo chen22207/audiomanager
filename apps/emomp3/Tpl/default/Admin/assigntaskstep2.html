@@ -9,27 +9,31 @@
                     <hr/>
                 </div>
                 <div class="row">
-                    <div class="large-12 columns">
-                        <p>已选择{:count($uids)}个用户</p>
+                    <div class="large-6 columns">
+                        请指定人员（拖动鼠标可以批量选择）
+                    </div>
+                    <div class="large-6 columns">
+                        <p class="right">已选择<span id="usercount">{:count($uids)}</span>个用户</p>
                     </div>
                 </div>
                 <div class="row">
-                    <table style="width: 100%;">
-                        <thead>
-                        <tr>
-                            <th>UID</th>
-                            <th>学号</th>
-                            <th>用户名</th>
-                            <th>班级</th>
-                            <th>选择</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="large-12 columns">
+                        <table style="width: 100%;" id="userlist">
+                            <thead>
+                            <tr>
+                                <th>UID</th>
+                                <th>学号</th>
+                                <th>用户名</th>
+                                <th>班级</th>
+                                <th>选择</th>
+                            </tr>
+                            </thead>
+                            <tbody>
                             <volist name="users['data']" id="e">
                                 <php>
                                     $user = D('User')->getuserinfo($e['uid']);
                                     if(in_array($e['uid'], $uids)) {
-                                        $checked = 'checked';
+                                    $checked = 'checked';
                                     }
                                 </php>
                                 <tr>
@@ -37,17 +41,22 @@
                                     <td>{$e['studentid']}</td>
                                     <td>{$user['uname']}</td>
                                     <td>{$e['classname']}</td>
-                                    <td><input type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/></td>
+                                    <td>
+                                        <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
+                                        <span class="round secondary label unselected" style="display: none;">未选择</span>
+                                        <span class="round success label selected" style="display: none;">已选择</span>
+                                    </td>
                                 </tr>
                             </volist>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="large-12 columns">
-                        <div class="page">
+                        <p class="page">
                             {$users['html']}
-                        </div>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
@@ -58,7 +67,9 @@
                         <div class="expand secondary button" id="selectnone">全不选</div>
                     </div>
                     <div class="large-3 columns">
-                        <div class="expand button" id="addselected" href="{:U('emomp3/Admin/addassignuser')}">添加选定人员</div>
+                        <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
+                            添加选定人员
+                        </div>
                     </div>
                     <div class="large-3 columns">
                         <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">立即分配</div>
@@ -74,34 +85,107 @@
         //全选
         $('#selectall').click(function() {
             $('[name="selectuser"]').prop('checked', true);
+            $('[name="selectuser"]').trigger('change');
         });
         //全不选
         $('#selectnone').click(function(){
             $('[name="selectuser"]').prop('checked', false);
+            $('[name="selectuser"]').trigger('change');
         })
-        //添加指定人员
-        $('#addselected').click(function(){
-            //get uids
-            var users = $('[name="selectuser"]:checked');
-            var uids = [];
-            for(var i=0;i<users.length;i++){
-                var uid = $(users.get(i)).attr('uid');
-                uids.push(uid);
-            }
-            //commit to server
-            var url = $(this).attr('href');
-            $.post(url, {uids:uids}, function(a,b,c){
-                handleajax(a);
-            });
-        });
         //立即分配
         $('#assignnow').click(function(){
-            //commit to server
-            var url = $(this).attr('href');
-            $.post(url, {}, function(a,b,c){
-                handleajax(a);
-            })
+            saveselectionstate(function(){
+                //commit to server
+                var url = $(this).attr('href');
+                $.post(url, {}, function(a,b,c){
+                    handleajax(a);
+                })
+            });
         })
+        //高亮已经选择的用户
+        $(function(){
+            $('#userlist tr [name="selectuser"').trigger('change');
+        })
+        $('#userlist tr [name="selectuser"]').change(function(e){
+            var checked = $(this).is(':checked');
+            var row = $(this).parent().parent();
+            var selected = $('.selected', row);
+            var unselected = $('.unselected', row);
+            if(checked) {
+                unselected.hide();
+                selected.show();
+            } else {
+                selected.hide();
+                unselected.show();
+            }
+        });
+        //拖动选择
+        var mousedown = false;
+        var targetstate = false;
+        $('#userlist tr').mousedown(function(e){
+            mousedown = true;
+            // get current row selected
+            var checkbox = $('[name="selectuser"]', this);
+            var checked = checkbox.is(':checked');
+            targetstate = !checked;
+            // switch select state
+            setcheckboxstate(checkbox, targetstate);
+        });
+        $(document).mouseup(function(e) {
+            mousedown = false;
+        });
+        $(document).mousemove(function(e){
+            if(mousedown) {
+                e.preventDefault();
+            }
+        })
+        $('#userlist tr').mouseenter(function(e){
+            if(mousedown) {
+                var checkbox = $('[name="selectuser"]', this);
+                setcheckboxstate(checkbox, targetstate);
+            }
+        })
+        function setcheckboxstate(checkbox, state) {
+            var checked = checkbox.is(':checked');
+            if(checked == state) {
+                return;
+            }
+            checkbox.prop('checked', state);
+            checkbox.trigger('change');
+        }
+        //翻页时保存选定人员
+        $('.page a').click(function(e){
+            e.preventDefault();
+            var url = $(this).attr('href');
+            saveselectionstate(function(a,b,c){
+                if(url != undefined) {
+                    location.href = url;
+                }
+            });
+        });
+        function saveselectionstate(callback) {
+            //get selected/unselected users
+            var selections = $('[name="selectuser"]');
+            var add = [];
+            var remove = [];
+            for(var i=0;i<selections.length;i++) {
+                var e = $(selections.get(i));
+                var checked = e.is(':checked');
+                var uid = e.attr('uid');
+                if(checked) {
+                    add.push(uid);
+                } else {
+                    remove.push(uid);
+                }
+            }
+            console.log(add);
+            console.log(remove);
+            //post to server
+            var url = $('#setassignuser').attr('href');
+            $.post(url, {add:add,remove:remove}, function(a,b,c){
+                callback(a,b,c);
+            })
+        }
     })
 </script>
 
