@@ -126,4 +126,53 @@ class CpTaskModel extends Model {
         $row = $this->encode($row);
         return $this->where($map)->save($row);
     }
+
+    /**
+     * 获取任务完成的进度
+     * 返回结果取值范围是[0, 1]
+     * @param $taskid
+     * @param null $uid
+     */
+    public function getprogress($assignid, $taskid, $uid=null) {
+        // 限制参数类型
+        $assignid = intval($assignid);
+        $taskid = intval($taskid);
+        if($uid) {
+            $uid = intval($uid);
+        }
+        // 获取任务总数和完成数量
+        if($uid) {
+            // 获取任务总数
+            $map = array();
+            $map['assignid'] = $assignid;
+            $map['taskid'] = $taskid;
+            $map['uid'] = $uid;
+            $totalcount = D('CpAssignLink')->where($map)->count();
+            // 获取完成的任务数量
+            $map = array();
+            $map['assignid'] = $assignid;
+            $map['taskid'] = $taskid;
+            $map['uid'] = $uid;
+            $map['finishtime'] = array('NEQ', 0);
+            $finishcount = D('CpAssignLink')->where($map)->count();
+        } else {
+            // 获取任务数量
+            $map = array();
+            $map['assignid'] = $assignid;
+            $map['taskid'] = $taskid;
+            $totalcount = D('CpAssignLink')->where($map)->count();
+            // 获取完成的任务数量
+            $map = array();
+            $map['assignid'] = $assignid;
+            $map['taskid'] = $taskid;
+            $map['finishtime'] = array('NEQ', 0);
+            $finishcount = D('CpAssignLink')->where($map)->count();
+        }
+        // 计算进度百分比
+        if($finishcount == $totalcount) {
+            return 1;
+        } else {
+            return $finishcount / $totalcount;
+        }
+    }
 }

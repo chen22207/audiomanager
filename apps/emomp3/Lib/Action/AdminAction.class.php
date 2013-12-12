@@ -142,6 +142,10 @@ class AdminAction extends Action
         $uids = $_SESSION['cpassign']['uids'];
         // add assignment to database
         $assignid = D('CpAssign')->put($uid, $taskid, $uids);
+        // add uid to taskid mapping
+        foreach($uids as $e) {
+            D('CpUserTask')->put($e, $taskid, $assignid);
+        }
         // add assignment link to database
         $task = D('CpTask')->get($taskid);
         foreach($uids as $e) {

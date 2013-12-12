@@ -79,16 +79,32 @@ class IndexAction extends Action
         }
     }
 
+    public function selecttasktodo() {
+        $uid = $this->mid;
+        // read task list
+        $tasklist = D('CpUserTask')->getpagebyuid($uid);
+        // display page
+        $this->assign('tasklist', $tasklist);
+        $this->display();
+    }
+
     public function dotask() {
+        // get parameters
+        $assignid = intval($_REQUEST['assignid']);
+        $taskid = intval($_REQUEST['taskid']);
         // read finish task count/remain task count
         $map = array();
         $map['uid'] = $this->mid;
+        $map['assignid'] = $assignid;
+        $map['taskid'] = $taskid;
         $map['finishtime'] = 0;
         $finishtaskcount = intval($_SESSION['cptask']['finishcount']);
         $remaintaskcount = D('CpAssignLink')->where($map)->count();
         // get next task
         $map = array();
         $map['uid'] = $this->mid;
+        $map['assignid'] = $assignid;
+        $map['taskid'] = $taskid;
         $map['finishtime'] = 0; // means not finished
         $assignlink = D('CpAssignLink')->where($map)->order('ctime asc')->limit(1)->select();
         $assignlink = $assignlink[0];
