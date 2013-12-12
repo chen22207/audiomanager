@@ -77,7 +77,9 @@
                         </div>
                     </div>
                     <div class="large-3 columns">
-                        <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">立即分配</div>
+                        <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
+                            立即分配
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,9 +101,9 @@
         })
         //立即分配
         $('#assignnow').click(function(){
+            var url = $(this).attr('href');
             saveselectionstate(function(){
                 //commit to server
-                var url = $(this).attr('href');
                 $.post(url, {}, function(a,b,c){
                     handleajax(a);
                 })
