@@ -17,6 +17,16 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="large-10 columns">
+                        <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
+                    </div>
+                    <div class="large-2 columns">
+                        <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
+                            筛选用户
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="large-12 columns">
                         <table style="width: 100%;" id="userlist">
                             <thead>
@@ -202,6 +212,17 @@
                 callback(a,b,c);
             })
         }
+        //筛选用户
+        $('#filterkeyword').keydown(function(e){
+            if(e.keyCode == 13) {
+                $('#filterusers').trigger('click');
+            }
+        })
+        $('#filterusers').click(function(){
+            var url = $(this).attr('href');
+            var filter = $('#filterkeyword').val();
+            location.href = url + "&filter=" + encodeURIComponent(filter);
+        })
     })
 </script>
 

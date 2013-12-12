@@ -95,14 +95,27 @@ class AdminAction extends Action
         //第二步：指定人员
         // get taskid from parameter
         $taskid = intval($_REQUEST['taskid']);
+        $filter = strval($_REQUEST['filter']);
         // read session
         $uids = $_SESSION['cpassign']['uids'];
         // read users
-        $users = D('User')->findpage();
+        if($filter) {
+            $filter2 = '%'.$filter.'%';
+            $map = array();
+            $map['uid'] = array('LIKE', $filter2);
+            $map['studentid'] = array('LIKE', $filter2);
+            $map['uname'] = array('LIKE', $filter2);
+            $map['classname'] = array('LIKE', $filter2);
+            $map['_logic'] = 'or';
+            $users = D('User')->where($map)->findpage();
+        } else {
+            $users = D('User')->findpage();
+        }
         // display
         $this->assign('uids', $uids);
         $this->assign('users', $users);
         $this->assign('taskid', $taskid);
+        $this->assign('filter', $filter);
         $this->display();
     }
 
