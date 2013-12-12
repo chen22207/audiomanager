@@ -2761,3 +2761,9 @@
 .foundation table tr.highlight {
     background-color: #8fe26c;
 }
+
+.foundation .taglist li {
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
