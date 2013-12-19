@@ -1,89 +1,83 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-  <div id="main-wrap">
-    <div class="boxShadow">
-        <div class="foundation">
-            <div class="row">
-                <div class="large-12 columns"><h2>做众测任务</h2></div>
-                <hr/>
-            </div>
-            <if condition="!$task">
-                <div class="row">
-                    <div class="large-12 columns center">
-                        <p>
-                            恭喜，当前没有未完成的任务。
-                        </p>
-                    </div>
-                </div>
-                <div style="height: 200px;">
-                    &nbsp;
-                </div>
-            </if><if condition="$task">
-                <!--任务进度-->
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="right">
-                            今日完成：<span class="round success label">{$finishtaskcount}</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="right">
-                            剩余音频数量：<span class="round success label">{$remaintaskcount}</span>
-                        </p>
-                    </div>
-                </div>
-                <!--音频播放器-->
-                <div class="row">
-                    <h4>请听一段声音</h4>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <php>
-                            $audio = D('CpAudio')->get($task['audioid']);
-                            $audiourl = getattachurlbyattachid($audio['attachid']);
-                        </php>
-                        <audio src="{$audiourl}" controls autoplay style="width: 100%;"></audio>
-                    </div>
-                </div>
-                <!--问题列表-->
-                <div class="row">
-                    <h4>回答下列问题</h4>
-                </div>
-                <volist name="task['problems']" id="e">
-                    <php>$problemid = $key;</php>
-                    <div class="row">
-                        <div class="large-2 columns">
-                            <p class="right">{$problemid+1}.</p>
-                        </div>
-                        <div class="large-10 columns">
-                            <if condition="$e['type']=='choice'">
-                                <p>{$e['problem']|htmlspecialchars}</p>
-                                <volist name="e['choices']" id="e">
-                                    <input type="radio" value="{$key}" name="problem{$problemid}" id="problem{$problemid}">
-                                    {$e|htmlspecialchars}
-                                </volist>
-                            </if><if condition="$e['type']=='tag'">
-                                <p>{$e['problem']|htmlspecialchars}</p>
-                                {:W('CpTagInput', array('name'=>'problem'.$key))}
-                            </if>
-                        </div>
-                    </div>
-                </volist>
-                <!--提交按钮-->
-                <div class="row">
-                    <div class="large-offset-9 large-3 columns">
-                        <div class="button expand" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}" audioid="{$audioid}">
-                            提交
-                        </div>
-                    </div>
-                </div>
-            </if>
-        </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns"><h2>做众测任务</h2></div>
+        <hr/>
     </div>
-  </div>
+    <if condition="!$task">
+        <div class="row">
+            <div class="large-12 columns center">
+                <p>
+                    恭喜，当前没有未完成的任务。
+                </p>
+            </div>
+        </div>
+        <div style="height: 200px;">
+            &nbsp;
+        </div>
+    </if><if condition="$task">
+        <!--任务进度-->
+        <div class="row">
+            <div class="large-12 columns">
+                <p class="right">
+                    今日完成：<span class="round success label">{$finishtaskcount}</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <p class="right">
+                    剩余音频数量：<span class="round success label">{$remaintaskcount}</span>
+                </p>
+            </div>
+        </div>
+        <!--音频播放器-->
+        <div class="row">
+            <h4>请听一段声音</h4>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <php>
+                    $audio = D('CpAudio')->get($task['audioid']);
+                    $audiourl = getattachurlbyattachid($audio['attachid']);
+                </php>
+                <audio src="{$audiourl}" controls autoplay style="width: 100%;"></audio>
+            </div>
+        </div>
+        <!--问题列表-->
+        <div class="row">
+            <h4>回答下列问题</h4>
+        </div>
+        <volist name="task['problems']" id="e">
+            <php>$problemid = $key;</php>
+            <div class="row">
+                <div class="large-2 columns">
+                    <p class="right">{$problemid+1}.</p>
+                </div>
+                <div class="large-10 columns">
+                    <if condition="$e['type']=='choice'">
+                        <p>{$e['problem']|htmlspecialchars}</p>
+                        <volist name="e['choices']" id="e">
+                            <input type="radio" value="{$key}" name="problem{$problemid}" id="problem{$problemid}">
+                            {$e|htmlspecialchars}
+                        </volist>
+                    </if><if condition="$e['type']=='tag'">
+                        <p>{$e['problem']|htmlspecialchars}</p>
+                        {:W('CpTagInput', array('name'=>'problem'.$key))}
+                    </if>
+                </div>
+            </div>
+        </volist>
+        <!--提交按钮-->
+        <div class="row">
+            <div class="large-offset-9 large-3 columns">
+                <div class="button expand" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}" audioid="{$audioid}">
+                    提交
+                </div>
+            </div>
+        </div>
+    </if>
 </div>
 
 <script>

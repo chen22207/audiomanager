@@ -1,54 +1,48 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-    <div id="main-wrap">
-        <div class="boxShadow">
-            <div class="foundation">
-                <div class="row">
-                    <div class="large-12 columns"><h2>任务管理</h2></div>
-                    <hr/>
-                </div>
-                <div class="row">
-                    <table style="width: 100%;">
-                        <thead>
-                        <tr>
-                            <th>任务编号</th>
-                            <th>音频</th>
-                            <th>发布人</th>
-                            <th>发布时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <volist name="tasks['data']" id="e">
-                                <php>
-                                    $user = D('User')->getuserinfo($e['uid']);
-                                </php>
-                                <tr>
-                                    <td>{$e['id']}</td>
-                                    <td>{:count($e['audioids'])}个音频</td>
-                                    <td>{$user['uname']}</td>
-                                    <td>{$e['ctime']|friendlydate}</td>
-                                    <td>
-                                        <a href="{:U('emomp3/Admin/viewtask',array('taskid'=> $e['id']))}">查看</a>
-                                        &nbsp;
-                                        <a class="ajaxhref" confirm="您确实要删除编号为{$e['id']}的任务吗？" href="{:U('emomp3/Admin/deletetask', array('taskid'=>$e['id']))}">
-                                            删除
-                                        </a>
-                                    </td>
-                                </tr>
-                            </volist>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="page">
-                            {$page['html']}
-                        </p>
-                    </div>
-                </div>
-            </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns"><h2>任务管理</h2></div>
+        <hr/>
+    </div>
+    <div class="row">
+        <table style="width: 100%;">
+            <thead>
+            <tr>
+                <th>任务编号</th>
+                <th>音频</th>
+                <th>发布人</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <volist name="tasks['data']" id="e">
+                    <php>
+                        $user = D('User')->getuserinfo($e['uid']);
+                    </php>
+                    <tr>
+                        <td>{$e['id']}</td>
+                        <td>{:count($e['audioids'])}个音频</td>
+                        <td>{$user['uname']}</td>
+                        <td>{$e['ctime']|friendlydate}</td>
+                        <td>
+                            <a href="{:U('emomp3/Admin/viewtask',array('taskid'=> $e['id']))}">查看</a>
+                            &nbsp;
+                            <a class="ajaxhref" confirm="您确实要删除编号为{$e['id']}的任务吗？" href="{:U('emomp3/Admin/deletetask', array('taskid'=>$e['id']))}">
+                                删除
+                            </a>
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p class="page">
+                {$page['html']}
+            </p>
         </div>
     </div>
 </div>

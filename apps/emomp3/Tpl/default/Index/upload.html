@@ -1,55 +1,49 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-  <div id="main-wrap">
-    <div class="boxShadow">
-        <div class="foundation" id="upload">
-            <div class="row">
-                <h2>上传音频</h2>
-                <hr/>
-            </div>
-
-            <form action="{:U('emomp3/Index/doupload')}" onsubmit="return false;" method="post" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="large-12 columns">
-                        <input type="file"  name="files[]" accept="audio/*" multiple>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <table id="filelist" style="width: 100%;">
-                            <thead>
-                            <tr>
-                                <th width="250">文件名</th>
-                                <th width="80" class="text-right">大小</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>请选择文件</td>
-                                <td class="text-right">-</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <div class="fdprogress">
-                            <span class="meter" style="width: 0%;"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="large-12 large-centered columns text-center">
-                        <input class="button large" type="submit" value="开始上传"/>
-                    </div>
-                </div>
-            </form>
-        </div>
+<div class="foundation" id="upload">
+    <div class="row">
+        <h2>上传音频</h2>
+        <hr/>
     </div>
-  </div>
+
+    <form action="{:U('emomp3/Index/doupload')}" onsubmit="return false;" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="large-12 columns">
+                <input type="file"  name="files[]" accept="audio/*" multiple>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <table id="filelist" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th width="250">文件名</th>
+                        <th width="80" class="text-right">大小</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>请选择文件</td>
+                        <td class="text-right">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="fdprogress">
+                    <span class="meter" style="width: 0%;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 large-centered columns text-center">
+                <input class="button large" type="submit" value="开始上传"/>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script>

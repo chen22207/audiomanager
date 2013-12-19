@@ -1,94 +1,88 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-    <div id="main-wrap">
-        <div class="boxShadow">
-            <div class="foundation">
-                <div class="row">
-                    <div class="large-12 columns">
-                        <h2>发布任务 - 第一步设置题目</h2>
-                    </div>
-                    <hr/>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p>题目列表：</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <table style="width: 100%;" id="problemlist">
-                            <thead>
-                            <tr>
-                                <td>题目</td>
-                                <td>类型</td>
-                                <td>选项</td>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p>题目描述：</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <input type="text" name="description" id="description"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p>题目类型：</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <select id="problemtype">
-                            <option value="choice">选择题</option>
-                            <option value="tag">标签题</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="choicepanel">
-                    <div class="row">
-                        <div class="large-12 columns">
-                            <p>填写选项：</p>
-                            <p class="subheader">最多填写6个</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                        <div class="large-2 columns">
-                            <input type="text" id="choice"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-6 columns">
-                        <div class="expand button" id="addproblem">添加题目</div>
-                    </div>
-                    <div class="large-6 columns">
-                        <div class="expand button" id="next" href="{:U('emomp3/Index/donewtaskstep1')}">下一步</div>
-                    </div>
-                </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns">
+            <h2>发布任务 - 第一步设置题目</h2>
+        </div>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p>题目列表：</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <table style="width: 100%;" id="problemlist">
+                <thead>
+                <tr>
+                    <td>题目</td>
+                    <td>类型</td>
+                    <td>选项</td>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p>题目描述：</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <input type="text" name="description" id="description"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p>题目类型：</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <select id="problemtype">
+                <option value="choice">选择题</option>
+                <option value="tag">标签题</option>
+            </select>
+        </div>
+    </div>
+    <div id="choicepanel">
+        <div class="row">
+            <div class="large-12 columns">
+                <p>填写选项：</p>
+                <p class="subheader">最多填写6个</p>
             </div>
+        </div>
+        <div class="row">
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+            <div class="large-2 columns">
+                <input type="text" id="choice"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <div class="expand button" id="addproblem">添加题目</div>
+        </div>
+        <div class="large-6 columns">
+            <div class="expand button" id="next" href="{:U('emomp3/Index/donewtaskstep1')}">下一步</div>
         </div>
     </div>
 </div>

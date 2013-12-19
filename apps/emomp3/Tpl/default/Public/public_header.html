@@ -1,1 +1,30 @@
-<include file="__THEME__/public_header"/>
+<include file="__THEME__/_header" />
+
+<div class="foundation">
+    <nav class="top-bar" data-topbar>
+        <section class="top-bar-section">
+            <ul class="right"><li><a href="{:U('public/Passport/logout')}">退出登录</a></li></ul>
+
+            <ul class="left">
+                <li><a href="{:U('emomp3/Index/index')}">首页</a></li>
+                <li><a href="{:U('emomp3/Index/upload')}">上传音频</a></li>
+                <li><a href="{:U('emomp3/Index/listaudio')}">音频列表</a></li>
+                <li><a href="{:U('emomp3/Index/selecttasktodo')}">做任务</a></li>
+                <li><a href="{:U('emomp3/Index/newtaskstep1')}">发布任务</a></li>
+                <li><a href="{:U('emomp3/Index/listfinishedtask')}">查看已完成任务</a></li>
+                <li><a href="{:U('emomp3/Index/listtask')}">查看已发布任务</a></li>
+                <li><a href="{:U('emomp3/Index/profile')}">个人信息</a></li>
+            </ul>
+        </section>
+    </nav>
+</div>
+
+<div style="display:block; height: 38px;">
+    &nbsp;
+</div>
+
+<script src="__APP__/foundation.js"></script>
+
+<div id="page-wrap">
+<div id="main-wrap">
+<div class="boxShadow">

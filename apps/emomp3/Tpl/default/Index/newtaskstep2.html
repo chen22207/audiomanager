@@ -1,83 +1,77 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-    <div id="main-wrap">
-        <div class="boxShadow">
-            <div class="foundation">
-                <div class="row">
-                    <div class="large-12 columns">
-                        <h2>发布任务 - 第二步添加音频</h2>
-                    </div>
-                    <hr/>
-                </div>
-                <div class="row">
-                    <div class="large-6 columns">
-                        <p>请选择包含的音频（拖动鼠标可以多选）</p>
-                    </div>
-                    <div class="large-6 columns">
-                        <php>
-                            $task = D('CpTask')->get($taskid);
-                        </php>
-                        <p class="right">已添加<span id="audiocount">{:count($task['audioids'])}</span>个音频</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <table style="width: 100%;" id="audiolist">
-                            <thead>
-                            <tr>
-                                <td>音频编号</td>
-                                <td>上传时间</td>
-                                <td>选择</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <php>
-                                $audios = D('CpAudio')->getpage($mid);
-                                $task = D('CpTask')->get($taskid);
-                            </php>
-                            <volist name="audios['data']" id="e">
-                                <php>
-                                    $checked = "";
-                                    $trclass = "";
-                                    $selectedstyle = "";
-                                    $unselectedstyle = "";
-                                    if(in_array($e['id'], $task['audioids'])) {
-                                        $checked = 'checked="1"';
-                                        $trclass = 'highlight';
-                                        $unselectedstyle = "display: none;";
-                                    } else {
-                                        $selectedstyle = "display: none;";
-                                    }
-                                </php>
-                                <tr>
-                                    <td>{$e['id']}</td>
-                                    <td>{$e['ctime']|friendlydate}</td>
-                                    <td>
-                                        <input class="hide" type="checkbox" id="selectaudio" audioid="{$e['id']}" {$checked}/>
-                                        <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
-                                        <span class="round success label selected" style="{$selectedstyle}">已选择</span>
-                                    </td>
-                                </tr>
-                            </volist>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <div class="page">
-                            <p>{$audios['html']}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-offset-6 large-6 columns">
-                        <div class="expand button" id="finish" taskid="{$taskid}" href="{:U('emomp3/Index/settaskaudio')}">
-                            完成
-                        </div>
-                    </div>
-                </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns">
+            <h2>发布任务 - 第二步添加音频</h2>
+        </div>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            <p>请选择包含的音频（拖动鼠标可以多选）</p>
+        </div>
+        <div class="large-6 columns">
+            <php>
+                $task = D('CpTask')->get($taskid);
+            </php>
+            <p class="right">已添加<span id="audiocount">{:count($task['audioids'])}</span>个音频</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <table style="width: 100%;" id="audiolist">
+                <thead>
+                <tr>
+                    <td>音频编号</td>
+                    <td>上传时间</td>
+                    <td>选择</td>
+                </tr>
+                </thead>
+                <tbody>
+                <php>
+                    $audios = D('CpAudio')->getpage($mid);
+                    $task = D('CpTask')->get($taskid);
+                </php>
+                <volist name="audios['data']" id="e">
+                    <php>
+                        $checked = "";
+                        $trclass = "";
+                        $selectedstyle = "";
+                        $unselectedstyle = "";
+                        if(in_array($e['id'], $task['audioids'])) {
+                            $checked = 'checked="1"';
+                            $trclass = 'highlight';
+                            $unselectedstyle = "display: none;";
+                        } else {
+                            $selectedstyle = "display: none;";
+                        }
+                    </php>
+                    <tr>
+                        <td>{$e['id']}</td>
+                        <td>{$e['ctime']|friendlydate}</td>
+                        <td>
+                            <input class="hide" type="checkbox" id="selectaudio" audioid="{$e['id']}" {$checked}/>
+                            <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
+                            <span class="round success label selected" style="{$selectedstyle}">已选择</span>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="page">
+                <p>{$audios['html']}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-offset-6 large-6 columns">
+            <div class="expand button" id="finish" taskid="{$taskid}" href="{:U('emomp3/Index/settaskaudio')}">
+                完成
             </div>
         </div>
     </div>

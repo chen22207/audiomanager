@@ -1,97 +1,98 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-    <div id="main-wrap">
-        <div class="boxShadow">
-            <div class="foundation">
-                <div class="row">
-                    <div class="large-12 columns"><h2>分配任务 - 第二步指定人员</h2></div>
-                    <hr/>
-                </div>
-                <div class="row">
-                    <div class="large-6 columns">
-                        请指定人员（拖动鼠标可以批量选择）
-                    </div>
-                    <div class="large-6 columns">
-                        <p class="right">已选择<span id="usercount">{:count($uids)}</span>个用户</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-10 columns">
-                        <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
-                            筛选用户
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <table style="width: 100%;" id="userlist">
-                            <thead>
-                            <tr>
-                                <th>UID</th>
-                                <th>学号</th>
-                                <th>用户名</th>
-                                <th>班级</th>
-                                <th>选择</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <volist name="users['data']" id="e">
-                                <php>
-                                    $user = D('User')->getuserinfo($e['uid']);
-                                    if(in_array($e['uid'], $uids)) {
-                                        $checked = 'checked';
-                                        $unselectedstyle = "display:none";
-                                        $selectedstyle = "";
-                                    } else {
-                                        $unselectedstyle = "";
-                                        $selectedstyle = "display:none";
-                                    }
-                                </php>
-                                <tr>
-                                    <td>{$e['uid']}</td>
-                                    <td>{$e['studentid']}</td>
-                                    <td>{$user['uname']}</td>
-                                    <td>{$e['classname']}</td>
-                                    <td>
-                                        <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
-                                        <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
-                                        <span class="round success label selected" style="{$selectedstyle}">已选择</span>
-                                    </td>
-                                </tr>
-                            </volist>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="page">
-                            {$users['html']}
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-3 columns">
-                        <div class="expand secondary button" id="selectall">全选</div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="expand secondary button" id="selectnone">全不选</div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
-                            添加选定人员
-                        </div>
-                    </div>
-                    <div class="large-3 columns">
-                        <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
-                            立即分配
-                        </div>
-                    </div>
-                </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns"><h2>分配任务 - 第二步指定人员</h2></div>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
+            请指定人员（拖动鼠标可以批量选择）
+        </div>
+        <div class="large-6 columns">
+            <p class="right">已选择<span id="usercount">{:count($uids)}</span>个用户</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-10 columns">
+            <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
+        </div>
+        <div class="large-2 columns">
+            <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
+                筛选用户
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <table style="width: 100%;" id="userlist">
+                <thead>
+                <tr>
+                    <th>UID</th>
+                    <th>学号</th>
+                    <th>用户名</th>
+                    <th>班级</th>
+                    <th>选择</th>
+                </tr>
+                </thead>
+                <tbody>
+                <if condition="!$users['data']">
+                    <tr>
+                        <td colspan="5">
+                            <p class="center">没有符合条件的用户</p>
+                        </td>
+                    </tr>
+                </if>
+                <volist name="users['data']" id="e">
+                    <php>
+                        $user = D('User')->getuserinfo($e['uid']);
+                        if(in_array($e['uid'], $uids)) {
+                            $checked = 'checked';
+                            $unselectedstyle = "display:none";
+                            $selectedstyle = "";
+                        } else {
+                            $unselectedstyle = "";
+                            $selectedstyle = "display:none";
+                        }
+                    </php>
+                    <tr>
+                        <td>{$e['uid']}</td>
+                        <td>{$e['studentid']}</td>
+                        <td>{$user['uname']}</td>
+                        <td>{$e['classname']}</td>
+                        <td>
+                            <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
+                            <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
+                            <span class="round success label selected" style="{$selectedstyle}">已选择</span>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p class="page">
+                {$users['html']}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-3 columns">
+            <div class="expand secondary button" id="selectall">全选</div>
+        </div>
+        <div class="large-3 columns">
+            <div class="expand secondary button" id="selectnone">全不选</div>
+        </div>
+        <div class="large-3 columns">
+            <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
+                添加选定人员
+            </div>
+        </div>
+        <div class="large-3 columns">
+            <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
+                立即分配
             </div>
         </div>
     </div>

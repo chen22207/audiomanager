@@ -1,54 +1,48 @@
 <include file="../Public/public_header" />
 
-<div id="page-wrap">
-    <div id="main-wrap">
-        <div class="boxShadow">
-            <div class="foundation">
-                <div class="row">
-                    <div class="large-12 columns"><h2>已完成任务列表</h2></div>
-                    <hr/>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <table style="width: 100%;">
-                            <thead>
-                            <tr>
-                                <th>任务编号</th>
-                                <th>音频编号</th>
-                                <th>完成时间</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <volist name="assignlinks['data']" id="e">
-                                <tr>
-                                    <td>{$e['taskid']}</td>
-                                    <td>{$e['audioid']}</td>
-                                    <td>{$e['finishtime']|friendlydate}</td>
-                                    <td>
-                                        <a href="{:U('emomp3/Index/viewfinishedtask',array('linkid'=> $e['id']))}">查看</a>
-                                    </td>
-                                </tr>
-                            </volist>
-                            <if condition="!$assignlinks['data']">
-                                <tr>
-                                    <td colspan="4">
-                                        <p class="center">您还没有完成任何任务</p>
-                                    </td>
-                                </tr>
-                            </if>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="page">
-                            {$assignlinks['html']}
-                        </p>
-                    </div>
-                </div>
-            </div>
+<div class="foundation">
+    <div class="row">
+        <div class="large-12 columns"><h2>已完成任务列表</h2></div>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <table style="width: 100%;">
+                <thead>
+                <tr>
+                    <th>任务编号</th>
+                    <th>音频编号</th>
+                    <th>完成时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="assignlinks['data']" id="e">
+                    <tr>
+                        <td>{$e['taskid']}</td>
+                        <td>{$e['audioid']}</td>
+                        <td>{$e['finishtime']|friendlydate}</td>
+                        <td>
+                            <a href="{:U('emomp3/Index/viewfinishedtask',array('linkid'=> $e['id']))}">查看</a>
+                        </td>
+                    </tr>
+                </volist>
+                <if condition="!$assignlinks['data']">
+                    <tr>
+                        <td colspan="4">
+                            <p class="center">您还没有完成任何任务</p>
+                        </td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p class="page">
+                {$assignlinks['html']}
+            </p>
         </div>
     </div>
 </div>
