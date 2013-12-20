@@ -19,6 +19,13 @@
             </tr>
             </thead>
             <tbody>
+                <if condition="!$tasklist['data']">
+                    <tr>
+                        <td colspan="5">
+                            <p class="center">您目前还没有接收到任何任务～</p>
+                        </td>
+                    </tr>
+                </if>
                 <volist name="tasklist['data']" id="e">
                     <php>
                         $task = D('CpTask')->get($e['taskid']);
