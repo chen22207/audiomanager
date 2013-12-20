@@ -45,6 +45,9 @@
         </div>
         <div class="large-9 columns">
             <p>
+                <php>
+                    $audiourl = getAttachUrlByAttachId($audio['attachid']);
+                </php>
                 <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
             </p>
         </div>
