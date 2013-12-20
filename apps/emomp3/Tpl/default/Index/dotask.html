@@ -39,7 +39,7 @@
         <div class="row">
             <div class="large-12 columns">
                 <php>
-                    $audio = D('CpAudio')->get($task['audioid']);
+                    $audio = D('CpAudio')->get($audioid);
                     $audiourl = getattachurlbyattachid($audio['attachid']);
                 </php>
                 <audio src="{$audiourl}" controls autoplay style="width: 100%;"></audio>
