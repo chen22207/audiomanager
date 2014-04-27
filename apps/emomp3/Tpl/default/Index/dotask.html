@@ -19,15 +19,15 @@
         <!--任务进度-->
         <div class="row">
             <div class="col-sm-12">
-                <p class="text-right">
-                    今日完成：<span class="round success label">{$finishtaskcount}</span>
+                <p class="text-right text-muted">
+                    今日完成：<span class="label label-primary">{$finishtaskcount}</span>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <p class="text-right">
-                    剩余音频数量：<span class="round success label">{$remaintaskcount}</span>
+                <p class="text-right text-muted">
+                    剩余音频数量：<span class="label label-primary">{$remaintaskcount}</span>
                 </p>
             </div>
         </div>
@@ -35,20 +35,22 @@
         <div class="row">
             <div class="col-sm-12">
                 <h4>请听一段声音</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
+
                 <php>
                     $audio = D('CpAudio')->get($audioid);
                     $audiourl = getattachurlbyattachid($audio['attachid']);
                 </php>
-                <audio src="{$audiourl}" controls autoplay style="width: 100%;"></audio>
+                <p>
+                    <audio src="{$audiourl}" controls autoplay style="width: 100%;"></audio>
+                </p>
             </div>
         </div>
+
         <!--问题列表-->
         <div class="row">
-            <h4>回答下列问题</h4>
+            <div class="col-sm-12">
+                <h4>回答下列问题</h4>
+            </div>
         </div>
         <volist name="task['problems']" id="e">
             <php>$problemid = $key;</php>
@@ -58,22 +60,29 @@
                 </div>
                 <div class="col-sm-10">
                     <if condition="$e['type']=='choice'">
-                        <p>{$e['problem']|htmlspecialchars}</p>
+                        <p><strong>{$e['problem']|htmlspecialchars}</strong></p>
                         <volist name="e['choices']" id="e">
-                            <input type="radio" value="{$key}" name="problem{$problemid}" id="problem{$problemid}">
-                            {$e|htmlspecialchars}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" value="{$key}" name="problem{$problemid}" id="problem{$problemid}">
+                                    {$e|htmlspecialchars}
+                                </label>
+                            </div>
                         </volist>
-                    </if><if condition="$e['type']=='tag'">
-                        <p>{$e['problem']|htmlspecialchars}</p>
+                        <br/><br/>
+                    <else/>
+                        <p><strong>{$e['problem']|htmlspecialchars}</strong></p>
                         {:W('CpTagInput', array('name'=>'problem'.$key))}
+                        <br/><br/>
                     </if>
                 </div>
             </div>
         </volist>
         <!--提交按钮-->
         <div class="row">
-            <div class="large-offset-9 col-sm-3">
-                <div class="button expand" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}" audioid="{$audioid}">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3">
+                <div class="btn btn-block btn-primary" id="commitbutton" href="{:U('emomp3/Index/commitanswer')}" taskid="{$task['id']}" audioid="{$audioid}">
                     提交
                 </div>
             </div>

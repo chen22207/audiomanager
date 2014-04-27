@@ -1,64 +1,61 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '选择众测任务';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>选择众测任务</h2>
-        </div>
-        <hr/>
-    </div>
-    <div class="row">
-        <table style="width: 100%;">
-            <thead>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>任务编号</th>
+            <th>音频</th>
+            <th>分配时间</th>
+            <th>进度</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <if condition="!$tasklist['data']">
             <tr>
-                <th>任务编号</th>
-                <th>音频</th>
-                <th>分配时间</th>
-                <th>进度</th>
-                <th>操作</th>
+                <td colspan="5">
+                    <p class="center">您目前还没有接收到任何任务～</p>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-                <if condition="!$tasklist['data']">
-                    <tr>
-                        <td colspan="5">
-                            <p class="center">您目前还没有接收到任何任务～</p>
-                        </td>
-                    </tr>
-                </if>
-                <volist name="tasklist['data']" id="e">
-                    <php>
-                        $task = D('CpTask')->get($e['taskid']);
-                        $audiocount = count($task['audioids']);
-                        $taskid = $task['id'];
-                        $assignid = $e['assignid'];
-                        $percent = D('CpTask')->getprogress($assignid, $taskid, $mid);
-                        $percent = strval($percent * 100).'%';
-                    </php>
-                    <tr>
-                        <td>{$taskid}</td>
-                        <td>{$audiocount}个音频</td>
-                        <td>{$e['ctime']|friendlydate}</td>
-                        <td>
-                            <div class="fdprogress">
-                                <span class="meter" style="width: {$percent};"></span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{:U('emomp3/Index/dotask',array('taskid'=> $taskid, 'assignid'=>$assignid))}">选择</a>
-                        </td>
-                    </tr>
-                </volist>
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <p class="page">
-                {$tasklist['html']}
-            </p>
-        </div>
+        </if>
+        <volist name="tasklist['data']" id="e">
+            <php>
+                $task = D('CpTask')->get($e['taskid']);
+                $audiocount = count($task['audioids']);
+                $taskid = $task['id'];
+                $assignid = $e['assignid'];
+                $percent = D('CpTask')->getprogress($assignid, $taskid, $mid);
+                $percent = strval($percent * 100).'%';
+            </php>
+            <tr>
+                <td>{$taskid}</td>
+                <td>{$audiocount}个音频</td>
+                <td>{$e['ctime']|friendlydate}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: {$percent};">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{:U('emomp3/Index/dotask',array('taskid'=> $taskid, 'assignid'=>$assignid))}">选择</a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p class="page">
+            {$tasklist['html']}
+        </p>
     </div>
 </div>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>

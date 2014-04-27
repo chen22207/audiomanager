@@ -101,6 +101,7 @@ class IndexAction extends Action
         // get parameters
         $assignid = intval($_REQUEST['assignid']);
         $taskid = intval($_REQUEST['taskid']);
+
         // read finish task count/remain task count
         $map = array();
         $map['uid'] = $this->mid;
@@ -109,6 +110,7 @@ class IndexAction extends Action
         $map['finishtime'] = 0;
         $finishtaskcount = intval($_SESSION['cptask']['finishcount']);
         $remaintaskcount = D('CpAssignLink')->where($map)->count();
+
         // get next task
         $map = array();
         $map['uid'] = $this->mid;
@@ -117,10 +119,12 @@ class IndexAction extends Action
         $map['finishtime'] = 0; // means not finished
         $assignlink = D('CpAssignLink')->where($map)->order('ctime asc')->limit(1)->select();
         $assignlink = $assignlink[0];
+
         // read task content
         if($assignlink) {
             $task = D('CpTask')->get($assignlink['taskid']);
         }
+
         // display
         $this->assign('task', $task);
         $this->assign('audioid', $assignlink['audioid']);
