@@ -94,6 +94,7 @@
                 $('#choicepanel').hide();
             }
         });
+
         // 点击添加题目
         var problemlist = [];
         $("#addproblem").click(function(){
@@ -112,12 +113,23 @@
                     return;
                 }
             }
+
+            //添加题目到列表
+            add_problem(problem, type, choices);
+
+            // 清空用户输入
+            $('#description').val("");
+            $('[id="choice"]').val("");
+        });
+
+        function add_problem(problem, type, choices){
             // 添加到题目列表
             if(type=="choice") {
                 problemlist.push({problem: problem, type: type, choices:choices});
             } else {
                 problemlist.push({problem: problem, type: type});
             }
+
             // 显示添加的题目
             var html = "";
             var typename = "";
@@ -139,10 +151,8 @@
                     "<td>"+choicesname+"</td>" +
                     "</tr>";
             $('#problemlist tbody').append(html);
-            // 清空用户输入
-            $('#description').val("");
-            $('[id="choice"]').val("");
-        })
+        }
+
         function getchoices() {
             var choices = $('[id="choice"]');
             var result = [];
@@ -154,13 +164,19 @@
             }
             return result;
         }
+
         // 点击下一步
         $("#next").click(function(){
             var url = $(this).attr('href');
             $.post(url, {problems:problemlist}, function(a,b,c){
                 handleajax(a);
             });
-        })
+        });
+
+        //显示默认题目
+        $(function(){
+            add_problem('请给这段音频添加标签', 'tag', '');
+        });
     })
 </script>
 
