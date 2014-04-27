@@ -10,6 +10,10 @@ class IndexAction extends Action
 		$this->appCssList[] = 'emomp3.css';
 	}
 
+    public function index(){
+        $this->display();
+    }
+
     public function upload() {
         $this->display();
     }

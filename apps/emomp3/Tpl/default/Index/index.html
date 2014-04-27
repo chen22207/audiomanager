@@ -1,89 +1,27 @@
 <include file="../Public/public_header" />
 
-<div class="foundation">
-    <div class="row">
-        <div class="large-12 columns"><h2>首页</h2></div>
-        <hr/>
+<div class="jumbotron">
+    <div class="container">
+        <h2>情感语音管理与服务平台</h2>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/upload')}" class="expand button large">
-                上传音频
-            </a>
-        </div>
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/listaudio')}" class="expand button large">
-                音频列表
-            </a>
-        </div>
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/selecttasktodo')}" class="expand button large">
-                做任务
-            </a>
-        </div>
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/listfinishedtask')}" class="expand button large">
-                查看已完成任务
-            </a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/listtask')}" class="expand button large">
-                查看已发布任务
-            </a>
-        </div>
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/newtaskstep1')}" class="expand button large">
-                发布任务
-            </a>
-        </div>
-        <div class="large-3 columns">
-            <a href="{:U('emomp3/Index/profile')}" class="expand large button">
-                个人信息
-            </a>
-        </div>
-        <div class="large-3 columns">
+</div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <include file="../Public/nav-audio"/>
+            <include file="../Public/nav-task"/>
+            <include file="../Public/nav-user"/>
+        </div>
+
+        <div class="col-sm-9">
+            <h1>{$user.uname}您好！欢迎登录语音管理系统！</h1>
+
+            <if condition="$task_count">
+                <p>您当前有{$task_count}个任务没有完成，<a href="{:U('emomp3/Index/dotask')}">立即去做</a></p>
+            </if>
         </div>
     </div>
-    <if condition="$uid==1">
-        <div class="row">
-            <div class="large-12 columns">
-                <h2>管理员特权</h2>
-                <hr/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-3 columns">
-                <a href="{:U('emomp3/Admin/listaudio')}" class="expand large button">
-                    音频管理
-                </a>
-            </div>
-            <div class="large-3 columns">
-                <a href="{:U('emomp3/Admin/listtask')}" class="expand large button">
-                    任务管理
-                </a>
-            </div>
-            <div class="large-3 columns">
-                <a href="{:U('emomp3/Admin/assigntask')}" class="expand large button">
-                    分配任务
-                </a>
-            </div>
-            <div class="large-3 columns">
-                <a href="{:U('emomp3/Admin/listassign')}" class="expand large button">
-                    查看已分配任务
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-3 columns">
-                <a href="{:U('emomp3/Admin/search')}" class="expand large button">
-                    音频搜索
-                </a>
-            </div>
-        </div>
-    </if>
 </div>
 
 <include file="../Public/public_footer" />

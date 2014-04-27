@@ -1,0 +1,17 @@
+<php>
+    $map = array('uid'=>$this->mid, 'finishtime'=>array('NEQ',0));
+    $task_count = D('CpAssignLink')->where($map)->count();
+</php>
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-success">
+        <h4>任务</h4>
+    </a>
+    <a href="{:U('emomp3/Index/newtaskstep1')}" class="list-group-item">创建任务</a>
+    <a href="{:U('emomp3/Index/dotask')}" class="list-group-item">
+        做任务
+        <if condition="$task_count">
+            <span class="badge badge">{$task_count}</span>
+        </if>
+    </a>
+</div>
