@@ -79,7 +79,9 @@ function handleajax(r) {
 }
 
 $(function(){
-    $(document).on('click', '.ajaxhref', function() {
+    $(document).on('click', '.ajaxhref', function(e) {
+        e.preventDefault();
+
         // show confirm box if necessary
         var confirmmessage = $(this).attr('confirm');
         if(confirmmessage) {
@@ -92,6 +94,7 @@ $(function(){
         $.get(url, {}, function(a,b,c){
             handleajax(a);
         });
+
         return false;
     })
 })
