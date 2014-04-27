@@ -1,66 +1,53 @@
+<php>
+    $title = '音频列表';
+</php>
+
 <include file="../Public/public_header" />
 
-<div class="foundation" id="listaudio">
-    <div class="row">
-        <h2>音频列表</h2>
-        <hr/>
-    </div>
-    <div class="row">
-        <table style="width: 100%;">
-            <thead>
-            <tr>
-                <th>音频编号</th>
-                <th>用户</th>
-                <th>上传时间</th>
-                <th>文件编号</th>
-                <th>操作</th>
-                <th>试听</th>
-            </tr>
-            </thead>
-            <tbody>
-            <if condition="!$page['data']">
-                <tr>
-                    <td colspan="6">
-                        <p class="center">您还没有上传音频，<a href="{:U('emomp3/Index/upload')}">点击上传</a></p>
-                    </td>
-                </tr>
-            </if>
-            <volist name="page['data']" id="e">
+<table class="table">
+    <thead>
+    <tr>
+        <th>音频编号</th>
+        <th>用户</th>
+        <th>上传时间</th>
+        <th>文件编号</th>
+        <th>操作</th>
+        <th>试听</th>
+    </tr>
+    </thead>
+    <tbody>
+    <if condition="!$page['data']">
+        <tr>
+            <td colspan="6">
+                <p class="center">您还没有上传音频，<a href="{:U('emomp3/Index/upload')}">点击上传</a></p>
+            </td>
+        </tr>
+    </if>
+    <volist name="page['data']" id="e">
+        <php>
+            $user = D('User')->getuserinfo($e['uid']);
+        </php>
+        <tr>
+            <td>{$e['id']}</td>
+            <td>{$user['uname']}</td>
+            <td>{$e['ctime']|friendlydate}</td>
+            <td>{$e['attachid']}</td>
+            <td>
+                <a href="{:U('emomp3/Index/viewaudio', array('audioid'=>$e['id']))}">查看</a>
+                &nbsp;
+                <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
+            </td>
+            <td>
                 <php>
-                    $user = D('User')->getuserinfo($e['uid']);
+                    $audiourl = getattachurlbyattachid($e['attachid']);
                 </php>
-                <tr>
-                    <td>{$e['id']}</td>
-                    <td>{$user['uname']}</td>
-                    <td>{$e['ctime']|friendlydate}</td>
-                    <td>{$e['attachid']}</td>
-                    <td>
-                        <a href="{:U('emomp3/Index/viewaudio', array('audioid'=>$e['id']))}">查看</a>
-                        &nbsp;
-                        <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
-                    </td>
-                    <td>
-                        <php>
-                            $audiourl = getattachurlbyattachid($e['attachid']);
-                        </php>
-                        <a class="play" audioid="{$e['id']}">播放</a>
-                        <audio src="{$audiourl}" id="audio{$e['id']}"/>
-                    </td>
-                </tr>
-            </volist>
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <p class="page">
-                {$page['html']}
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        &nbsp;
-    </div>
+                <a class="play" audioid="{$e['id']}">播放</a>
+                <audio src="{$audiourl}" id="audio{$e['id']}"/>
+            </td>
+        </tr>
+    </volist>
+    </tbody>
+</table>
 </div>
 
 <script>
