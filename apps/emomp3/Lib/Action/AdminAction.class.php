@@ -107,9 +107,9 @@ class AdminAction extends Action
             $map['uname'] = array('LIKE', $filter2);
             $map['classname'] = array('LIKE', $filter2);
             $map['_logic'] = 'or';
-            $users = D('User')->where($map)->findpage();
+            $users = D('User')->where($map)->cpfindpage();
         } else {
-            $users = D('User')->findpage();
+            $users = D('User')->cpfindpage();
         }
         // display
         $this->assign('uids', $uids);

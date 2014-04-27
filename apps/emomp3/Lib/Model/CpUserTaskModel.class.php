@@ -18,7 +18,7 @@ class CpUserTaskModel extends Model {
     }
 
     public function getpage() {
-        $result = $this->order('ctime desc')->findpage();
+        $result = $this->order('ctime desc')->cpfindpage();
         return $result;
     }
 
@@ -34,7 +34,7 @@ class CpUserTaskModel extends Model {
         $uid = intval($uid);
         $map = array();
         $map['uid'] = $uid;
-        $result = $this->where($map)->order('ctime desc')->findpage();
+        $result = $this->where($map)->order('ctime desc')->cpfindpage();
         return $result;
     }
 
@@ -50,7 +50,7 @@ class CpUserTaskModel extends Model {
         $taskid = intval($taskid);
         $map = array();
         $map['taskid'] = $taskid;
-        $result = $this->where($map)->order('ctime desc')->findpage();
+        $result = $this->where($map)->order('ctime desc')->cpfindpage();
         return $result;
     }
 

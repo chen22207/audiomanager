@@ -39,7 +39,7 @@ class CpSearchModel extends Model {
         // read db
         $map = array();
         $map['keyword'] = $keyword;
-        return $this->where($map)->order('count desc')->findpage();
+        return $this->where($map)->order('count desc')->cpfindpage();
     }
 
     public function put($keyword, $audioid) {

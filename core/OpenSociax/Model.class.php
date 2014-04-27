@@ -1080,6 +1080,19 @@ class Model extends Think
         }
 	}
 
+    public function cpFindPage($pageopt,$count=false,$options=array()){
+
+
+        //调用原本的FINDPAGE
+        $result = $this->findPage($pageopt,$count,$options);
+
+        //生成html
+        $result['html'] = $this->getPagination($result['totalRows'], $pageopt ? $pageopt : 20);
+
+        //返回结果
+        return $result;
+    }
+
     /**
      * 分页查询数据
      * @access public
@@ -1265,6 +1278,72 @@ class Model extends Think
      */
     public function cleanCache($param){
         return true;
+    }
+
+    private function getPagination($totalCount, $countPerPage = 10)
+    {
+        $pageKey = 'p';
+
+        //获取当前页码
+        $currentPage = $_REQUEST[$pageKey] ? $_REQUEST[$pageKey] : 1;
+
+        //计算总页数
+        $pageCount = ceil($totalCount / $countPerPage);
+
+        //如果只有1页，就没必要翻页了
+        if ($pageCount <= 1) {
+            return '';
+        }
+
+        //定义返回结果
+        $html = '';
+
+        //添加头部
+        $html .= '<div class="pagination">';
+
+        //添加上一页的按钮
+        if ($currentPage > 1) {
+            $prevUrl = $this->addUrlParam($this->getCurrentUrl(), array($pageKey => $currentPage - 1));
+            $html .= "<li><a class=\"\" href=\"{$prevUrl}\">&laquo;</a></li>";
+        } else {
+            $html .= "<li class=\"disabled\"><a>&laquo;</a></li>";
+        }
+
+        //添加各页面按钮
+        for ($i = 1; $i <= $pageCount; $i++) {
+            $pageUrl = $this->addUrlParam($this->getCurrentUrl(), array($pageKey => $i));
+            if ($i == $currentPage) {
+                $html .= "<li class=\"active\"><a class=\"active\" href=\"{$pageUrl}\">{$i}</a></li>";
+            } else {
+                $html .= "<li><a class=\"\" href=\"{$pageUrl}\">{$i}</a></li>";
+            }
+        }
+
+        //添加下一页按钮
+        if ($currentPage < $pageCount) {
+            $nextUrl = $this->addUrlParam($this->getCurrentUrl(), array($pageKey => $currentPage + 1));
+            $html .= "<li><a class=\"\" href=\"{$nextUrl}\">&raquo;</a></li>";
+        } else {
+            $html .= "<li class=\"disabled\"><a>&raquo;</a></li>";
+        }
+
+        //收尾
+        $html .= '</div>';
+        return $html;
+    }
+
+    private function addUrlParam($url, $params)
+    {
+        $app = MODULE_NAME;
+        $controller = CONTROLLER_NAME;
+        $action = ACTION_NAME;
+        $get = array_merge($_GET, $params);
+        return U("$app/$controller/$action", $get);
+    }
+
+    private function getCurrentUrl()
+    {
+        return $_SERVER['REQUEST_URI'];
     }
 };
 ?>

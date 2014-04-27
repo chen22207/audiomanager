@@ -50,7 +50,7 @@ class CpAssignLinkModel extends Model {
         // read db
         $map = array();
         $map['assignid'] = $assignid;
-        $result = $this->where($map)->findpage();
+        $result = $this->where($map)->cpfindpage();
         // decode result
         $result['data'] = $this->decodelist($result['data']);
         // return result
@@ -82,7 +82,7 @@ class CpAssignLinkModel extends Model {
             $map['uid'] = $uid;
         }
         // read db
-        $result = $this->where($map)->order('ctime desc')->findpage();
+        $result = $this->where($map)->order('ctime desc')->cpfindpage();
         $result['data'] = $this->decodelist($result['data']);
         return $result;
     }

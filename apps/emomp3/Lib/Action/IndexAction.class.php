@@ -270,7 +270,7 @@ class IndexAction extends Action
         $map = array();
         $map['finishtime'] = array('NEQ', 0);
         $map['uid'] = $this->mid;
-        $assignlinks = D('CpAssignLink')->where($map)->order('finishtime desc')->findpage();
+        $assignlinks = D('CpAssignLink')->where($map)->order('finishtime desc')->cpfindpage();
         // display
         $this->assign('assignlinks', $assignlinks);
         $this->display();

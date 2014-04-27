@@ -40,11 +40,11 @@ class CpTaskModel extends Model {
         if($uid) {
             $map = array();
             $map['uid'] = $uid;
-            $result = $this->where($map)->order('ctime desc')->findpage();
+            $result = $this->where($map)->order('ctime desc')->cpfindpage();
             $result['data'] = $this->decodelist($result['data']);
             return $result;
         } else {
-            $result = $this->order('ctime desc')->findpage();
+            $result = $this->order('ctime desc')->cpfindpage();
             $result['data'] = $this->decodelist($result['data']);
             return $result;
         }

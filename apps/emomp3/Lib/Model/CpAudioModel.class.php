@@ -41,9 +41,9 @@ class CpAudioModel extends Model {
         if($uid) {
             $map = array();
             $map['uid'] = $uid;
-            return $this->where($map)->order('ctime desc')->findpage();
+            return $this->where($map)->order('ctime desc')->cpfindpage();
         } else {
-            return $this->order('ctime desc')->findpage();
+            return $this->order('ctime desc')->cpfindpage();
         }
     }
 

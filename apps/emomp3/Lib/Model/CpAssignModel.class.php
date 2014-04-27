@@ -48,7 +48,7 @@ class CpAssignModel extends Model
             $map['uid'] = $uid;
         }
         // read db
-        $result = $this->where($map)->order('ctime desc')->findpage();
+        $result = $this->where($map)->order('ctime desc')->cpfindpage();
         $result['data'] = $this->decodelist($result['data']);
         return $result;
     }
