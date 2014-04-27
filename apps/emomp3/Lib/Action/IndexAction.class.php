@@ -45,6 +45,10 @@ class IndexAction extends Action
         }
     }
 
+    public function newtask(){
+        redirect(U('emomp3/Index/newtaskstep1'));
+    }
+
     public function listaudio() {
         // read db
         $page = D('CpAudio')->getpage($this->mid);

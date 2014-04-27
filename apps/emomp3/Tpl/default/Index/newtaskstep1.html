@@ -1,94 +1,102 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '发布任务 - 第一步设置题目';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="large-12 columns">
-            <h2>发布任务 - 第一步设置题目</h2>
-        </div>
-        <hr/>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right"><strong>题目列表：</strong></p>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">题目列表：</p>
-        </div>
-        <div class="large-9 columns">
-            <table style="width: 100%;" id="problemlist">
-                <thead>
-                <tr>
-                    <td>题目</td>
-                    <td>类型</td>
-                    <td>选项</td>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+    <div class="col-sm-9">
+        <table class="table" id="problemlist">
+            <thead>
+            <tr>
+                <td>题目</td>
+                <td>类型</td>
+                <td>选项</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">题目描述：</p>
-        </div>
-        <div class="large-9 columns">
-            <input type="text" name="description" id="description"/>
-        </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right"><strong>题目描述：</strong></p>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">题目类型：</p>
-        </div>
-        <div class="large-9 columns">
-            <select id="problemtype">
+    <div class="col-sm-9">
+        <p>
+            <input type="text" name="description" id="description" class="form-control"/>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right"><strong>题目类型：</strong></p>
+    </div>
+    <div class="col-sm-9">
+        <p>
+            <select id="problemtype" class="form-control">
                 <option value="choice">选择题</option>
                 <option value="tag">标签题</option>
             </select>
-        </div>
+        </p>
     </div>
-    <div id="choicepanel">
-        <div class="row">
-            <div class="large-3 columns">
-                <p class="right">选择项：</p>
+</div>
+
+<div id="choicepanel">
+    <div class="row">
+        <div class="col-sm-3">
+            <p class="text-right"><strong>选择项：</strong></p>
+        </div>
+        <div class="col-sm-9">
+            <p class="text-muted">最多填写6个</p>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="choice"/>
+                </div>
             </div>
-            <div class="large-9 columns">
-                <p class="subheader">最多填写6个</p>
-                <div class="row">
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
-                    </div>
-                    <div class="large-2 columns">
-                        <input type="text" id="choice"/>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="btn btn-block btn-default" id="addproblem">添加题目</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn btn-block btn-primary" id="next" href="{:U('emomp3/Index/donewtaskstep1')}">下一步
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="large-6 columns">
-            <div class="expand button" id="addproblem">添加题目</div>
-        </div>
-        <div class="large-6 columns">
-            <div class="expand button" id="next" href="{:U('emomp3/Index/donewtaskstep1')}">下一步</div>
-        </div>
-    </div>
 </div>
 
 <script>
-    $(function(){
+    $(function () {
         // 根据题目类型自动显示或隐藏“填写选项”
-        $("#problemtype").change(function(){
+        $("#problemtype").change(function () {
             var problemtype = $('#problemtype').val();
-            if(problemtype=="choice") {
+            if (problemtype == "choice") {
                 $('#choicepanel').show();
             } else {
                 $('#choicepanel').hide();
@@ -97,18 +105,18 @@
 
         // 点击添加题目
         var problemlist = [];
-        $("#addproblem").click(function(){
+        $("#addproblem").click(function () {
             // 获取用户输入的内容
             var problem = $('#description').val();
             var type = $('#problemtype').val();
             var choices = getchoices();
             // 检查输入内容
-            if(problem == "") {
+            if (problem == "") {
                 ui.error("请输入题目描述");
                 return;
             }
-            if(type=="choice"){
-                if(choices.length == 0) {
+            if (type == "choice") {
+                if (choices.length == 0) {
                     ui.error("请填入选项");
                     return;
                 }
@@ -122,10 +130,10 @@
             $('[id="choice"]').val("");
         });
 
-        function add_problem(problem, type, choices){
+        function add_problem(problem, type, choices) {
             // 添加到题目列表
-            if(type=="choice") {
-                problemlist.push({problem: problem, type: type, choices:choices});
+            if (type == "choice") {
+                problemlist.push({problem: problem, type: type, choices: choices});
             } else {
                 problemlist.push({problem: problem, type: type});
             }
@@ -134,21 +142,21 @@
             var html = "";
             var typename = "";
             var choicesname = "";
-            if(type=="choice"){
-                typename="选择题";
+            if (type == "choice") {
+                typename = "选择题";
             } else {
-                typename="标签题";
+                typename = "标签题";
             }
-            for(var i=0;i<choices.length;i++) {
-                if(choicesname!="") {
+            for (var i = 0; i < choices.length; i++) {
+                if (choicesname != "") {
                     choicesname += ",";
                 }
                 choicesname += choices[i];
             }
             html += "<tr>" +
-                    "<td>"+problem+"</td>" +
-                    "<td>"+typename+"</td>" +
-                    "<td>"+choicesname+"</td>" +
+                    "<td>" + problem + "</td>" +
+                    "<td>" + typename + "</td>" +
+                    "<td>" + choicesname + "</td>" +
                     "</tr>";
             $('#problemlist tbody').append(html);
         }
@@ -156,9 +164,9 @@
         function getchoices() {
             var choices = $('[id="choice"]');
             var result = [];
-            for(var i=0;i<choices.length;i++){
+            for (var i = 0; i < choices.length; i++) {
                 var c = $(choices.get(i)).val();
-                if(c != "") {
+                if (c != "") {
                     result.push(c);
                 }
             }
@@ -166,18 +174,18 @@
         }
 
         // 点击下一步
-        $("#next").click(function(){
+        $("#next").click(function () {
             var url = $(this).attr('href');
-            $.post(url, {problems:problemlist}, function(a,b,c){
+            $.post(url, {problems: problemlist}, function (a, b, c) {
                 handleajax(a);
             });
         });
 
         //显示默认题目
-        $(function(){
+        $(function () {
             add_problem('请给这段音频添加标签', 'tag', '');
         });
     })
 </script>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>
