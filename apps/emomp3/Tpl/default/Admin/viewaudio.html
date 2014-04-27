@@ -1,188 +1,186 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '查看音频';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <h2>查看音频</h2>
-        <hr/>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">音频编号：</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">音频编号：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$audio['id']}</p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$audio['id']}</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">上传时间：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$audio['ctime']|friendlydate}</p>
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">上传时间：</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">音频长度：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$audiolength}</p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$audio['ctime']|friendlydate}</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">音频指纹：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$audio['md5']}</p>
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">音频长度：</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">
-                试听：
-            </p>
-        </div>
-        <div class="col-sm-9">
-            <p>
-                <php>
-                    $audiourl = getAttachUrlByAttachId($audio['attachid']);
-                </php>
-                <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
-            </p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$audiolength}</p>
     </div>
-    <!--显示众测结果-->
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">测试结果：</p>
-        </div>
-        <div class="col-sm-9">
-            <table style="width: 100%;">
-                <thead>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">音频指纹：</p>
+    </div>
+    <div class="col-sm-9">
+        <p>{$audio['md5']}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">
+            试听：
+        </p>
+    </div>
+    <div class="col-sm-9">
+        <p>
+            <php>
+                $audiourl = getAttachUrlByAttachId($audio['attachid']);
+            </php>
+            <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
+        </p>
+    </div>
+</div>
+<!--显示众测结果-->
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">测试结果：</p>
+    </div>
+    <div class="col-sm-9">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>学号</td>
+                <td>用户名</td>
+                <td>提交时间</td>
+                <td>题目及答案</td>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $assignlinks = D('CpAssignLink')->getlistbyaudioid($audio['id']);
+                //用于答案统计
+                $keywords = array();
+            </php>
+            <if condition="!$assignlinks">
                 <tr>
-                    <td>学号</td>
-                    <td>用户名</td>
-                    <td>提交时间</td>
-                    <td>题目及答案</td>
+                    <td colspan="4">
+                        <p class="center">该音频尚无测试结果</p>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <php>
-                    $assignlinks = D('CpAssignLink')->getlistbyaudioid($audio['id']);
-                    //用于答案统计
-                    $keywords = array();
-                </php>
-                <if condition="!$assignlinks">
+            </if>
+            <volist name="assignlinks" id="e">
+                <if condition="$e['finishtime']">
+                    <php>
+                        //获取被测者用户名
+                        $user = D('User')->getuserinfo($e['uid']);
+                        //获取问题和答案
+                        $task = D('CpTask')->get($e['taskid']);
+                        $problems = $task['problems'];
+                        $assignlink = $e;
+                        $answers = $assignlink['answer'];
+                        $problemanswer = '';
+                        foreach($problems as $i=>$problem) {
+                        if($problem['type'] == 'choice') {
+                        $problemtype = '选择题';
+                        $answer = $answers[$i];
+                        $answer = $problem['choices'][$answer];
+                        $keywords[] = $answer;
+                        } else if($problem['type'] == 'tag') {
+                        $problemtype = '标签题';
+                        $answer = $answers[$i];
+                        foreach($answer as $a) {
+                        $keywords[] = $a;
+                        }
+                        $answer = implode('，', $answer);
+                        }
+                        $problemanswer .= '<p>';
+                        $problemanswer .= $problem['problem'];
+                        $problemanswer .= '【'.$problemtype.'】';
+                        $problemanswer .= '该用户选了：'.$answer;
+                        $problemanswer .= '</p>';
+                        }
+                    </php>
                     <tr>
-                        <td colspan="4">
-                            <p class="center">该音频尚无测试结果</p>
-                        </td>
+                        <td>{$user['studentid']}</td>
+                        <td>{$user['uname']}</td>
+                        <td>{$e['finishtime']|friendlydate}</td>
+                        <td>{$problemanswer}</td>
                     </tr>
                 </if>
-                <volist name="assignlinks" id="e">
-                    <if condition="$e['finishtime']">
-                        <php>
-                            //获取被测者用户名
-                            $user = D('User')->getuserinfo($e['uid']);
-                            //获取问题和答案
-                            $task = D('CpTask')->get($e['taskid']);
-                            $problems = $task['problems'];
-                            $assignlink = $e;
-                            $answers = $assignlink['answer'];
-                            $problemanswer = '';
-                            foreach($problems as $i=>$problem) {
-                                if($problem['type'] == 'choice') {
-                                    $problemtype = '选择题';
-                                    $answer = $answers[$i];
-                                    $answer = $problem['choices'][$answer];
-                                    $keywords[] = $answer;
-                                } else if($problem['type'] == 'tag') {
-                                    $problemtype = '标签题';
-                                    $answer = $answers[$i];
-                                    foreach($answer as $a) {
-                                        $keywords[] = $a;
-                                    }
-                                    $answer = implode('，', $answer);
-                                }
-                                $problemanswer .= '<p>';
-                                $problemanswer .= $problem['problem'];
-                                $problemanswer .= '【'.$problemtype.'】';
-                                $problemanswer .= '该用户选了：'.$answer;
-                                $problemanswer .= '</p>';
-                            }
-                        </php>
-                        <tr>
-                            <td>{$user['studentid']}</td>
-                            <td>{$user['uname']}</td>
-                            <td>{$e['finishtime']|friendlydate}</td>
-                            <td>{$problemanswer}</td>
-                        </tr>
-                    </if>
-                </volist>
-                </tbody>
-            </table>
-        </div>
+            </volist>
+            </tbody>
+        </table>
     </div>
-    <!--答案统计-->
-    <php>
-        //统计数量
-        $counter = array();
-        foreach($keywords as $k) {
-            $counter[$k]++;
-        }
-        //排序
-        arsort($counter);
-        //最多数量
-        $maxcount = $counter[key($counter)];
-        //关键字总数
-        $totalcount = count($keywords);
-    </php>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">答案统计：</p>
-        </div>
-        <div class="col-sm-9">
-            <table style="width: 100%;">
-                <thead>
+</div>
+<!--答案统计-->
+<php>
+    //统计数量
+    $counter = array();
+    foreach($keywords as $k) {
+    $counter[$k]++;
+    }
+    //排序
+    arsort($counter);
+    //最多数量
+    $maxcount = $counter[key($counter)];
+    //关键字总数
+    $totalcount = count($keywords);
+</php>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">答案统计：</p>
+    </div>
+    <div class="col-sm-9">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>关键字</td>
+                <td>出现次数</td>
+                <td>占比</td>
+                <td>图形</td>
+            </tr>
+            </thead>
+            <tbody>
+            <if condition="!$counter">
                 <tr>
-                    <td>关键字</td>
-                    <td>出现次数</td>
-                    <td>占比</td>
-                    <td>图形</td>
+                    <td colspan="4">
+                        <p class="center">该音频尚无测试结果</p>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <if condition="!$counter">
-                    <tr>
-                        <td colspan="4">
-                            <p class="center">该音频尚无测试结果</p>
-                        </td>
-                    </tr>
-                </if>
-                <volist name="counter" id="e">
-                    <tr>
-                        <td>{$key}</td>
-                        <td>{$e}</td>
-                        <td>{:round($e/$totalcount*100, 1)}%</td>
-                        <td>
-                            <div class="fdprogress">
-                                <span class="meter" style="width: {$e/$totalcount*100}%"></span>
-                            </div>
-                        </td>
-                    </tr>
-                </volist>
-                </tbody>
-            </table>
-        </div>
+            </if>
+            <volist name="counter" id="e">
+                <tr>
+                    <td>{$key}</td>
+                    <td>{$e}</td>
+                    <td>{:round($e/$totalcount*100, 1)}%</td>
+                    <td>
+                        <div class="fdprogress">
+                            <span class="meter" style="width: {$e/$totalcount*100}%"></span>
+                        </div>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    $('#play').click(function(){
+    $('#play').click(function () {
         var au = $('.foundation audio').get(0);
         au.play();
     });
 </script>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>

@@ -1,132 +1,131 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '分配任务 - 第二步指定人员';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="col-sm-12"><h2>分配任务 - 第二步指定人员</h2></div>
-        <hr/>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <div class="col-sm-6">
+        请指定人员（拖动鼠标可以批量选择）
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            请指定人员（拖动鼠标可以批量选择）
-        </div>
-        <div class="col-sm-6">
-            <p class="text-right">已选择<span id="usercount">{:count($uids)}</span>个用户</p>
-        </div>
+    <div class="col-sm-6">
+        <p class="text-right">已选择<span id="usercount">{:count($uids)}</span>个用户</p>
     </div>
-    <div class="row">
-        <div class="col-sm-10">
-            <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
-        </div>
-        <div class="col-sm-2">
-            <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
-                筛选用户
-            </div>
+</div>
+<div class="row">
+    <div class="col-sm-10">
+        <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
+    </div>
+    <div class="col-sm-2">
+        <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
+            筛选用户
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table style="width: 100%;" id="userlist">
-                <thead>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table style="width: 100%;" id="userlist">
+            <thead>
+            <tr>
+                <th>UID</th>
+                <th>学号</th>
+                <th>用户名</th>
+                <th>班级</th>
+                <th>选择</th>
+            </tr>
+            </thead>
+            <tbody>
+            <if condition="!$users['data']">
                 <tr>
-                    <th>UID</th>
-                    <th>学号</th>
-                    <th>用户名</th>
-                    <th>班级</th>
-                    <th>选择</th>
+                    <td colspan="5">
+                        <p class="center">没有符合条件的用户</p>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <if condition="!$users['data']">
-                    <tr>
-                        <td colspan="5">
-                            <p class="center">没有符合条件的用户</p>
-                        </td>
-                    </tr>
-                </if>
-                <volist name="users['data']" id="e">
-                    <php>
-                        $user = D('User')->getuserinfo($e['uid']);
-                        if(in_array($e['uid'], $uids)) {
-                            $checked = 'checked';
-                            $unselectedstyle = "display:none";
-                            $selectedstyle = "";
-                        } else {
-                            $unselectedstyle = "";
-                            $selectedstyle = "display:none";
-                        }
-                    </php>
-                    <tr>
-                        <td>{$e['uid']}</td>
-                        <td>{$e['studentid']}</td>
-                        <td>{$user['uname']}</td>
-                        <td>{$e['classname']}</td>
-                        <td>
-                            <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
-                            <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
-                            <span class="round success label selected" style="{$selectedstyle}">已选择</span>
-                        </td>
-                    </tr>
-                </volist>
-                </tbody>
-            </table>
+            </if>
+            <volist name="users['data']" id="e">
+                <php>
+                    $user = D('User')->getuserinfo($e['uid']);
+                    if(in_array($e['uid'], $uids)) {
+                    $checked = 'checked';
+                    $unselectedstyle = "display:none";
+                    $selectedstyle = "";
+                    } else {
+                    $unselectedstyle = "";
+                    $selectedstyle = "display:none";
+                    }
+                </php>
+                <tr>
+                    <td>{$e['uid']}</td>
+                    <td>{$e['studentid']}</td>
+                    <td>{$user['uname']}</td>
+                    <td>{$e['classname']}</td>
+                    <td>
+                        <input class="hide" type="checkbox" uid="{$e['uid']}" name="selectuser" {$checked}/>
+                        <span class="round secondary label unselected" style="{$unselectedstyle}">未选择</span>
+                        <span class="round success label selected" style="{$selectedstyle}">已选择</span>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p class="page">
+            {$users['html']}
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="expand secondary button" id="selectall">全选</div>
+    </div>
+    <div class="col-sm-3">
+        <div class="expand secondary button" id="selectnone">全不选</div>
+    </div>
+    <div class="col-sm-3">
+        <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
+            添加选定人员
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <p class="page">
-                {$users['html']}
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="expand secondary button" id="selectall">全选</div>
-        </div>
-        <div class="col-sm-3">
-            <div class="expand secondary button" id="selectnone">全不选</div>
-        </div>
-        <div class="col-sm-3">
-            <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
-                添加选定人员
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="expand button" id="assignnow" href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
-                立即分配
-            </div>
+    <div class="col-sm-3">
+        <div class="expand button" id="assignnow"
+             href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
+            立即分配
         </div>
     </div>
 </div>
 
 <script>
-    $(function(){
+    $(function () {
         //全选
-        $('#selectall').click(function() {
+        $('#selectall').click(function () {
             $('[name="selectuser"]').prop('checked', true);
             $('[name="selectuser"]').trigger('change');
         });
         //全不选
-        $('#selectnone').click(function(){
+        $('#selectnone').click(function () {
             $('[name="selectuser"]').prop('checked', false);
             $('[name="selectuser"]').trigger('change');
         })
         //立即分配
-        $('#assignnow').click(function(){
+        $('#assignnow').click(function () {
             var url = $(this).attr('href');
-            saveselectionstate(function(){
+            saveselectionstate(function () {
                 //commit to server
-                $.post(url, {}, function(a,b,c){
+                $.post(url, {}, function (a, b, c) {
                     handleajax(a);
                 })
             });
         })
         //高亮已经选择的用户
-        $('#userlist tr [name="selectuser"]').change(function(e){
+        $('#userlist tr [name="selectuser"]').change(function (e) {
             var checked = $(this).is(':checked');
             var row = $(this).parent().parent();
             var selected = $('.selected', row);
             var unselected = $('.unselected', row);
-            if(checked) {
+            if (checked) {
                 unselected.hide();
                 selected.show();
             } else {
@@ -136,9 +135,9 @@
         });
         //同步显示已选用户的数量
         var usercount = parseInt($('#usercount').text());
-        $('#userlist tr [name="selectuser"]').change(function(e){
+        $('#userlist tr [name="selectuser"]').change(function (e) {
             var checked = $(this).is(':checked');
-            if(checked) {
+            if (checked) {
                 usercount++;
             } else {
                 usercount--;
@@ -149,7 +148,7 @@
         //拖动选择
         var mousedown = false;
         var targetstate = false;
-        $('#userlist tr').mousedown(function(e){
+        $('#userlist tr').mousedown(function (e) {
             mousedown = true;
             // get current row selected
             var checkbox = $('[name="selectuser"]', this);
@@ -158,34 +157,35 @@
             // switch select state
             setcheckboxstate(checkbox, targetstate);
         });
-        $(document).mouseup(function(e) {
+        $(document).mouseup(function (e) {
             mousedown = false;
         });
-        $(document).mousemove(function(e){
-            if(mousedown) {
+        $(document).mousemove(function (e) {
+            if (mousedown) {
                 e.preventDefault();
             }
         })
-        $('#userlist tr').mouseenter(function(e){
-            if(mousedown) {
+        $('#userlist tr').mouseenter(function (e) {
+            if (mousedown) {
                 var checkbox = $('[name="selectuser"]', this);
                 setcheckboxstate(checkbox, targetstate);
             }
         })
         function setcheckboxstate(checkbox, state) {
             var checked = checkbox.is(':checked');
-            if(checked == state) {
+            if (checked == state) {
                 return;
             }
             checkbox.prop('checked', state);
             checkbox.trigger('change');
         }
+
         //翻页时保存选定人员
-        $('.page a').click(function(e){
+        $('.page a').click(function (e) {
             e.preventDefault();
             var url = $(this).attr('href');
-            saveselectionstate(function(a,b,c){
-                if(url != undefined) {
+            saveselectionstate(function (a, b, c) {
+                if (url != undefined) {
                     location.href = url;
                 }
             });
@@ -195,11 +195,11 @@
             var selections = $('[name="selectuser"]');
             var add = [];
             var remove = [];
-            for(var i=0;i<selections.length;i++) {
+            for (var i = 0; i < selections.length; i++) {
                 var e = $(selections.get(i));
                 var checked = e.is(':checked');
                 var uid = e.attr('uid');
-                if(checked) {
+                if (checked) {
                     add.push(uid);
                 } else {
                     remove.push(uid);
@@ -209,17 +209,18 @@
             console.log(remove);
             //post to server
             var url = $('#setassignuser').attr('href');
-            $.post(url, {add:add,remove:remove}, function(a,b,c){
-                callback(a,b,c);
+            $.post(url, {add: add, remove: remove}, function (a, b, c) {
+                callback(a, b, c);
             })
         }
+
         //筛选用户
-        $('#filterkeyword').keydown(function(e){
-            if(e.keyCode == 13) {
+        $('#filterkeyword').keydown(function (e) {
+            if (e.keyCode == 13) {
                 $('#filterusers').trigger('click');
             }
         })
-        $('#filterusers').click(function(){
+        $('#filterusers').click(function () {
             var url = $(this).attr('href');
             var filter = $('#filterkeyword').val();
             location.href = url + "&filter=" + encodeURIComponent(filter);
@@ -227,4 +228,4 @@
     })
 </script>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>

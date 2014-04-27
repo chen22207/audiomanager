@@ -30,14 +30,14 @@
             <td>
                 <a href="{:U('emomp3/Admin/viewaudio', array('audioid'=>$e['id']))}">查看</a>
                 &nbsp;
-                <a class="ajaxhref" confirm="您确实要删除吗？"
+                <a confirm="您确实要删除吗？"
                    href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
             </td>
             <td>
                 <php>
                     $audiourl = getattachurlbyattachid($e['attachid']);
                 </php>
-                <a class="play" audioid="{$e['id']}">播放</a>
+                <a class="btn btn-success play" audioid="{$e['id']}">播放</a>
                 <audio src="{$audiourl}" id="audio{$e['id']}"/>
             </td>
         </tr>

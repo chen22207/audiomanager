@@ -1,44 +1,41 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '分配任务 - 第一步选择任务';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="col-sm-12"><h2>分配任务 - 第一步选择任务</h2></div>
-        <hr/>
-    </div>
-    <div class="row">
-        <table style="width: 100%;">
-            <thead>
-            <tr>
-                <th>任务编号</th>
-                <th>音频</th>
-                <th>发布人</th>
-                <th>发布时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-                <volist name="tasks['data']" id="e">
-                    <php>
-                        $user = D('User')->getuserinfo($e['uid']);
-                    </php>
-                    <tr>
-                        <td>{$e['id']}</td>
-                        <td>{:count($e['audioids'])}个音频</td>
-                        <td>{$user['uname']}</td>
-                        <td>{$e['ctime']|friendlydate}</td>
-                        <td><a href="{:U('emomp3/Admin/assigntaskstep2', array('taskid'=>$e['id']))}">选择</a></td>
-                    </tr>
-                </volist>
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <p class="page">
-                {$tasks['html']}
-            </p>
-        </div>
+<include file="../Public/public_header"/>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>任务编号</th>
+        <th>音频</th>
+        <th>发布人</th>
+        <th>发布时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="tasks['data']" id="e">
+        <php>
+            $user = D('User')->getuserinfo($e['uid']);
+        </php>
+        <tr>
+            <td>{$e['id']}</td>
+            <td>{:count($e['audioids'])}个音频</td>
+            <td>{$user['uname']}</td>
+            <td>{$e['ctime']|friendlydate}</td>
+            <td><a class="btn btn-primary" href="{:U('emomp3/Admin/assigntaskstep2', array('taskid'=>$e['id']))}">选择</a></td>
+        </tr>
+    </volist>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-12">
+        <p class="page">
+            {$tasks['html']}
+        </p>
     </div>
 </div>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>
