@@ -1081,8 +1081,6 @@ class Model extends Think
 	}
 
     public function cpFindPage($pageopt,$count=false,$options=array()){
-
-
         //调用原本的FINDPAGE
         $result = $this->findPage($pageopt,$count,$options);
 
