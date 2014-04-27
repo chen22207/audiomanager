@@ -2,7 +2,7 @@
     $title = '音频列表';
 </php>
 
-<include file="../Public/public_header" />
+<include file="../Public/public_header"/>
 
 <table class="table">
     <thead>
@@ -35,7 +35,8 @@
             <td>
                 <a href="{:U('emomp3/Index/viewaudio', array('audioid'=>$e['id']))}">查看</a>
                 &nbsp;
-                <a class="ajaxhref" confirm="您确实要删除吗？" href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
+                <a class="ajaxhref" confirm="您确实要删除吗？"
+                   href="{:U('emomp3/Index/deleteaudio', array('audioid'=>$e['id']))}">删除</a>
             </td>
             <td>
                 <php>
@@ -52,7 +53,7 @@
 
 <script>
     // 点击播放按钮时
-    $(document).on('click', '.play', function(){
+    $(document).on('click', '.play', function () {
         // get audioid
         var audioid = $(this).attr('audioid');
         // play the audio
@@ -60,4 +61,4 @@
     })
 </script>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>
