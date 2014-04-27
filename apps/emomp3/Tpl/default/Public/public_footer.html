@@ -1,23 +1,3 @@
-</div>
-</div>
-</div>
 
-<div class="footer">
-    <div class="right">
-        版权所有 2013 @ <a href="http://www.50pal.com/">蚕语工作室</a>
-    </div>
-</div>
-
-</div><!--page end-->
-{:Addons::hook('public_footer')}
-<!-- 统计代码-->
-<div id="site_analytics_code" style="display:none;">
-    {$site.site_analytics_code|base64_decode}
-</div>
-<eq name='site.site_online_count' value='1'>
-    <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
-</eq>
 </body>
 </html>
-
-<include file="__THEME__/_footer"/>
