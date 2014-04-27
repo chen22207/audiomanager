@@ -1,3 +1,16 @@
+<html>
+<head>
+
+</head>
+<body>
+<script>
+    setTimeout(function(){
+        location.reload();
+    }, 1000);
+</script>
+</body>
+</html>
+
 <?php
 //清文件缓存
 $dirs	=	array('./_runtime/');

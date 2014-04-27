@@ -91,6 +91,28 @@ class CpAssignModel extends Model {
         return $totalcount - $unfinished;
     }
 
+    public function getProgressByUid($assign_id, $uid){
+        // 获取任务总数
+        $map = array(
+            'assignid' => $assign_id,
+            'uid' => $uid,
+        );
+        $model = D('CpAssignLink');
+        $total_count = $model->where($map)->count();
+
+        // 获取完成总数
+        $map = array(
+            'assignid' => $assign_id,
+            'uid'=>$uid,
+            'finishtime'=>array('NEQ', 0),
+        );
+        $finish_count = D('CpAssignLink')->where($map)->count();
+
+        // 返回完成比例
+        $result = $finish_count / $total_count;
+        return $result;
+    }
+
     public function getprogress($assignid) {
         //get total count
         $map = array();

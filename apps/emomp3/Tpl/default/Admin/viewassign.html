@@ -33,6 +33,7 @@
                 <tr>
                     <td>学号</td>
                     <td>姓名</td>
+                    <td>完成进度</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,8 +50,13 @@
                         $user = D('User')->getuserinfo($e);
                     </php>
                     <tr>
+                        <php>
+                            $user_progress = D('CpAssign')->getProgressByUid($assign['id'], $user['uid']);
+                            $user_percent = round($user_progress * 100);
+                        </php>
                         <td>{$user['studentid']}</td>
                         <td>{$user['uname']}</td>
+                        <td><div class="fdprogress"><span class="meter" style="width: {$user_percent}%;"></span></div></td>
                     </tr>
                 </volist>
                 </tbody>
