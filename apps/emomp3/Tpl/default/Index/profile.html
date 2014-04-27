@@ -1,34 +1,32 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '个人信息';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="col-sm-12"><h2>个人信息</h2></div>
-        <hr/>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">学号：</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">学号：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$user['studentid']}</p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$user['studentid']}</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">姓名：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$user['uname']}</p>
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">姓名：</p>
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <p class="text-right">完成任务总数：</p>
-        </div>
-        <div class="col-sm-9">
-            <p>{$user['taskcount']}</p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$user['uname']}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">完成任务总数：</p>
+    </div>
+    <div class="col-sm-9">
+        <p>{$user['taskcount']}</p>
     </div>
 </div>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>
