@@ -2,38 +2,38 @@
 
 <div class="foundation">
     <div class="row">
-        <div class="large-12 columns"><h2>查看已经完成的任务</h2></div>
+        <div class="col-sm-12"><h2>查看已经完成的任务</h2></div>
         <hr/>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">任务编号：</p>
+        <div class="col-sm-3">
+            <p class="text-right">任务编号：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$assignlink['taskid']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">音频编号：</p>
+        <div class="col-sm-3">
+            <p class="text-right">音频编号：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$assignlink['audioid']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">提交时间：</p>
+        <div class="col-sm-3">
+            <p class="text-right">提交时间：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$assignlink['finishtime']|friendlydate}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">音频试听：</p>
+        <div class="col-sm-3">
+            <p class="text-right">音频试听：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>
                 <audio src="{$audiourl}" controls="controls" style="width:100%"></audio>
             </p>
@@ -66,10 +66,10 @@
         }
     </php>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">问题及答案：</p>
+        <div class="col-sm-3">
+            <p class="text-right">问题及答案：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             {$problemanswer}
         </div>
     </div>

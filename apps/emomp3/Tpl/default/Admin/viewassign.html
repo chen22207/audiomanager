@@ -2,32 +2,32 @@
 
 <div class="foundation">
     <div class="row">
-        <div class="large-12 columns">
+        <div class="col-sm-12">
             <h2>查看已分配任务</h2>
         </div>
         <hr/>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">分配编号：</p>
+        <div class="col-sm-3">
+            <p class="text-right">分配编号：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$assign['id']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">任务编号：</p>
+        <div class="col-sm-3">
+            <p class="text-right">任务编号：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$assign['taskid']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">参与人：</p>
+        <div class="col-sm-3">
+            <p class="text-right">参与人：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <table style="width: 100%;">
                 <thead>
                 <tr>
@@ -66,10 +66,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">进度：</p>
+        <div class="col-sm-3">
+            <p class="text-right">进度：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <div class="fdprogress">
                 <php>
                     $progress = D('CpAssign')->getprogress($assign['id']);
@@ -80,10 +80,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">任务完成情况：</p>
+        <div class="col-sm-3">
+            <p class="text-right">任务完成情况：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <table style="width: 100%;">
                 <thead>
                 <tr>
@@ -131,7 +131,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-12 columns">
+        <div class="col-sm-12">
             <p class="page">
                 {$assignlinks['html']}
             </p>

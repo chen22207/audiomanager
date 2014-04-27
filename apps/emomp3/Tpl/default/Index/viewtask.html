@@ -1,90 +1,89 @@
-<include file="../Public/public_header" />
+<php>
+    $title = '查看任务';
+</php>
 
-<div class="foundation">
-    <div class="row">
-        <div class="large-12 columns">
-            <h2>查看任务</h2>
-        </div>
-        <hr/>
+<include file="../Public/public_header"/>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">任务编号：</p>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">任务编号：</p>
-        </div>
-        <div class="large-9 columns">
-            <p>{$task['id']}</p>
-        </div>
+    <div class="col-sm-9">
+        <p>{$task['id']}</p>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">发布时间：</p>
-        </div>
-        <div class="large-9 columns">
-            <p>{$task['ctime']|friendlydate}</p>
-        </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">发布时间：</p>
     </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">包含音频：</p>
-        </div>
-        <div class="large-9 columns">
-            <table style="width: 100%;">
-                <thead>
+    <div class="col-sm-9">
+        <p>{$task['ctime']|friendlydate}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">包含音频：</p>
+    </div>
+    <div class="col-sm-9">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>音频编号</td>
+                <td>上传时间</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="task['audioids']" id="e">
+                <php>
+                    $audio = D('CpAudio')->get($e);
+                </php>
                 <tr>
-                    <td>音频编号</td>
-                    <td>上传时间</td>
+                    <td>{$audio['id']}</td>
+                    <td>{$audio['ctime']|friendlydate}</td>
                 </tr>
-                </thead>
-                <tbody>
-                <volist name="task['audioids']" id="e">
-                    <php>
-                        $audio = D('CpAudio')->get($e);
-                    </php>
-                    <tr>
-                        <td>{$audio['id']}</td>
-                        <td>{$audio['ctime']|friendlydate}</td>
-                    </tr>
-                </volist>
-                </tbody>
-            </table>
-            <div>
-                <a class="button" href="{:U('emomp3/Index/newtaskstep2', array('taskid'=>$task['id']))}">添加或删除音频</a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-3 columns">
-            <p class="right">题目列表：</p>
-        </div>
-        <div class="large-9 columns">
-            <table style="width: 100%;">
-                <thead>
-                <tr>
-                    <td>题目描述</td>
-                    <td>类型</td>
-                    <td>选项</td>
-                </tr>
-                </thead>
-                <tbody>
-                <volist name="task['problems']" id="e">
-                    <php>
-                        if($e['type'] == 'choice') {
-                            $type = '选择题';
-                        } else if($e['type'] == 'tag') {
-                            $type = '标签题';
-                        }
-                        $choices = implode(',', $e['choices']);
-                    </php>
-                    <tr>
-                        <td>{$e['problem']}</td>
-                        <td>{$type}</td>
-                        <td>{$choices}</td>
-                    </tr>
-                </volist>
-                </tbody>
-            </table>
+            </volist>
+            </tbody>
+        </table>
+        <div>
+            <a class="btn btn-primary" href="{:U('emomp3/Index/newtaskstep2', array('taskid'=>$task['id']))}">添加或删除音频</a>
         </div>
     </div>
 </div>
 
-<include file="../Public/public_footer" />
+<br/>
+
+<div class="row">
+    <div class="col-sm-3">
+        <p class="text-right">题目列表：</p>
+    </div>
+    <div class="col-sm-9">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>题目描述</td>
+                <td>类型</td>
+                <td>选项</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="task['problems']" id="e">
+                <php>
+                    if($e['type'] == 'choice') {
+                    $type = '选择题';
+                    } else if($e['type'] == 'tag') {
+                    $type = '标签题';
+                    }
+                    $choices = implode(',', $e['choices']);
+                </php>
+                <tr>
+                    <td>{$e['problem']}</td>
+                    <td>{$type}</td>
+                    <td>{$choices}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<include file="../Public/public_footer"/>

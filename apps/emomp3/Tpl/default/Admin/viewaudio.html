@@ -6,44 +6,44 @@
         <hr/>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">音频编号：</p>
+        <div class="col-sm-3">
+            <p class="text-right">音频编号：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$audio['id']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">上传时间：</p>
+        <div class="col-sm-3">
+            <p class="text-right">上传时间：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$audio['ctime']|friendlydate}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">音频长度：</p>
+        <div class="col-sm-3">
+            <p class="text-right">音频长度：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$audiolength}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">音频指纹：</p>
+        <div class="col-sm-3">
+            <p class="text-right">音频指纹：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>{$audio['md5']}</p>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">
+        <div class="col-sm-3">
+            <p class="text-right">
                 试听：
             </p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <p>
                 <php>
                     $audiourl = getAttachUrlByAttachId($audio['attachid']);
@@ -54,10 +54,10 @@
     </div>
     <!--显示众测结果-->
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">测试结果：</p>
+        <div class="col-sm-3">
+            <p class="text-right">测试结果：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <table style="width: 100%;">
                 <thead>
                 <tr>
@@ -139,10 +139,10 @@
         $totalcount = count($keywords);
     </php>
     <div class="row">
-        <div class="large-3 columns">
-            <p class="right">答案统计：</p>
+        <div class="col-sm-3">
+            <p class="text-right">答案统计：</p>
         </div>
-        <div class="large-9 columns">
+        <div class="col-sm-9">
             <table style="width: 100%;">
                 <thead>
                 <tr>
