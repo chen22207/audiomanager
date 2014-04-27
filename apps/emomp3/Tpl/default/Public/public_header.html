@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>情感语音管理系统</title>
     <link href="__APP__/css/bootstrap-flatly.css" rel="stylesheet"/>
     <script src="__APP__/jquery-1.11.0.min.js"></script>
     <script src="__APP__/js/bootstrap.min.js"></script>
+    <script src="__APP__/emomp3.js"></script>
+    <script src="__THEME__/js/jquery.form.js"></script>
+
+    <!-- ToastR -->
+    <link href="__APP__/toastr/toastr.min.css" rel="stylesheet"/>
+    <script src="__APP__/toastr/toastr.min.js"></script>
 </head>
 <body>
 
@@ -75,3 +81,19 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+
+
+<div class="jumbotron">
+    <div class="container">
+        <h2>{$title}</h2>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <include file="../Public/nav-front"/>
+        </div>
+
+        <div class="col-sm-9">

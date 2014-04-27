@@ -1,85 +1,98 @@
-<include file="../Public/public_header" />
+<php>
+    $title = "上传音频";
+</php>
 
-<div class="foundation" id="upload">
-    <div class="row">
-        <h2>上传音频</h2>
-        <hr/>
-    </div>
+<include file="../Public/public_header"/>
 
-    <form action="{:U('emomp3/Index/doupload')}" onsubmit="return false;" method="post" enctype="multipart/form-data">
+<div id="upload">
+    <form action="{:U('emomp3/Index/doupload')}" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="large-12 columns">
-                <input type="file"  name="files[]" accept="audio/*" multiple>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" name="files[]" accept="audio/*" multiple>
             </div>
-        </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <table id="filelist" style="width: 100%;">
+
+            <div class="col-sm-8">
+                <table id="filelist" class="table">
                     <thead>
                     <tr>
-                        <th width="250">文件名</th>
-                        <th width="80" class="text-right">大小</th>
+                        <th>文件名</th>
+                        <th>大小</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>请选择文件</td>
-                        <td class="text-right">-</td>
+                        <td>-</td>
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="large-12 columns">
-                <div class="fdprogress">
-                    <span class="meter" style="width: 0%;"></span>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="large-12 large-centered columns text-center">
-                <input class="button large" type="submit" value="开始上传"/>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="fdprogress">
+                            <span class="meter" style="width: 0%;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="btn btn-lg btn-primary" type="submit" value="开始上传"/>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 </div>
 
 <script>
-    $(function(){
+    $(function () {
         var uploadform = $("#upload form");
         var bar = $('#upload form .fdprogress .meter')
 
+
+        function strip_tags (input, allowed) {
+            allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+            var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+                    commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+            return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+                return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+            });
+        }
+
         uploadform.ajaxForm({
-            beforeSend: function() {
+            beforeSend: function () {
                 var percentVal = '0%';
                 bar.width(percentVal);
             },
-            uploadProgress: function(event, position, total, percentComplete) {
+            uploadProgress: function (event, position, total, percentComplete) {
                 var percentVal = percentComplete + '%';
                 bar.css("width", percentVal);
             },
-            success: function() {
+            success: function () {
                 var percentVal = '100%';
                 bar.width(percentVal)
             },
-            complete: function(xhr) {
+            complete: function (xhr) {
+                var json = xhr.responseText;
+                json = strip_tags(json);
+                json = $.parseJSON(json);
+                handleajax(json);
             }
         });
 
-        $('#upload input[type="file"]').change(function(){
+        $('#upload input[type="file"]').change(function () {
             // gen files html
             var html = "";
             var files = $('#upload input[type="file"]')[0].files;
-            for(var i=0;i<files.length;i++){
+            for (var i = 0; i < files.length; i++) {
                 var filename = files[i].name;
                 var filesize = files[i].size;
                 html += "<tr>";
                 html += "<td>";
                 html += filename;
                 html += "</td>";
-                html += '<td class="text-right">';
+                html += '<td>';
                 html += friendlysize(filesize);
                 html += "</td>";
                 html += "</tr>";
@@ -89,9 +102,9 @@
         });
 
         function friendlysize(filesize) {
-            if(filesize < 1024) {
+            if (filesize < 1024) {
                 return filesize + "字节";
-            } else if(filesize < 1024*1024) {
+            } else if (filesize < 1024 * 1024) {
                 return humanround(filesize / 1024) + "KB";
             } else {
                 return humanround(filesize / 1024 / 1024) + "MB";
@@ -99,17 +112,9 @@
         }
 
         function humanround(n) {
-            return Math.round(n*10) / 10;
+            return Math.round(n * 10) / 10;
         }
-
-        $('#upload').submit(function(){
-            var url = $("#upload form").attr('action');
-            $('#upload').ajaxSubmit({url:url, type:'post', success: function(a,b,c){
-                handleajax(a);
-            }});
-            return false;
-        })
     })
 </script>
 
-<include file="../Public/public_footer" />
+<include file="../Public/public_footer"/>

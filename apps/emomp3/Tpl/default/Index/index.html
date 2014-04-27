@@ -1,27 +1,13 @@
+<php>
+    $title = '情感语音管理与服务平台';
+</php>
+
 <include file="../Public/public_header" />
 
-<div class="jumbotron">
-    <div class="container">
-        <h2>情感语音管理与服务平台</h2>
-    </div>
-</div>
+<h1>{$user.uname}您好！欢迎登录语音管理系统！</h1>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <include file="../Public/nav-audio"/>
-            <include file="../Public/nav-task"/>
-            <include file="../Public/nav-user"/>
-        </div>
-
-        <div class="col-sm-9">
-            <h1>{$user.uname}您好！欢迎登录语音管理系统！</h1>
-
-            <if condition="$task_count">
-                <p>您当前有{$task_count}个任务没有完成，<a href="{:U('emomp3/Index/dotask')}">立即去做</a></p>
-            </if>
-        </div>
-    </div>
-</div>
+<if condition="$task_count">
+    <p>您当前有{$task_count}个任务没有完成，<a href="{:U('emomp3/Index/dotask')}">立即去做</a></p>
+</if>
 
 <include file="../Public/public_footer" />

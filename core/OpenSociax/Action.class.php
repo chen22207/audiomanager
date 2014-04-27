@@ -566,7 +566,8 @@ abstract class Action
         $json['success'] = true;
         $json['message'] = $message;
         $json['url'] = $url;
-        echo json_encode($json);
+        header("Content-Type: application/json; charset=utf-8");
+        exit(json_encode($json));
     }
 
     public function jsonerror($message, $url=null) {
@@ -574,6 +575,7 @@ abstract class Action
         $json['success'] = false;
         $json['message'] = $message;
         $json['url'] = $url;
-        echo json_encode($json);
+        header("Content-Type: application/json; charset=utf-8");
+        exit(json_encode($json));
     }
 };//类定义结束

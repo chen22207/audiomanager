@@ -36,6 +36,7 @@ class IndexAction extends Action
                 }
             }
         }
+
         // render
         if($success) {
             return $this->jsonsuccess("上传成功", U('emomp3/Index/listaudio'));
