@@ -10,5 +10,18 @@
     </div>
 </div>
 
+<script>
+    $(function(){
+        var items = $('.auto-active.list-group-item');
+        for(var i=0;i<items.length;i++){
+            var each = $(items.get(i));
+            var url = each.attr('href');
+            if(url == location.href){
+                each.addClass('active');
+            }
+        }
+    })
+</script>
+
 </body>
 </html>
