@@ -1,5 +1,5 @@
 <php>
-    $map = array('uid'=>$this->mid, 'finishtime'=>array('NEQ',0));
+    $map = array('uid'=>$mid, 'finishtime'=>0);
     $task_count = D('CpAssignLink')->where($map)->count();
 </php>
 
