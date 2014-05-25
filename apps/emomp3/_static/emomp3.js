@@ -72,7 +72,8 @@ function handleajax(r) {
                 location.reload();
                 location.href = location.href;
             } else {
-                location.href = r.url;
+                var url = r.url.replace(/&amp;/g,'&');
+                location.href = url;
             }
         }, 1000);
     }
