@@ -14,17 +14,17 @@
 </div>
 <div class="row">
     <div class="col-sm-10">
-        <input id="filterkeyword" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
+        <input id="filterkeyword" class="form-control" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
     </div>
     <div class="col-sm-2">
-        <div class="expand postfix button" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
+        <div class="btn btn-default btn-block" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
             筛选用户
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12">
-        <table style="width: 100%;" id="userlist">
+        <table class="table" style="width: 100%;" id="userlist">
             <thead>
             <tr>
                 <th>UID</th>
@@ -79,10 +79,10 @@
 </div>
 <div class="row">
     <div class="col-sm-3">
-        <div class="expand secondary button" id="selectall">全选</div>
+        <div class="btn btn-default btn-lg btn-block" id="selectall">全选</div>
     </div>
     <div class="col-sm-3">
-        <div class="expand secondary button" id="selectnone">全不选</div>
+        <div class="btn btn-default btn-lg btn-block" id="selectnone">全不选</div>
     </div>
     <div class="col-sm-3">
         <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
@@ -90,7 +90,7 @@
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="expand button" id="assignnow"
+        <div class="btn btn-primary btn-lg btn-block" id="assignnow"
              href="{:U('emomp3/Admin/commitassigntask', array('taskid'=>$taskid))}">
             立即分配
         </div>
