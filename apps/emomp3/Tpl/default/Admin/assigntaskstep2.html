@@ -14,7 +14,8 @@
 </div>
 <div class="row">
     <div class="col-sm-10">
-        <input id="filterkeyword" class="form-control" type="text" placeholder="UID / 学号 / 姓名 / 班级" value="{$filter|htmlspecialchars}"/>
+        <input id="filterkeyword" class="form-control" type="text" placeholder="UID / 学号 / 姓名 / 班级"
+               value="{$filter|htmlspecialchars}"/>
     </div>
     <div class="col-sm-2">
         <div class="btn btn-default btn-block" id="filterusers" href="{:U('emomp3/Admin/assigntaskstep2')}">
@@ -85,8 +86,8 @@
         <div class="btn btn-default btn-lg btn-block" id="selectnone">全不选</div>
     </div>
     <div class="col-sm-3">
-        <div class="hide" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
-            添加选定人员
+        <div class="btn btn-default btn-lg btn-block" id="setassignuser" href="{:U('emomp3/Admin/setassignuser')}">
+            保存人员列表
         </div>
     </div>
     <div class="col-sm-3">
@@ -97,18 +98,59 @@
     </div>
 </div>
 
+<hr/>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3>已选人员</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>UID</th>
+                <th>学号</th>
+                <th>用户名</th>
+                <th>班级</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="uids" id="uid">
+                <php>
+                    $user = D('User')->getUserInfo($uid);
+                </php>
+                <tr>
+                    <td>{$user.uid}</td>
+                    <td>{$user.studentid}</td>
+                    <td>{$user.uname}</td>
+                    <td>{$user.classname}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <script>
     $(function () {
         //全选
         $('#selectall').click(function () {
-            $('[name="selectuser"]').prop('checked', true);
-            $('[name="selectuser"]').trigger('change');
+            var uids = {$filter_uids|json_encode};
+
+            //post to server
+            var url = $('#setassignuser').attr('href');
+            $.post(url, {add: uids, remove: []}, function (a, b, c) {
+                handleajax(a);
+            });
         });
         //全不选
         $('#selectnone').click(function () {
-            $('[name="selectuser"]').prop('checked', false);
-            $('[name="selectuser"]').trigger('change');
-        })
+            var uids = {$filter_uids|json_encode};
+
+            //post to server
+            var url = $('#setassignuser').attr('href');
+            $.post(url, {add: [], remove: uids}, function (a, b, c) {
+                handleajax(a);
+            });
+        });
         //立即分配
         $('#assignnow').click(function () {
             var url = $(this).attr('href');
@@ -180,6 +222,14 @@
             checkbox.trigger('change');
         }
 
+        //保存人员列表
+        $('#setassignuser').click(function(){
+            saveselectionstate(function(a,b,c){
+                a.url = 'refresh';
+                handleajax(a);
+            });
+        });
+
         //翻页时保存选定人员
         $('.page a').click(function (e) {
             e.preventDefault();
@@ -205,8 +255,6 @@
                     remove.push(uid);
                 }
             }
-            console.log(add);
-            console.log(remove);
             //post to server
             var url = $('#setassignuser').attr('href');
             $.post(url, {add: add, remove: remove}, function (a, b, c) {

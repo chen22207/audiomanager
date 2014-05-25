@@ -108,14 +108,19 @@ class AdminAction extends Action
             $map['classname'] = array('LIKE', $filter2);
             $map['_logic'] = 'or';
             $users = D('User')->where($map)->cpfindpage();
+            $filter_uids = D('User')->where($map)->field('uid')->select();
+            $filter_uids = getSubByKey($filter_uids, 'uid');
         } else {
             $users = D('User')->cpfindpage();
+            $filter_uids = D('User')->field('uid')->select();
+            $filter_uids = getSubByKey($filter_uids, 'uid');
         }
         // display
         $this->assign('uids', $uids);
         $this->assign('users', $users);
         $this->assign('taskid', $taskid);
         $this->assign('filter', $filter);
+        $this->assign('filter_uids', $filter_uids);
         $this->display();
     }
 
@@ -144,7 +149,7 @@ class AdminAction extends Action
         //write session
         $_SESSION['cpassign']['uids'] = $uids;
         //return success
-        $this->jsonsuccess("操作成功");
+        $this->jsonsuccess("操作成功",'refresh');
     }
 
     public function commitassigntask() {
